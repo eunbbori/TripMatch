@@ -14,6 +14,8 @@ paths:
     $ref: "./auth.yaml#/~1auth~1certify"
   /api/main/auth/join:
     $ref: "./auth.yaml#/~1auth~1join"
+  /api/main/auth/login:
+    $ref: "./auth.yaml#/~1auth~1login"
 components:
   schemas:
     status:
@@ -38,7 +40,7 @@ components:
             401:
               description: "인증되지 않음<br>인증된 토큰이 아닐 때 발생<br>acess가 없거나 만료됐거나 훼손됐거나, refresh가 만료됐거나 값이 다르면 뜸"
             403:
-              description: "권한이 없음<br>클라가 허용되지 않은 api를 요청할 때 발생<br>타인의 사용자평 수정 혹은 삭제를 요청하거나, 인증되지 않은 이메일이 회원가입을 요청하면 뜸"
+              description: "권한이 없음<br>클라가 허용되지 않은 api를 요청할 때 발생<br>인증되지 않은 이메일이 회원가입을 요청하면 뜸"
             404:
               description: "정보 없음<br>없는 api를 요청할 때 발생<br>사용되지 않는 uri로 접근하면 뜸"
             409:

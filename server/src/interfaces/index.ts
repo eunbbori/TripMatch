@@ -1,3 +1,4 @@
 import User from "./user";
+import Req from "./req";
 
-export { User };
+export { User, Req };
