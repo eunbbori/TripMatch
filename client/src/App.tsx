@@ -4,6 +4,8 @@ import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Layout from "./components/Layout/Layout";
 import Home from "./pages/Home/Home";
+import FreePostDetail from "./pages/FreePostDetail/FreePostDetail";
+import MatchPostDetail from "./pages/MatchPostDetail/MatchPostDetail";
 import MyPage from "./pages/MyPage/myPage";
 import FreePostWrite from "./pages/FreePostWrite/FreePostWrite";
 import LoginPage from "./pages/Login/LoginPage";
@@ -15,6 +17,8 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route path="" element={<Home />} />
+          <Route path="free/:id" element={<FreePostDetail />} />
+          <Route path="match/:id" element={<MatchPostDetail />} />
           <Route
             path="mypage"
             element={
