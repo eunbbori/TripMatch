@@ -5,12 +5,20 @@ const AuthFormBlock = styled.div`
   padding: 2rem;
 
   label {
-    margin-top: 0.5rem;
+    margin-top: 2rem;
     margin-bottom: 0.5rem;
     display: block;
     font-size: 1.2rem;
     font-weight: 600;
     margin-right: 1rem;
+  }
+  .gender {
+    margin-top: 0.5rem;
+    display: inline-block;
+  }
+  .introP {
+    font-size: 0.5rem;
+    margin-bottom: 2rem;
   }
 `;
 
@@ -32,6 +40,28 @@ const ResultText = styled.p`
   margin-bottom: 0.8rem;
 `;
 
+const Select = styled.select`
+  width: 8rem;
+  margin-top: 0.5rem;
+  font-size: 1.2rem;
+  border-radius: 0.5rem;
+  padding: 0.3rem;
+`;
+
+const TextArea = styled.textarea`
+  box-sizing: border-box;
+  font-size: 1.2rem;
+  width: 100%;
+  border: 1px solid #cfcfcf;
+  border-radius: 0.5rem;
+  padding: 0.8rem;
+  resize: none;
+
+  &:focus {
+    outline: none;
+  }
+`;
+
 const SummitBtn = styled.div`
   font-size: 1.2rem;
   font-weight: 600;
@@ -40,9 +70,11 @@ const SummitBtn = styled.div`
   padding: 0.8rem;
   margin-bottom: 1.2rem;
   background-color: ${(props) => props.theme.color.pink};
+
   &:hover {
     background-color: ${(props) => props.theme.color.lightblue};
   }
+
   &.formSubmit {
     margin-top: 0.5rem;
     display: block;
@@ -57,10 +89,23 @@ const Footer = styled.span`
   text-align: right;
   color: gray;
   margin-bottom: 2rem;
+
   a:visited {
     font-size: 5rem;
     color: gray;
   }
+
+  a:hover {
+    opacity: 0.6;
+  }
 `;
 
-export { AuthFormBlock, StyledInput, ResultText, SummitBtn, Footer };
+export {
+  AuthFormBlock,
+  StyledInput,
+  ResultText,
+  Select,
+  TextArea,
+  SummitBtn,
+  Footer,
+};

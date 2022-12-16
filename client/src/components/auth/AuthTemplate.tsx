@@ -6,9 +6,10 @@ import styled from "styled-components";
 // 화면 전체 배경색 채우기
 const AuthTemplateBlock = styled.div`
   width: 100%;
-  height: 100vh;
-  display: flex;
+  /* 높이는 footer 수정 후에 지울 예정 */
+  height: 120rem;
   background-color: white;
+  display: flex;
   align-items: center;
   justify-content: center;
 `;
@@ -18,6 +19,7 @@ const PinkBox = styled.div`
   box-sizing: border-box;
   background-color: ${(props) => props.theme.color.lightpink};
   border-radius: 0.5rem;
+  margin-top: 2rem;
   max-width: 40rem;
   min-width: 25em;
   .title {
