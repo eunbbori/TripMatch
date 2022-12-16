@@ -33,6 +33,10 @@ const Header = styled.header`
 
     input {
       border: none;
+
+      :focus {
+        outline: white;
+      }
     }
 
     img {

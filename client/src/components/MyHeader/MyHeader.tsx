@@ -32,7 +32,7 @@ const MyHeader = () => {
         </Link>
         <Link to="/">
           <img
-            src="https://res.cloudinary.com/dk9scwone/image/upload/v1671095094/temporaryIconHeart_udk7l6.png"
+            src="https://res.cloudinary.com/dk9scwone/image/upload/v1671184505/free-icon-heart-shape-39559_aatqxl.png"
             alt="위시리스트"
           />
         </Link>
