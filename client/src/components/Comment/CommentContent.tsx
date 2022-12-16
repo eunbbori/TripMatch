@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import UserProfile from "../UserProfile/UserProfile";
 import styled from "styled-components";
+import { Comment } from "../../pages/MatchPostDetail/MatchPostDetail";
 
 interface CommentContentProps {
-  data: any;
+  data: Comment;
 }
 
 const CommentContent: React.FC<CommentContentProps> = ({ data }) => {
@@ -24,7 +25,7 @@ const CommentContent: React.FC<CommentContentProps> = ({ data }) => {
         <Date>({data.createdAt})</Date>
       </ProfileContainer>
       {isClickUpdate ? (
-        <UpdateInput defaultValue={data.content} />
+        <UpdateInput defaultValue={data.comment} />
       ) : (
         <Content>{data.comment}</Content>
       )}

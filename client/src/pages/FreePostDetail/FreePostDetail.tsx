@@ -5,96 +5,42 @@ import Comment from "../../components/Comment/Comment";
 import pointer from "../../images/temporaryIconPointer.png";
 import axios from "axios";
 
-// export interface Freepost {
-//   id: number;
-//   author: Author;
-//   region: string;
-//   category: string;
-//   title: string;
-//   content: string;
-//   comments: CommentType[];
-//   createdAt: Date;
-// }
+export interface Freepost {
+  id: number;
+  author: Author;
+  region: string;
+  category: string;
+  title: string;
+  content: string;
+  comments: CommentType[];
+  createdAt: string;
+}
 
-// export interface Author {
-//   id: number;
-//   nickname: string;
-//   profileImg: string;
-// }
+export interface Author {
+  id: number;
+  nickname: string;
+  profileImg: string;
+}
 
-// export interface CommentType {
-//   id: number;
-//   user: Author;
-//   comment: string;
-//   createdAt: Date;
-// }
-
-const data = {
-  id: 1,
-  author: {
-    id: 1,
-    nickname: "nick",
-    profileImg: "",
-  },
-  region: "경상도",
-  category: "맛집",
-  title: "공주 한정식 82식당 후기입니다",
-  content: "<p>맛집</p><p>추천합니다</p>",
-  comments: [
-    {
-      id: 2,
-      user: {
-        id: 1,
-        nickname: "nick",
-        profileImg: "",
-      },
-      comment: "반가워요?",
-      createdAt: "2022-12-11 16:10:02",
-    },
-    {
-      id: 3,
-      user: {
-        id: 1,
-        nickname: "nick",
-        profileImg: "",
-      },
-      comment: "반가워요?",
-      createdAt: "2022-12-11 16:10:02",
-    },
-    {
-      id: 4,
-      user: {
-        id: 1,
-        nickname: "nick",
-        profileImg: "",
-      },
-      comment: "반가워요?",
-      createdAt: "2022-12-11 16:10:02",
-    },
-    {
-      id: 5,
-      user: {
-        id: 1,
-        nickname: "nick",
-        profileImg: "",
-      },
-      comment: "반가워요?",
-      createdAt: "2022-12-11 16:10:02",
-    },
-  ],
-  createdAt: "2022-12-11 16:10:02",
-};
+export interface CommentType {
+  id: number;
+  user: Author;
+  comment: string;
+  createdAt: string;
+}
 
 const FreePostDetail = () => {
-  const [post, setPost] = useState(data);
+  const [post, setPost] = useState<Freepost>();
 
-  // useEffect(() => {
-  //   const getPost = async () => {
-  //     const res = await axios.get("http://localhost:3001/freeposts");
-  //     setPost(res.data[0]);
-  //   };
-  //   getPost();
-  // }, []);
+  useEffect(() => {
+    const getPost = async () => {
+      const res = await axios.get(
+        "https://70aee874-8965-4db1-be06-07823d5c4dda.mock.pstmn.io/posts",
+      );
+      setPost(res.data);
+    };
+    getPost();
+  }, []);
 
   return (
     <Container>
@@ -115,7 +61,7 @@ export default FreePostDetail;
 const Container = styled.div`
   width: 1000px;
   margin: auto;
-  padding-bottom: 10vh;
+  padding: 20px 0 15vh;
 `;
 
 const CategoryName = styled.span`

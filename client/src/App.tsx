@@ -29,8 +29,8 @@ const App = () => {
               />
             }
           />
-          <Route path="/free/write" element={<FreePostWrite />} />
-          <Route path="/free/write/:id" element={<FreePostWrite />} />
+          <Route path="free/write" element={<FreePostWrite />} />
+          <Route path="free/write/:id" element={<FreePostWrite />} />
           <Route path="login" element={<LoginPage />} />
           <Route path="register" element={<RegisterPage />} />
         </Route>

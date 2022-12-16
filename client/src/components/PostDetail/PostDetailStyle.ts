@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Theme from "./../../styles/Theme";
+import Theme from "../../styles/Theme";
 
 export const PostTitle = styled.h3`
   font-size: 20px;
@@ -19,6 +19,7 @@ export const Thumbnail = styled.div`
   height: 300px;
   overflow: hidden;
   margin-bottom: 10px;
+  background-color: #ccc;
 `;
 
 export const ThumbnailImg = styled.img`
@@ -62,6 +63,10 @@ export const Date = styled.p`
 export const ButtonContainer = styled.div`
   display: flex;
   justify-content: end;
+
+  a {
+    margin-right: 15px;
+  }
 `;
 
 export const Button = styled.button`
@@ -72,10 +77,6 @@ export const Button = styled.button`
   cursor: pointer;
   background-color: ${(props) => props.theme.color.lightblue};
   color: #333;
-
-  + button {
-    margin-left: 15px;
-  }
 `;
 
 export const MatchButton = styled.button`

@@ -1,22 +1,28 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import Editor from "../Editor/Editor";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   Button,
   ButtonContainer,
   Select,
   TitleContainer,
   TitleInput,
-} from "./style";
+} from "./FreePostFormStyle";
+import { Freepost } from "../../pages/FreePostDetail/FreePostDetail";
 
 interface FreePostFormProps {
-  post?: any;
+  post?: Freepost;
 }
 
 const FreePostForm: React.FC<FreePostFormProps> = ({ post }) => {
+  const state = useLocation().state;
+  const navigate = useNavigate();
+
+  const [content, setContent] = useState("");
+
   const regionRef = useRef<HTMLSelectElement>(null);
   const categoryRef = useRef<HTMLSelectElement>(null);
   const titleRef = useRef<HTMLInputElement>(null);
-  //const contentRef = useRef(null);
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -25,10 +31,14 @@ const FreePostForm: React.FC<FreePostFormProps> = ({ post }) => {
     console.log(titleRef.current?.value);
   };
 
+  const onClickCancle = () => {
+    state ? navigate(`/free/${state.id}`) : navigate("/");
+  };
+
   return (
     <form onSubmit={onSubmit}>
       <TitleContainer>
-        <Select defaultValue={post ? post.region : "서울"} ref={regionRef}>
+        <Select defaultValue={state ? state.region : "서울"} ref={regionRef}>
           <option value="서울">서울</option>
           <option value="경기도">경기도</option>
           <option value="강원도">강원도</option>
@@ -38,7 +48,10 @@ const FreePostForm: React.FC<FreePostFormProps> = ({ post }) => {
           <option value="제주도">제주도</option>
           <option value="기타">기타</option>
         </Select>
-        <Select defaultValue={post ? post.category : "맛집"} ref={categoryRef}>
+        <Select
+          defaultValue={state ? state.category : "맛집"}
+          ref={categoryRef}
+        >
           <option value="맛집">맛집</option>
           <option value="액티비티">액티비티</option>
           <option value="교통">교통</option>
@@ -48,14 +61,16 @@ const FreePostForm: React.FC<FreePostFormProps> = ({ post }) => {
         <TitleInput
           type="text"
           placeholder="ex) 12월 31일 부산 해돋이 보러갈 동행 2명 구합니다"
-          defaultValue={post && post.title}
+          defaultValue={state && state.title}
           ref={titleRef}
         />
       </TitleContainer>
-      <Editor />
+      <Editor initialValue={state && state.content} setContent={setContent} />
       <ButtonContainer>
-        <Button type="button">취소</Button>
-        <Button>작성 완료</Button>
+        <Button type="button" onClick={onClickCancle}>
+          취소
+        </Button>
+        <Button>{state ? "수정 완료" : "작성 완료"}</Button>
       </ButtonContainer>
     </form>
   );

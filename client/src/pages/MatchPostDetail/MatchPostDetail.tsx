@@ -1,28 +1,56 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import PostDetail from "./../../components/PostDetail/PostDetail";
 import Comment from "../../components/Comment/Comment";
+import axios from "axios";
+
+export interface MatchPost {
+  id: number;
+  author: Author;
+  region: string;
+  userCount: number;
+  hopeGender: string;
+  hopeAge: string;
+  title: string;
+  content: string;
+  status: boolean;
+  duration: Date[];
+  thumbnailImg: string;
+  comments: Comment[];
+  createdAt: string;
+}
+
+export interface Author {
+  id: number;
+  nickname: string;
+  profileImg: string;
+}
+
+export interface Comment {
+  id: number;
+  user: Author;
+  comment: string;
+  createdAt: string;
+}
 
 const MatchPostDetail = () => {
-  const matchData = {
-    status: "모집중",
-    hopeGender: "성별 무관",
-    hopeAge: "20대",
-    region: "경상도",
-    duration: ["2022-12-14", "2022-12-15"],
-    userCount: 4,
-    thumbnailImg: "",
-  };
+  const [post, setPost] = useState<MatchPost>();
 
-  const userData = {
-    nickname: "nickname",
-    profileImg: "",
-  };
+  useEffect(() => {
+    const getData = async () => {
+      const res = await axios.get(
+        "https://70aee874-8965-4db1-be06-07823d5c4dda.mock.pstmn.io/matchposts/1",
+      );
+      setPost(res.data);
+    };
+
+    getData();
+  }, []);
 
   return (
     <Container>
-      <PostDetail matchData={matchData} user={userData} />
-      <Comment />
+      <PostDetail matchPost={post} user={post?.author} />
+      <Comment comments={post?.comments} />
     </Container>
   );
 };

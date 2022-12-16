@@ -1,16 +1,17 @@
 import React from "react";
 import styled from "styled-components";
-// import { CommentType } from "../../pages/FreePostDetail/FreePostDetail";
+import { CommentType } from "../../pages/FreePostDetail/FreePostDetail";
+
 import CommentContent from "./CommentContent";
 import CommentForm from "./CommentForm";
 
-const Comment: React.FC<{ comments?: any }> = ({ comments }) => {
+const Comment: React.FC<{ comments?: CommentType[] }> = ({ comments }) => {
   return (
     <>
       <CommentCount>
         <span>{comments?.length}</span>개의 답변
       </CommentCount>
-      {comments?.map((comment: any) => (
+      {comments?.map((comment) => (
         <CommentContent data={comment} key={comment.id} />
       ))}
       <CommentForm />
