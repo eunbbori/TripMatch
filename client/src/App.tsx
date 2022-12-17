@@ -10,6 +10,7 @@ import MyPage from "./pages/MyPage/myPage";
 import FreePostWrite from "./pages/FreePostWrite/FreePostWrite";
 import LoginPage from "./pages/Login/LoginPage";
 import RegisterPage from "./pages/Login/RegisterPage";
+import FreePostList from "./pages/FreePostList/FreePostList";
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route path="" element={<Home />} />
+          <Route path="free" element={<FreePostList />} />
           <Route path="free/:id" element={<FreePostDetail />} />
           <Route path="match/:id" element={<MatchPostDetail />} />
           <Route
