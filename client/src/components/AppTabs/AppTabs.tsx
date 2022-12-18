@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import FreePostRow from "../FreePostRow/FreePostRow";
+import Paging from "../Pagination/Paging";
 // import DataTable from "../Table/Table";
 import { Container, STabList } from "./AppTabsStyle";
 
@@ -38,6 +39,7 @@ const AppTabs: React.FC<TabProps> = ({ tabs }) => {
           <FreePostRow />
           <FreePostRow />
           <FreePostRow />
+          <Paging />
         </TabPanel>
         <TabPanel>
           <h2>Any content 2</h2>
