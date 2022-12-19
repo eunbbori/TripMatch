@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import { Tab, Tabs, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
-import FreePostRow from "../FreePostRow/FreePostRow";
+import FreePostList from "../FreePost/FreePostList";
 import Paging from "../Pagination/Paging";
 // import DataTable from "../Table/Table";
 import { Container, STabList } from "./AppTabsStyle";
@@ -33,12 +33,7 @@ const AppTabs: React.FC<TabProps> = ({ tabs }) => {
         </STabList>
 
         <TabPanel>
-          <FreePostRow />
-          <FreePostRow />
-          <FreePostRow />
-          <FreePostRow />
-          <FreePostRow />
-          <FreePostRow />
+          <FreePostList />
           <Paging />
         </TabPanel>
         <TabPanel>

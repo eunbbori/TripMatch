@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import AppTabs from "../../components/AppTabs/AppTabs";
 

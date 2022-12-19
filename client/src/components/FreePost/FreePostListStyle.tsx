@@ -1,13 +1,15 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  width: 1000px;
-  height: 50px;
-  margin: auto;
-  padding: 10px;
-  display: flex;
-  border: 1px solid black;
-  justify-content: space-between;
+  .container {
+    width: 1000px;
+    height: 50px;
+    margin: auto;
+    padding: 10px;
+    display: flex;
+    border: 1px solid black;
+    justify-content: space-between;
+  }
 `;
 
 export const MainContent = styled.div`
