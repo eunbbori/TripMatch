@@ -8,7 +8,7 @@ import {
   TitleContainer,
   TitleInput,
 } from "./FreePostFormStyle";
-import { Freepost } from "../../pages/FreePostDetail/FreePostDetail";
+import type { Freepost } from "../../pages/FreePostDetail/FreePostDetail";
 
 interface FreePostFormProps {
   post?: Freepost;

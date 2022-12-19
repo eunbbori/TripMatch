@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Author } from "../../pages/FreePostDetail/FreePostDetail";
+import type { Author } from "../../pages/FreePostDetail/FreePostDetail";
 import defaultImage from "./../../images/user-default.jpg";
 
 interface UserProfileProps {

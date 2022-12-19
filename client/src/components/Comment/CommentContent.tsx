@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import UserProfile from "../UserProfile/UserProfile";
 import styled from "styled-components";
-import { Comment } from "../../pages/MatchPostDetail/MatchPostDetail";
+import type { Comment } from "../../pages/MatchPostDetail/MatchPostDetail";
 
 interface CommentContentProps {
   data: Comment;
