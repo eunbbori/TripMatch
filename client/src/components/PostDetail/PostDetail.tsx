@@ -1,5 +1,4 @@
 import React from "react";
-import { MatchPost } from "../../pages/MatchPostDetail/MatchPostDetail";
 import { Link, useLocation } from "react-router-dom";
 import UserProfile from "../UserProfile/UserProfile";
 import {
@@ -15,15 +14,13 @@ import {
   ButtonContainer,
   Button,
 } from "./PostDetailStyle";
-import type {
-  Author,
-  Freepost,
-} from "../../pages/FreePostDetail/FreePostDetail";
+import type { FreepostType, AuthorType } from "./../../type/freePost";
+import type { MatchPostType } from "../../type/matchPost";
 
 interface PostDetailProps {
-  matchPost?: MatchPost;
-  freePost?: Freepost;
-  user?: Author;
+  matchPost?: MatchPostType;
+  freePost?: FreepostType;
+  user?: AuthorType;
 }
 
 const PostDetail: React.FC<PostDetailProps> = ({

@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import UserProfile from "../UserProfile/UserProfile";
 import styled from "styled-components";
-import type { Comment } from "../../pages/MatchPostDetail/MatchPostDetail";
+import { CommentType } from "./../../type/comment";
 
 interface CommentContentProps {
-  data: Comment;
+  data: CommentType;
 }
 
 const CommentContent: React.FC<CommentContentProps> = ({ data }) => {

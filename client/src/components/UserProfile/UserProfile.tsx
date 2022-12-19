@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import type { Author } from "../../pages/FreePostDetail/FreePostDetail";
+import type { AuthorType } from "../../type/freePost";
 import defaultImage from "./../../images/user-default.jpg";
 
 interface UserProfileProps {
-  user?: Author;
+  user?: AuthorType;
 }
 
 const UserProfile: React.FC<UserProfileProps> = ({ user }) => {

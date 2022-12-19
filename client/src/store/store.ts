@@ -1,8 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
+import { freePostSlice } from "./../slice/freePost";
 // ...
 
 export const store = configureStore({
-  reducer: {},
+  reducer: { freePost: freePostSlice.reducer },
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

@@ -3,38 +3,10 @@ import styled from "styled-components";
 import PostDetail from "./../../components/PostDetail/PostDetail";
 import Comment from "../../components/Comment/Comment";
 import axios from "axios";
-
-export interface MatchPost {
-  id: number;
-  author: Author;
-  region: string;
-  userCount: number;
-  hopeGender: string;
-  hopeAge: string;
-  title: string;
-  content: string;
-  status: boolean;
-  duration: Date[];
-  thumbnailImg: string;
-  comments: Comment[];
-  createdAt: string;
-}
-
-export interface Author {
-  id: number;
-  nickname: string;
-  profileImg: string;
-}
-
-export interface Comment {
-  id: number;
-  user: Author;
-  comment: string;
-  createdAt: string;
-}
+import type { MatchPostType } from "../../type/matchPost";
 
 const MatchPostDetail = () => {
-  const [post, setPost] = useState<MatchPost>();
+  const [post, setPost] = useState<MatchPostType>();
 
   useEffect(() => {
     const getData = async () => {

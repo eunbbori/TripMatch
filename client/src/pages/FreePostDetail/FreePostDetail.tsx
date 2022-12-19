@@ -4,33 +4,10 @@ import styled from "styled-components";
 import Comment from "../../components/Comment/Comment";
 import pointer from "../../images/temporaryIconPointer.png";
 import axios from "axios";
-
-export interface Freepost {
-  id: number;
-  author: Author;
-  region: string;
-  category: string;
-  title: string;
-  content: string;
-  comments: CommentType[];
-  createdAt: string;
-}
-
-export interface Author {
-  id: number;
-  nickname: string;
-  profileImg: string;
-}
-
-export interface CommentType {
-  id: number;
-  user: Author;
-  comment: string;
-  createdAt: string;
-}
+import type { FreepostType } from "../../type/freePost";
 
 const FreePostDetail = () => {
-  const [post, setPost] = useState<Freepost>();
+  const [post, setPost] = useState<FreepostType>();
 
   useEffect(() => {
     const getPost = async () => {

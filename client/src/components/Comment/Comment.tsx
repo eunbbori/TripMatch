@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import type { CommentType } from "../../pages/FreePostDetail/FreePostDetail";
 import CommentContent from "./CommentContent";
 import CommentForm from "./CommentForm";
+import type { CommentType } from "./../../type/comment";
 
 const Comment: React.FC<{ comments: CommentType[] | undefined }> = ({
   comments = [],
