@@ -22,6 +22,7 @@ const PinkBox = styled.div`
   margin-top: 2rem;
   max-width: 40rem;
   min-width: 25em;
+  box-shadow: 0 4px 5px rgba(0, 0, 0, 0.6);
   .title {
     margin-top: 2rem;
     text-align: center;
