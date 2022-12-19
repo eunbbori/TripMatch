@@ -11,6 +11,7 @@ import FreePostWrite from "./pages/FreePostWrite/FreePostWrite";
 import LoginPage from "./pages/Login/LoginPage";
 import RegisterPage from "./pages/Login/RegisterPage";
 import FreePostList from "./pages/FreePostList/FreePostList";
+import Admin from "./pages/Admin/Admin";
 
 const App = () => {
   return (
@@ -35,6 +36,7 @@ const App = () => {
           <Route path="free/write/:id" element={<FreePostWrite />} />
           <Route path="login" element={<LoginPage />} />
           <Route path="register" element={<RegisterPage />} />
+          <Route path="admin" element={<Admin />} />
         </Route>
       </Routes>
     </BrowserRouter>

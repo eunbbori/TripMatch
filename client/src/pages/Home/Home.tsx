@@ -1,14 +1,16 @@
 import React from "react";
 import Carousel from "../../components/Carousel/Carousel";
+import FestivalList from "../../components/FestivalList/FestivalList";
 import FreePostPreview from "../../components/FreePostPreview/FreePostPreview";
-import MatchPostPreview from "../../components/MatchPostPreview/MatchPostPreview";
+import MakeMatchPostList from "../../components/MakeMatchPostList/MakeMatchPostList";
 
 const Home = () => {
   return (
     <div>
       <Carousel />
-      <MatchPostPreview />
+      <MakeMatchPostList />
       <FreePostPreview />
+      <FestivalList />
     </div>
   );
 };

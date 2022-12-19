@@ -20,45 +20,41 @@ const Container = styled.div`
   }
 `;
 
-const MatchPost = styled.div`
+const FestivalInfo = styled.div`
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
   align-content: flex-start;
 
   .item {
-    width: 23%;
+    width: 21%;
     margin: 1% 1%;
+    padding: 1% 1%;
     position: relative;
+    background: linear-gradient(
+      135deg,
+      ${(props) => props.theme.color.lightblue},
+      ${(props) => props.theme.color.lightblue},
+      ${(props) => props.theme.color.lightpink}
+    );
 
-    .region {
-      position: absolute;
-      top: 7%;
-      left: 8%;
-      background-color: white;
-      padding: 2px 2px;
-      opacity: 0.5;
-      border-radius: 10%;
-    }
-
-    .heart {
-      width: 10%;
-      position: absolute;
-      top: 8%;
-      left: 80%;
-    }
-
-    .itemImg {
+    img {
       width: 100%;
-      height: 15vw;
+      height: 13vw;
       object-fit: cover;
+      // object-position: center top;
     }
 
     .itemTitle {
       height: 40px;
       line-height: 20px;
+      margin-top: 10px;
+    }
+
+    .itemDate {
+      margin-top: 5px;
+      color: #b1b1b1;
     }
   }
 `;
 
-export { Container, MatchPost };
+export { Container, FestivalInfo };
