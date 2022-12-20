@@ -5,10 +5,12 @@ const MyHeader = () => {
   return (
     <Header>
       <div className="logo">
-        <img
-          src="https://res.cloudinary.com/dk9scwone/image/upload/v1671095095/temporaryLogo_l9x22i.png"
-          alt="TripMatch"
-        />
+        <Link to="/">
+          <img
+            src="https://res.cloudinary.com/dk9scwone/image/upload/v1671436634/temporaryLogo_l9x22i.png"
+            alt="TripMatch"
+          />
+        </Link>
       </div>
       <div className="searchBar">
         <input type="text" placeholder="지역명으로 검색해 보세요."></input>
@@ -20,6 +22,7 @@ const MyHeader = () => {
       <div className="navBar">
         <Link to="/">
           <img
+            className="firstImg"
             src="https://res.cloudinary.com/dk9scwone/image/upload/v1671095094/temporaryIconShake_jywmku.png"
             alt="동행게시판"
           />

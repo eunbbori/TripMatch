@@ -11,15 +11,17 @@ const Header = styled.header`
   border-bottom: 1px solid darkgray;
 
   .logo {
-    font-size: 30px;
-    font-weight: bold;
     height: 100%;
     display: flex;
     align-items: center;
 
-    img {
+    a {
       min-height: 80px;
       height: 8vh;
+    }
+
+    img {
+      height: 100%;
     }
   }
 
@@ -48,8 +50,13 @@ const Header = styled.header`
   .navBar img {
     height: 4vh;
     min-height: 40px;
-    margin-right: 20px;
+    margin-left: 20px;
   }
+
+  .navBar .firstImg {
+    margin-left: 0;
+  }
+}
 `;
 
 export default Header;

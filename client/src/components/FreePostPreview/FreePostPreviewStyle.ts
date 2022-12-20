@@ -20,4 +20,33 @@ const Container = styled.div`
   }
 `;
 
-export default Container;
+const FreePostList = styled.div`
+  .item {
+    display: flex;
+    align-items: center;
+    height: 5vh;
+    margin: 0 1% 5px 1%;
+    padding: 0 2%;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom: solid 3.5px ${(props) => props.theme.color.pink};
+    background-color: ${(props) => props.theme.color.lightpink};
+
+    .region,
+    .category {
+      font-weight: bold;
+      margin-right: 1%;
+    }
+
+    .itemTitle {
+      flex-grow: 1;
+    }
+
+    .createDate {
+      width: 13%;
+      text-align: end;
+    }
+  }
+`;
+
+export { Container, FreePostList };

@@ -1,4 +1,5 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useRef, useState } from "react";
 import { Container, MemberList, SearchBar } from "./AdminStyle";
 
 const mockData = [
@@ -27,59 +28,77 @@ const mockData = [
     createdAt: "2022-11-04T04:57:01.267Z",
   },
   {
-    userID: "4",
+    userID: "5",
     email: "tripMatch1234@naver.com",
     nickname: "최대길이닉네임임",
     createdAt: "2022-11-04T04:57:01.267Z",
   },
   {
-    userID: "4",
+    userID: "6",
     email: "111@naver.com",
     nickname: "최대길이닉네임임",
     createdAt: "2022-11-04T04:57:01.267Z",
   },
   {
-    userID: "4",
+    userID: "7",
     email: "111@naver.com",
     nickname: "최대길이닉네임임",
     createdAt: "2022-11-04T04:57:01.267Z",
   },
   {
-    userID: "4",
+    userID: "8",
     email: "111@naver.com",
     nickname: "최대길이닉네임임",
     createdAt: "2022-11-04T04:57:01.267Z",
   },
   {
-    userID: "4",
+    userID: "9",
     email: "111@naver.com",
     nickname: "최대길이닉네임임",
     createdAt: "2022-11-04T04:57:01.267Z",
   },
   {
-    userID: "4",
+    userID: "10",
     email: "jjyy5017@naver.com",
     nickname: "최대길이닉네임임",
     createdAt: "2022-11-04T04:57:01.267Z",
   },
   {
-    userID: "4",
+    userID: "11",
     email: "111@naver.com",
     nickname: "최대길이닉네임임",
     createdAt: "2022-11-04T04:57:01.267Z",
   },
 ];
 
+const joinDateFormat = (createdAt: string) => {
+  return (
+    createdAt.slice(0, 4) +
+    "." +
+    createdAt.slice(5, 7) +
+    "." +
+    createdAt.slice(8, 10)
+  );
+};
+
 const Admin = () => {
-  const joinDateFormat = (createdAt: string) => {
-    return (
-      createdAt.slice(0, 4) +
-      "." +
-      createdAt.slice(5, 7) +
-      "." +
-      createdAt.slice(8, 10)
-    );
+  const [members, setMembers] = useState([]);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const getMember = async (ninkname?: string) => {
+    const memberList = await axios.get("").then((res) => res.data);
+    setMembers(memberList);
+    return;
   };
+
+  const deleteMember = async (userID: string) => {
+    await axios.delete("");
+  };
+
+  useEffect(() => {
+    // getMember();
+  }, []);
+
   return (
     <Container>
       <div className="title">

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Container, MatchPosts } from "./MakeMatchPostListStyle";
+import { Container, MatchPosList } from "./MakeMatchPostListStyle";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
@@ -81,7 +81,7 @@ const mockData = [
   },
 ];
 
-const MakeMatchPostList = ({ data, likes = [] }: DataProps) => {
+const MakeMatchPostList: React.FC<DataProps> = ({ data, likes = [] }) => {
   //비회원의 경우 좋아요 없으므로 빈 배열을 디폴트로 설정
   const [likePost, setLikePost] = useState<LikePostType>({});
   const fullHeart =
@@ -104,11 +104,7 @@ const MakeMatchPostList = ({ data, likes = [] }: DataProps) => {
 
   return (
     <Container>
-      <div className="title">
-        <h3>동행게시판</h3>
-        <Link to="/">더보기</Link>
-      </div>
-      <MatchPosts>
+      <MatchPosList>
         {mockData &&
           mockData.map((item) => {
             return (
@@ -126,7 +122,7 @@ const MakeMatchPostList = ({ data, likes = [] }: DataProps) => {
               </div>
             );
           })}
-      </MatchPosts>
+      </MatchPosList>
     </Container>
   );
 };
