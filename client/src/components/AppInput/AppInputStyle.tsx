@@ -16,7 +16,7 @@ export const Input = styled.input`
 
   &:focus {
     outline: none;
-    border: 2px solid ${Theme.color.blue};
+    border: 1px solid ${Theme.color.blue};
   }
 `;
 
@@ -41,7 +41,7 @@ export const FileUploadName = styled.input`
   font-size: 1rem;
   &:focus {
     outline: none;
-    border: 2px solid ${Theme.color.blue};
+    border: 1px solid ${Theme.color.blue};
   }
 `;
 export const FileUploadLabel = styled.label`
@@ -56,6 +56,16 @@ export const FileUploadLabel = styled.label`
   margin-left: 10px;
 `;
 
+export const DateRange = styled.div`
+  margin: 10px 0;
+  display: flex;
+  p {
+    align-self: center;
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+`;
+
 export const RadioAndCheckBoxInput = styled.input`
   border: 1px solid #dbdbdb;
   border-radius: 5px;
@@ -65,7 +75,7 @@ export const RadioAndCheckBoxInput = styled.input`
 
   &:focus {
     outline: none;
-    border: 2px solid ${Theme.color.blue};
+    border: 1px solid ${Theme.color.blue};
   }
 `;
 

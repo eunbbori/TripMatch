@@ -10,6 +10,7 @@ import {
   FileInput,
   FileUploadName,
   FileUploadLabel,
+  DateRange,
 } from "./AppInputStyle";
 
 interface RadioAndCheckBox {
@@ -17,7 +18,7 @@ interface RadioAndCheckBox {
   htmlValue: string;
 }
 interface AppInputProps {
-  label: string;
+  label?: string;
   type: string;
   inputWidth?: string;
   placeholder?: string;
@@ -39,7 +40,7 @@ const AppInput: React.FC<AppInputProps> = ({
   if (type === "radio" || type === "checkbox") {
     return (
       <Div>
-        {label && <Label htmlFor={className}>{label}</Label>}
+        {<Label htmlFor={className}>{label}</Label>}
         {radioAndCheckBoxList?.map((object) => (
           <RadioAndCheckBoxDiv key={object.htmlValue}>
             <RadioAndCheckBoxInput
@@ -62,7 +63,7 @@ const AppInput: React.FC<AppInputProps> = ({
     };
     return (
       <Div>
-        {label && <Label htmlFor={className}>{label}</Label>}
+        {<Label htmlFor={className}>{label}</Label>}
         <FileInput
           id="file"
           type={type}
@@ -79,10 +80,26 @@ const AppInput: React.FC<AppInputProps> = ({
         <FileUploadLabel htmlFor="file">업로드</FileUploadLabel>
       </Div>
     );
+  } else if (type === "dateRange") {
+    return (
+      <DateRange>
+        {<Label htmlFor={className}>{label}</Label>}
+        <Input type="date" className="startDatePicker" width={inputWidth} />
+        <p>~</p>
+        <Input type="date" className="endDatePicker" width={inputWidth} />
+      </DateRange>
+    );
+  } else if (type === "date") {
+    return (
+      <Div>
+        {<Label htmlFor={className}>{label}</Label>}
+        <Input type="date" className={className} width={inputWidth} />
+      </Div>
+    );
   } else {
     return (
       <Div>
-        {label && <Label htmlFor={className}>{label}</Label>}
+        {<Label htmlFor={className}>{label}</Label>}
         <Input
           type={type}
           width={inputWidth}
