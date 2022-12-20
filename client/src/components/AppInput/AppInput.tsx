@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+
 import {
   Div,
   Input,
@@ -6,6 +7,9 @@ import {
   RadioAndCheckBoxInput,
   RadioAndCheckBoxLabel,
   RadioAndCheckBoxDiv,
+  FileInput,
+  FileUploadName,
+  FileUploadLabel,
 } from "./AppInputStyle";
 
 interface RadioAndCheckBox {
@@ -17,6 +21,7 @@ interface AppInputProps {
   type: string;
   inputWidth?: string;
   placeholder?: string;
+  accept?: string;
   className: string;
   radioAndCheckBoxList?: RadioAndCheckBox[];
 }
@@ -29,6 +34,8 @@ const AppInput: React.FC<AppInputProps> = ({
   className,
   placeholder,
 }) => {
+  const [imageUploaded, setImageUploaded] = useState<string>();
+
   if (type === "radio" || type === "checkbox") {
     return (
       <Div>
@@ -46,6 +53,30 @@ const AppInput: React.FC<AppInputProps> = ({
             </RadioAndCheckBoxLabel>
           </RadioAndCheckBoxDiv>
         ))}
+      </Div>
+    );
+  } else if (type === "file") {
+    const imageHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+      const fileName = event.target.value;
+      setImageUploaded(fileName);
+    };
+    return (
+      <Div>
+        {label && <Label htmlFor={className}>{label}</Label>}
+        <FileInput
+          id="file"
+          type={type}
+          placeholder={placeholder}
+          className={className}
+          accept="image/jpg,image.png,image/jpeg"
+          onChange={imageHandler}
+        />
+        <FileUploadName
+          className="uploadName"
+          placeholder="jpg,png,jpeg 이미지"
+          value={imageUploaded}
+        />
+        <FileUploadLabel htmlFor="file">업로드</FileUploadLabel>
       </Div>
     );
   } else {
