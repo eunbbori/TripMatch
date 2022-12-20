@@ -1,29 +1,5 @@
 import styled from "styled-components";
 
-export const Body = styled.div`
-  width: 100%;
-  height: 100vh;
-  background-color: ${(props) => props.theme.color.lightpink};
-`;
-
-export const Container = styled.div`
-  display: grid;
-  grid-template-rows: 0.5fr 1fr;
-  justify-content: start;
-  width: 1000px;
-  height: 700px;
-  margin: 30px auto;
-  background-color: ${(props) => props.theme.color.lightpink};
-`;
-
-export const MidContainer = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  width: 900px;
-  height: 540px;
-  margin-left: 30px;
-`;
-
 export const Content = styled.div`
   width: 750px;
   height: 540px;
@@ -36,16 +12,16 @@ export const Content = styled.div`
   border-bottom-right-radius: 10px;
   box-shadow: 1px 1px 6px 1px rgba(0, 0, 0, 0.11);
 
+  thead {
+    position: sticky;
+    top: 0;
+    z-index: 3;
+  }
+
   table {
     width: 750px;
     height: 540px;
     vertical-align: middle;
-
-    thead {
-      position: sticky;
-      top: 0;
-      z-index: 3;
-    }
 
     tr {
       display: grid;
@@ -80,6 +56,11 @@ export const Content = styled.div`
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+    }
+
+    #title {
+      text-align: left;
+      padding-left: 30px;
     }
 
     #last {
