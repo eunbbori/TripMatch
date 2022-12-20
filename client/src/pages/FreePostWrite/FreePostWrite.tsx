@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import FreePostForm from "./../../components/FreePostForm/FreePostForm";
+import FreePostForm from "./components/FreePostForm";
 
 const FreePostWrite = () => {
   // const postData = {

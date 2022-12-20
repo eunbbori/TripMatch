@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PostDetail from "../../components/PostDetail/PostDetail";
 import styled from "styled-components";
-import Comment from "../../components/Comment/Comment";
+import Comment from "../../components/CommentList/CommentList";
 import pointer from "../../images/temporaryIconPointer.png";
 import axios from "axios";
 import type { FreepostType } from "../../type/freePost";
@@ -28,7 +28,7 @@ const FreePostDetail = () => {
         </CategoryName>
       </div>
       <PostDetail user={post?.author} freePost={post} />
-      <Comment comments={post?.comments} />
+      {post?.comments && <Comment comments={post.comments} />}
     </Container>
   );
 };

@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import Editor from "../Editor/Editor";
+import Editor from "../../../components/Editor/Editor";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
   Button,
@@ -8,15 +8,18 @@ import {
   TitleContainer,
   TitleInput,
 } from "./FreePostFormStyle";
-import type { FreepostType } from "./../../type/freePost";
+import type { FreepostType } from "../../../type/freePost";
+import { useDispatch } from "react-redux";
+import {
+  addFreePost,
+  removeFreePost,
+  updateFreePost,
+} from "../../../slice/freePost";
 
-interface FreePostFormProps {
-  post?: FreepostType;
-}
-
-const FreePostForm: React.FC<FreePostFormProps> = ({ post }) => {
-  const state = useLocation().state;
+const FreePostForm = () => {
+  const state: FreepostType = useLocation().state;
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [content, setContent] = useState("");
 
@@ -29,10 +32,27 @@ const FreePostForm: React.FC<FreePostFormProps> = ({ post }) => {
     console.log(regionRef.current?.value);
     console.log(categoryRef.current?.value);
     console.log(titleRef.current?.value);
+    // if (regionRef.current && categoryRef.current && titleRef.current) {
+    //   const newObj: FreepostType = {
+    //     id: state.id,
+    //     title: "어쩌구",
+    //     region: regionRef.current?.value,
+    //     category: categoryRef.current?.value,
+    //     author: { email: "111", nickname: "111", profileImg: "" },
+    //     content,
+    //     comments: [],
+    //     createdAt: "",
+    //   };
+    //   dispatch(updateFreePost(newObj));
+    // }
   };
 
   const onClickCancle = () => {
     state ? navigate(`/free/${state.id}`) : navigate("/");
+  };
+
+  const onDelete = () => {
+    dispatch(removeFreePost(state.id));
   };
 
   return (

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import PostDetail from "./../../components/PostDetail/PostDetail";
-import Comment from "../../components/Comment/Comment";
+import Comment from "../../components/CommentList/CommentList";
 import axios from "axios";
 import type { MatchPostType } from "../../type/matchPost";
 
@@ -22,7 +22,7 @@ const MatchPostDetail = () => {
   return (
     <Container>
       <PostDetail matchPost={post} user={post?.author} />
-      {post?.comments && <Comment comments={post?.comments} />}
+      {post?.comments && <Comment comments={post.comments} />}
     </Container>
   );
 };
