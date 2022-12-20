@@ -7,8 +7,8 @@ export const Div = styled.div`
 `;
 
 export const Input = styled.input`
-  flex-grow: 1;
   outline: none;
+  width: ${(props) => props.width};
   border: 1px solid #dbdbdb;
   border-radius: 5px;
   text-indent: 10px;
@@ -21,6 +21,7 @@ export const Input = styled.input`
 `;
 
 export const Label = styled.label`
+  flex: none;
   align-self: center;
   margin-right: 15px;
 `;
