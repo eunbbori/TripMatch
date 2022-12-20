@@ -1,0 +1,110 @@
+/auth/email:
+  post:
+    tags:
+      - /auth
+    summary: 이메일 중복검사 및 인증 번호 발급
+    consumes:
+      - application/json
+    requestBody:
+      x-name: body
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              email:
+                type: string
+    responses:
+      "201":
+        description: 성공
+      "409":
+        description: 이메일 중복
+/auth/certify:
+  post:
+    tags:
+      - /auth
+    summary: 이메일 인증
+    consumes:
+      - application/json
+    requestBody:
+      x-name: body
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              email:
+                type: string
+              number:
+                type: number
+    responses:
+      "200":
+        description: 성공
+      "400":
+        description: 인증 번호 오류
+/auth/join:
+  post:
+    tags:
+      - /auth
+    summary: 회원가입
+    consumes:
+      - application/json
+    requestBody:
+      x-name: body
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              email:
+                type: string
+              nickname:
+                type: string
+              password:
+                type: string
+              gender:
+                type: string
+              age:
+                type: string
+              introduce:
+                type: string
+    responses:
+      "201":
+        description: 성공
+      "403":
+        description: 인증 안 된 이메일
+/auth/login:
+  post:
+    tags:
+      - /auth
+    summary: 로그인
+    consumes:
+      - application/json
+    requestBody:
+      x-name: body
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              email:
+                type: string
+              password:
+                type: string
+    responses:
+      "201":
+        description: 성공
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                refresh:
+                  type: string
+                  description: accessToken 갱신할 JWT
+      "400":
+        description: email 또는 password 틀림
