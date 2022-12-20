@@ -13,8 +13,8 @@ const Modal = styled.div`
   align-items: center;
 
   .modalCard {
-    width: 18vw; 
-    height: 20vh; 
+    width: 18vw;
+    height: 20vh;
     margin: auto;
     padding: 2vh 1vw;
     display: flex;
@@ -23,7 +23,6 @@ const Modal = styled.div`
     justify-content: center;
     border-radius: 10px;
     background-color: white;
-    }
   }
 `;
 

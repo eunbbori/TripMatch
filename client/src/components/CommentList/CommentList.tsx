@@ -3,17 +3,23 @@ import styled from "styled-components";
 import CommentForm from "../CommentForm/CommentForm";
 import type { CommentType } from "../../type/comment";
 import UserProfile from "../UserProfile/UserProfile";
+import { useAppDispatch } from "./../../store/hooks";
+import { showModal } from "../../slice/deleteModal";
 
 const Comment: React.FC<{ comments: CommentType[] }> = ({ comments }) => {
   const [isClickUpdate, setIsClickUpdate] = useState<boolean>(false);
 
-  const onClickUpdateButton = () => {
+  const dispatch = useAppDispatch();
+
+  const onClickUpdate = () => {
     setIsClickUpdate(true);
   };
 
-  const onClickCancleButton = () => {
+  const onClickCancle = () => {
     setIsClickUpdate(false);
   };
+
+  const onClickDelete = () => dispatch(showModal("댓글"));
 
   return (
     <>
@@ -35,12 +41,12 @@ const Comment: React.FC<{ comments: CommentType[] }> = ({ comments }) => {
             {isClickUpdate ? (
               <>
                 <Button>수정 완료</Button>
-                <Button onClick={onClickCancleButton}>취소</Button>
+                <Button onClick={onClickCancle}>취소</Button>
               </>
             ) : (
               <>
-                <Button onClick={onClickUpdateButton}>수정</Button>
-                <Button>삭제</Button>
+                <Button onClick={onClickUpdate}>수정</Button>
+                <Button onClick={onClickDelete}>삭제</Button>
               </>
             )}
           </ButtonContainer>

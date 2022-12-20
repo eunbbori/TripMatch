@@ -1,9 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { freePostSlice } from "./../slice/freePost";
+import { modalSlice } from "./../slice/deleteModal";
 // ...
 
 export const store = configureStore({
-  reducer: { freePost: freePostSlice.reducer },
+  reducer: { freePost: freePostSlice.reducer, modal: modalSlice.reducer },
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

@@ -16,6 +16,10 @@ import {
 } from "./PostDetailStyle";
 import type { FreepostType, AuthorType } from "./../../type/freePost";
 import type { MatchPostType } from "../../type/matchPost";
+import DeleteModal from "./../DeleteModal/DeleteModal";
+import { useAppSelector } from "../../store/hooks";
+import { useAppDispatch } from "./../../store/hooks";
+import { showModal } from "../../slice/deleteModal";
 
 interface PostDetailProps {
   matchPost?: MatchPostType;
@@ -29,6 +33,8 @@ const PostDetail: React.FC<PostDetailProps> = ({
   freePost,
 }) => {
   const location = useLocation();
+  const isShown = useAppSelector((state) => state.modal.show);
+  const dispatch = useAppDispatch();
 
   const getUpdatePathname = () =>
     location.pathname.includes("match")
@@ -37,6 +43,10 @@ const PostDetail: React.FC<PostDetailProps> = ({
 
   const getListPathname = () =>
     location.pathname.includes("match") ? "/match" : "/free";
+
+  const onClickDelete = () => {
+    dispatch(showModal("게시글"));
+  };
 
   return (
     <div>
@@ -95,8 +105,9 @@ const PostDetail: React.FC<PostDetailProps> = ({
         <Link to={getUpdatePathname()} state={freePost || matchPost}>
           <Button>글수정</Button>
         </Link>
-        <Button>글삭제</Button>
+        <Button onClick={onClickDelete}>글삭제</Button>
       </ButtonContainer>
+      {isShown && <DeleteModal />}
     </div>
   );
 };

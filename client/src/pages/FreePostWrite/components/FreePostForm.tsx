@@ -51,10 +51,6 @@ const FreePostForm = () => {
     state ? navigate(`/free/${state.id}`) : navigate("/");
   };
 
-  const onDelete = () => {
-    dispatch(removeFreePost(state.id));
-  };
-
   return (
     <form onSubmit={onSubmit}>
       <TitleContainer>
