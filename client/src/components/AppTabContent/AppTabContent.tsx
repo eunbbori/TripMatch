@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { Tab, Tabs, TabPanel } from "react-tabs";
-import "react-tabs/style/react-tabs.css";
 import FreePostList from "../FreePost/FreePostList";
 import Paging from "../Pagination/Paging";
+import { Tab, Tabs, TabPanel } from "react-tabs";
 import { Container, STabList } from "./AppTabContentStyle";
+import "react-tabs/style/react-tabs.css";
 
 interface TabProps {
   tabs: string[];
