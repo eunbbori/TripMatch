@@ -37,6 +37,7 @@ const mockData = [
     postID: "3",
     nickname: "가나다라",
     region: "전라도",
+    status: true,
     title: "제목입니다",
     like: true,
     thumbnailImg: "https://picsum.photos/600/900",
@@ -53,6 +54,7 @@ const mockData = [
     postID: "5",
     nickname: "가나다라",
     region: "제주도",
+    status: true,
     title: "제목입니다",
     like: true,
     thumbnailImg: "https://picsum.photos/600/900",
@@ -68,6 +70,7 @@ const mockData = [
   {
     postID: "7",
     nickname: "가나다라",
+    status: true,
     region: "서울",
     title: "제목입니다",
     like: true,
@@ -75,6 +78,7 @@ const mockData = [
   },
   {
     postID: "8",
+    status: true,
     nickname: "가나다라",
     region: "서울",
     title: "제목입니다",
@@ -108,16 +112,28 @@ const MakeMatchPostList: React.FC<DataProps> = ({
     // await axios.post('') 좋아요 게시글 api 작성
   };
 
+  // mockdata를 쓰지 않으면 지워도 되는 함수
+  const checkFilter = (item: any) => {
+    const { region, status } = filter;
+
+    if (region === "전체" && status === "전체") {
+      return true;
+    } else if (region === "전체" && status !== "전체") {
+      return item.status;
+    } else if (region !== "전체" && status === "전체") {
+      return region === item.region;
+    } else {
+      return region === item.region && item.status;
+    }
+  };
+
   return (
     <Container>
       <MatchPosList>
         {mockData &&
           mockData
             .filter(
-              (item) =>
-                Object.keys(filter).length === 0 ||
-                filter.region === "전체" ||
-                item.region === filter.region,
+              (item) => Object.keys(filter).length === 0 || checkFilter(item),
             )
             .map((item) => {
               return (
