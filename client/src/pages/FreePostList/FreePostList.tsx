@@ -1,6 +1,6 @@
-import styled from "styled-components";
 import AppTabContent from "../../components/AppTabContent/AppTabContent";
 import FreePostPanel from "../../components/AppTapPanel/FreePostPanel";
+import { Container } from "./FreePostListStyle";
 
 const FreePostList = () => {
   const tabContents = [
@@ -23,7 +23,3 @@ const FreePostList = () => {
 };
 
 export default FreePostList;
-
-const Container = styled.div`
-  padding: 50px 100px;
-`;
