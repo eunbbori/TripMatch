@@ -1,32 +1,26 @@
 import React, { useState } from "react";
-import FreePostList from "../FreePost/FreePostList";
-import Paging from "../Pagination/Paging";
+import { TabContentType } from "../../type/tab";
 import { Tab, Tabs, TabPanel } from "react-tabs";
 import { Container, STabList } from "./AppTabContentStyle";
 import "react-tabs/style/react-tabs.css";
 
 interface TabProps {
-  tabs: string[];
+  tabContents: TabContentType[];
 }
 
-const AppTabContent: React.FC<TabProps> = ({ tabs }) => {
+const AppTabContent: React.FC<TabProps> = ({ tabContents }) => {
   const [tabIndex, setTabIndex] = useState(0);
   return (
     <Container>
       <Tabs defaultIndex={tabIndex}>
         <STabList>
-          {tabs.map((tab) => {
-            return <Tab key={tabIndex}>{tab}</Tab>;
+          {tabContents.map((t, i) => {
+            return <Tab key={i}>{t.tab}</Tab>;
           })}
         </STabList>
-
-        <TabPanel>
-          <FreePostList />
-          <Paging />
-        </TabPanel>
-        <TabPanel>
-          <h2>Any content 2</h2>
-        </TabPanel>
+        {tabContents.map((t, i) => {
+          return <TabPanel key={i}>{t.content}</TabPanel>;
+        })}
       </Tabs>
     </Container>
   );
