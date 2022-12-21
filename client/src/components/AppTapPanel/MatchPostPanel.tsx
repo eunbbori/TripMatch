@@ -1,16 +1,28 @@
-import React from "react";
-import "react-tabs/style/react-tabs.css";
+import React, { useState } from "react";
 import MakeMatchPostList from "../MakeMatchPostList/MakeMatchPostList";
 import Paging from "../Pagination/Paging";
+import { FilterType } from "../../type/filter";
+import { FilterAppSelect } from "./MatchPostPanelStyle";
 
 interface MatchPostPanelProps {
   region: string;
 }
 
 const MatchPostPanel: React.FC<MatchPostPanelProps> = ({ region }) => {
+  const [filters, setFilters] = useState<FilterType>({ region: region });
+
+  const selectEvent = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setFilters({ ...filters, status: event.target.value });
+  };
+
   return (
     <>
-      <MakeMatchPostList region={region} />
+      <FilterAppSelect
+        options={["전체", "모집중"]}
+        className="filter"
+        onChange={selectEvent}
+      />
+      <MakeMatchPostList filter={filters} />
       <Paging />
     </>
   );
