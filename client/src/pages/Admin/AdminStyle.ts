@@ -89,7 +89,7 @@ const MemberList = styled.div`
       cursor: pointer;
 
       &:hover {
-        opacity: 0.6;
+        background-color: ${(props) => props.theme.color.blue};
       }
     }
   }

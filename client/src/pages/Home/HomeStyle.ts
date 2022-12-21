@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Modal from "./../../styles/Modal";
+import Modal from "../../styles/Modal";
 
 const Title = styled.div`
   width: 60vw;
@@ -20,12 +20,12 @@ const Title = styled.div`
 
 const ModalCard = styled(Modal)`
   .modalCard {
-    width: 80vw;
+    height: 25vh;
   }
 
   .userInfo {
     width: 210px;
-    margin-bottom: 5%;
+    margin: 2% 0 5% 0; 
     display: grid;
     grid-auto-columns: 1fr;
     grid-template-columns: 0.8fr 1.7fr;
@@ -40,27 +40,60 @@ const ModalCard = styled(Modal)`
       width: 3.5vw;
       height: 3.5vw;
       object-fit: cover;
+      border-radius: 100%;
     }
   
     .nickname {
       grid-area: nickname;
+      font-weight: bold;
+      line-height: 2rem;
     }
     
     .detailInfo {
       grid-area: detailInfo;
+      line-height: 1.5rem;
     }
   }
 
   .guide {
     margin-top: 5%;
     color: #b1b1b1;
+    font-size: 0.8rem;
+  }
+
+  ul {
+    width: 60%;
+    margin-top: 5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    li {
+      margin: 0 2px;
+      cursor: pointer;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+    }
   }
 
   .btn {
     margin-top: 5%;
 
     button {
-      margin: 0 5px;
+      margin: 0 10px;
+      padding: 5px 7px;
+      background-color: ${(props) => props.theme.color.lightpink};
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: ${(props) => props.theme.color.lightblue};
+      }
     }
   }
 }
