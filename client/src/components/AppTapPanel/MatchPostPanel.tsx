@@ -9,7 +9,10 @@ interface MatchPostPanelProps {
 }
 
 const MatchPostPanel: React.FC<MatchPostPanelProps> = ({ region }) => {
-  const [filters, setFilters] = useState<FilterType>({ region: region });
+  const [filters, setFilters] = useState<FilterType>({
+    region: region,
+    status: "전체",
+  });
 
   const selectEvent = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setFilters({ ...filters, status: event.target.value });
