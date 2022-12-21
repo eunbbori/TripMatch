@@ -16,10 +16,10 @@ import {
 } from "./PostDetailStyle";
 import type { FreePostType, AuthorType } from "./../../type/freePost";
 import type { MatchPostType } from "../../type/matchPost";
-import DeleteModal from "./../DeleteModal/DeleteModal";
+import Modal from "../Modal/Modal";
 import { useAppSelector } from "../../store/hooks";
 import { useAppDispatch } from "./../../store/hooks";
-import { showModal } from "../../slice/deleteModal";
+import { showModal } from "../../slice/modal";
 
 interface PostDetailProps {
   matchPost?: MatchPostType;
@@ -33,7 +33,7 @@ const PostDetail: React.FC<PostDetailProps> = ({
   freePost,
 }) => {
   const location = useLocation();
-  const isShown = useAppSelector((state) => state.modal.show);
+  const { show: isShown, modalText } = useAppSelector((state) => state.modal);
   const dispatch = useAppDispatch();
 
   const [isLikePost, setIsLikePost] = useState(false);
@@ -50,7 +50,26 @@ const PostDetail: React.FC<PostDetailProps> = ({
   };
 
   const onClickApply = () => {
-    setIsApplying(!isApplying);
+    setIsApplying(!isApplying); // 취소하거나 api 요청 실패시 바뀌지 않게 수정해야 함
+    if (isApplying) {
+      dispatch(
+        showModal({
+          title: "동행 신청 취소",
+          content: "동행 신청을 취소하시겠습니까?",
+          rightButton: "예",
+          leftButton: "아니요",
+        }),
+      );
+    } else {
+      dispatch(
+        showModal({
+          title: "동행 신청",
+          content: "동행을 신청하시겠습니까?",
+          rightButton: "신청",
+        }),
+      );
+    }
+
     // await axios.post('') 동행 신청 api 작성
   };
 
@@ -63,7 +82,38 @@ const PostDetail: React.FC<PostDetailProps> = ({
     location.pathname.includes("match") ? "/match" : "/free";
 
   const onClickDelete = () => {
-    dispatch(showModal("게시글"));
+    dispatch(
+      showModal({
+        title: "삭제",
+        content: "이 게시글을 삭제하시겠습니까?",
+        rightButton: "삭제",
+      }),
+    );
+  };
+
+  const onDelete = () => {
+    console.log("삭제");
+  };
+
+  const onApply = () => {
+    console.log("동행 신청");
+  };
+
+  const onApplyCancle = () => {
+    console.log("동행 취소");
+  };
+
+  const getModalCallback = () => {
+    if (modalText) {
+      switch (modalText.title) {
+        case "삭제":
+          return onDelete;
+        case "동행 신청":
+          return onApply;
+        case "동행 신청 취소":
+          return onApplyCancle;
+      }
+    }
   };
 
   return (
@@ -138,7 +188,7 @@ const PostDetail: React.FC<PostDetailProps> = ({
         </Link>
         <Button onClick={onClickDelete}>글삭제</Button>
       </ButtonContainer>
-      {isShown && <DeleteModal />}
+      {isShown && <Modal callBackFn={getModalCallback()} />}
     </div>
   );
 };

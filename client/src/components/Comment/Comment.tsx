@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { showModal } from "../../slice/deleteModal";
+import { showModal } from "../../slice/modal";
 import { useAppDispatch } from "../../store/hooks";
 import { Button } from "../CommentList/CommentListStyle";
 import UserProfile from "../UserProfile/UserProfile";

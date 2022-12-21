@@ -4,6 +4,7 @@ import PostDetail from "./../../components/PostDetail/PostDetail";
 import Comment from "../../components/CommentList/CommentList";
 import axios from "axios";
 import type { MatchPostType } from "../../type/matchPost";
+import { useAppSelector } from "../../store/hooks";
 
 const MatchPostDetail = () => {
   const [post, setPost] = useState<MatchPostType>();
@@ -32,5 +33,5 @@ export default MatchPostDetail;
 const Container = styled.div`
   width: 1000px;
   margin: auto;
-  padding-bottom: 11vh;
+  padding: 20px 0 11vh;
 `;

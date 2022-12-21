@@ -49,6 +49,7 @@ const FreePostForm = () => {
         content,
       };
       updateFreePost(newObj);
+      navigate(`/free/${state.communityId}`);
     } else if (
       regionRef.current &&
       categoryRef.current &&
@@ -67,8 +68,11 @@ const FreePostForm = () => {
         content,
       };
       createFreePost(newObj);
+      navigate("/free");
     }
   };
+
+  console.log(state.communityId);
 
   const onClickCancle = () => {
     state ? navigate(`/free/${state.communityId}`) : navigate("/");
