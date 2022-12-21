@@ -4,6 +4,14 @@ import Theme from "../../styles/Theme";
 export const PostTitle = styled.h3`
   font-size: 20px;
   margin: 20px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  img {
+    width: 25px;
+    cursor: pointer;
+  }
 `;
 
 export const MatchStatus = styled.span<{ status: boolean }>`
@@ -79,13 +87,14 @@ export const Button = styled.button`
   color: #333;
 `;
 
-export const MatchButton = styled.button`
+export const MatchButton = styled.button<{ isApplying: boolean }>`
   width: 150px;
   height: 50px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  background-color: ${(props) => props.theme.color.pink};
+  background-color: ${(props) =>
+    props.isApplying ? "grey" : props.theme.color.pink};
   font-size: 17px;
   color: #fff;
   font-weight: bold;

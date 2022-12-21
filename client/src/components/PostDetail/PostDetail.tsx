@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import UserProfile from "../UserProfile/UserProfile";
 import {
@@ -36,6 +36,24 @@ const PostDetail: React.FC<PostDetailProps> = ({
   const isShown = useAppSelector((state) => state.modal.show);
   const dispatch = useAppDispatch();
 
+  const [isLikePost, setIsLikePost] = useState(false);
+  const [isApplying, setIsApplying] = useState(false);
+
+  const fullHeart =
+    "https://res.cloudinary.com/dk9scwone/image/upload/v1671341657/fullheart_adk06q.png";
+  const emptyHeart =
+    "https://res.cloudinary.com/dk9scwone/image/upload/v1671341657/emptyheart_ra2kqf.png";
+
+  const onToggleLikes = async () => {
+    setIsLikePost(!isLikePost);
+    // await axios.post('') 좋아요 게시글 api 작성
+  };
+
+  const onClickApply = () => {
+    setIsApplying(!isApplying);
+    // await axios.post('') 동행 신청 api 작성
+  };
+
   const getUpdatePathname = () =>
     location.pathname.includes("match")
       ? `/match/write/${matchPost?.id}`
@@ -56,12 +74,21 @@ const PostDetail: React.FC<PostDetailProps> = ({
         </Thumbnail>
       )}
       <PostTitle>
+        <div>
+          {matchPost && (
+            <MatchStatus status={matchPost.status === true}>
+              {matchPost.status ? "모집중" : "모집마감"}
+            </MatchStatus>
+          )}
+          {freePost?.title || matchPost?.title}
+        </div>
         {matchPost && (
-          <MatchStatus status={matchPost.status === true}>
-            {matchPost.status}
-          </MatchStatus>
+          <img
+            src={isLikePost ? fullHeart : emptyHeart}
+            className="heart"
+            onClick={() => onToggleLikes()}
+          />
         )}
-        {freePost?.title || matchPost?.title}
       </PostTitle>
       <UserContainer>
         <UserProfile user={user} />
@@ -97,7 +124,11 @@ const PostDetail: React.FC<PostDetailProps> = ({
           (matchPost && { __html: matchPost.content })
         }
       ></PostContent>
-      {matchPost && <MatchButton>동행 신청하기</MatchButton>}
+      {matchPost && (
+        <MatchButton onClick={onClickApply} isApplying={isApplying}>
+          {isApplying ? "동행 신청 중" : "동행 신청하기"}
+        </MatchButton>
+      )}
       <ButtonContainer>
         <Link to={getListPathname()}>
           <Button>목록</Button>
