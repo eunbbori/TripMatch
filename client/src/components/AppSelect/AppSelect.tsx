@@ -2,7 +2,7 @@ import React from "react";
 import { Div, Select, Label } from "./AppSelectStyle";
 
 interface AppSelectProps {
-  label: string;
+  label?: string;
   options: string[];
   className: string;
 }
