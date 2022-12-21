@@ -4,7 +4,7 @@ import "react-tabs/style/react-tabs.css";
 import FreePostList from "../FreePost/FreePostList";
 import Paging from "../Pagination/Paging";
 // import DataTable from "../Table/Table";
-import { Container, STabList } from "./AppTabsStyle";
+import { Container, STabList } from "./AppTabContentStyle";
 
 interface TabProps {
   tabs: string[];
@@ -21,7 +21,7 @@ interface TabProps {
 //     </Container>
 //   );
 // };
-const AppTabs: React.FC<TabProps> = ({ tabs }) => {
+const AppTabContent: React.FC<TabProps> = ({ tabs }) => {
   const [tabIndex, setTabIndex] = useState(0);
   return (
     <Container>
@@ -44,4 +44,4 @@ const AppTabs: React.FC<TabProps> = ({ tabs }) => {
   );
 };
 
-export default AppTabs;
+export default AppTabContent;

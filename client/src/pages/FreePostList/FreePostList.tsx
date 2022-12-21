@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import AppTabs from "../../components/AppTabs/AppTabs";
+import AppTabContent from "../../components/AppTabContent/AppTabContent";
 
 const FreePostList = () => {
   const regions = [
@@ -16,7 +16,7 @@ const FreePostList = () => {
 
   return (
     <Container>
-      <AppTabs tabs={regions} />
+      <AppTabContent tabs={regions} />
     </Container>
   );
 };
