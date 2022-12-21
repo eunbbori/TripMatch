@@ -16,7 +16,11 @@ import {
 } from "./FreePostListStyle";
 import CommentLogo from "../../images/comment-dots.png";
 
-const FreePost = () => {
+interface FreePostProps {
+  region: string;
+}
+
+const FreePostList: React.FC<FreePostProps> = ({ region }) => {
   const mockData = [
     {
       postID: "1",
@@ -102,4 +106,4 @@ const FreePost = () => {
   );
 };
 
-export default FreePost;
+export default FreePostList;
