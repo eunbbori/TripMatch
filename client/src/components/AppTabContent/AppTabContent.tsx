@@ -3,24 +3,12 @@ import { Tab, Tabs, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import FreePostList from "../FreePost/FreePostList";
 import Paging from "../Pagination/Paging";
-// import DataTable from "../Table/Table";
 import { Container, STabList } from "./AppTabContentStyle";
 
 interface TabProps {
   tabs: string[];
 }
 
-// const AppTabs: React.FC<TabProps> = ({ tabs }) => {
-//   return (
-//     <Container>
-//       <Ul>
-//         {tabs.map((tab) => {
-//           return <li key={tab}>{tab}</li>;
-//         })}
-//       </Ul>
-//     </Container>
-//   );
-// };
 const AppTabContent: React.FC<TabProps> = ({ tabs }) => {
   const [tabIndex, setTabIndex] = useState(0);
   return (
