@@ -14,7 +14,7 @@ import {
   ButtonContainer,
   Button,
 } from "./PostDetailStyle";
-import type { FreepostType, AuthorType } from "./../../type/freePost";
+import type { FreePostType, AuthorType } from "./../../type/freePost";
 import type { MatchPostType } from "../../type/matchPost";
 import DeleteModal from "./../DeleteModal/DeleteModal";
 import { useAppSelector } from "../../store/hooks";
@@ -23,7 +23,7 @@ import { showModal } from "../../slice/deleteModal";
 
 interface PostDetailProps {
   matchPost?: MatchPostType;
-  freePost?: FreepostType;
+  freePost?: FreePostType;
   user?: AuthorType;
 }
 
@@ -56,8 +56,8 @@ const PostDetail: React.FC<PostDetailProps> = ({
 
   const getUpdatePathname = () =>
     location.pathname.includes("match")
-      ? `/match/write/${matchPost?.id}`
-      : `/free/write/${freePost?.id}`;
+      ? `/match/write/${matchPost?.postId}`
+      : `/free/write/${freePost?.communityId}`;
 
   const getListPathname = () =>
     location.pathname.includes("match") ? "/match" : "/free";
@@ -70,7 +70,7 @@ const PostDetail: React.FC<PostDetailProps> = ({
     <div>
       {matchPost && (
         <Thumbnail>
-          <ThumbnailImg src={matchPost.thumbnailImg} />
+          <ThumbnailImg src={matchPost.thumbnail} />
         </Thumbnail>
       )}
       <PostTitle>

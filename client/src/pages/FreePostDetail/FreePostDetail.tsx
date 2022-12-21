@@ -4,20 +4,27 @@ import styled from "styled-components";
 import Comment from "../../components/CommentList/CommentList";
 import pointer from "../../images/temporaryIconPointer.png";
 import axios from "axios";
-import type { FreepostType } from "../../type/freePost";
+import type { FreePostType } from "../../type/freePost";
+import { useGetAllFreePostQuery, useGetFreePostQuery } from "../../slice/api";
+import { useParams } from "react-router-dom";
 
 const FreePostDetail = () => {
-  const [post, setPost] = useState<FreepostType>();
+  //const [post, setPost] = useState<FreePostType>();
+  const { id } = useParams();
+  const postquery = useGetFreePostQuery(id);
+  const { data: post, isLoading } = postquery;
 
-  useEffect(() => {
-    const getPost = async () => {
-      const res = await axios.get(
-        "https://70aee874-8965-4db1-be06-07823d5c4dda.mock.pstmn.io/posts",
-      );
-      setPost(res.data);
-    };
-    getPost();
-  }, []);
+  // useEffect(() => {
+  //   const getPost = async () => {
+  //     const res = await axios.get(
+  //       "https://70aee874-8965-4db1-be06-07823d5c4dda.mock.pstmn.io/posts",
+  //     );
+  //     setPost(res.data);
+  //   };
+  //   getPost();
+  // }, []);
+
+  console.log(post);
 
   return (
     <Container>
