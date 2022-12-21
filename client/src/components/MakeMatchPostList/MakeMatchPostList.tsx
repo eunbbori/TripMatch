@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Container, MatchPosList } from "./MakeMatchPostListStyle";
 import { Link } from "react-router-dom";
+import { FilterType } from "../../type/filter";
 import axios from "axios";
 
 interface DataProps {
-  region?: string;
+  filter?: FilterType;
   data?: object[];
   likes?: string[]; //로그인 유저의 좋아요 누른 게시글의 포스트 id가 배열로 온다고 가정하고 작성함
 }
@@ -85,7 +86,7 @@ const mockData = [
 const MakeMatchPostList: React.FC<DataProps> = ({
   data,
   likes = [],
-  region = "전체",
+  filter = {},
 }) => {
   //비회원의 경우 좋아요 없으므로 빈 배열을 디폴트로 설정
   const [likePost, setLikePost] = useState<LikePostType>({});
@@ -112,7 +113,12 @@ const MakeMatchPostList: React.FC<DataProps> = ({
       <MatchPosList>
         {mockData &&
           mockData
-            .filter((item) => region === "전체" || item.region === region)
+            .filter(
+              (item) =>
+                Object.keys(filter).length === 0 ||
+                filter.region === "전체" ||
+                item.region === filter.region,
+            )
             .map((item) => {
               return (
                 <div className="item" key={item.postID}>
