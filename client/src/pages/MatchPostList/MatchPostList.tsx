@@ -1,6 +1,7 @@
+import AppButton from "../../components/AppButton/AppButton";
 import AppTabContent from "../../components/AppTabContent/AppTabContent";
 import MatchPostPanel from "../../components/AppTapPanel/MatchPostPanel";
-import { Container } from "./MatchPostListStyle";
+import { Container, ButtonContainer } from "./MatchPostListStyle";
 
 const MatchPostList = () => {
   const regions = [
@@ -18,6 +19,14 @@ const MatchPostList = () => {
   return (
     <Container>
       <AppTabContent tabContents={regions} />
+      <ButtonContainer>
+        <AppButton
+          width={"120px"}
+          className={"postBtn"}
+          text={"글쓰기"}
+          type={"button"}
+        />
+      </ButtonContainer>
     </Container>
   );
 };

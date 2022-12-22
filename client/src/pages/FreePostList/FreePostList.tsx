@@ -1,6 +1,7 @@
+import AppButton from "../../components/AppButton/AppButton";
 import AppTabContent from "../../components/AppTabContent/AppTabContent";
 import FreePostPanel from "../../components/AppTapPanel/FreePostPanel";
-import { Container } from "./FreePostListStyle";
+import { Container, ButtonContainer } from "./FreePostListStyle";
 
 const FreePostList = () => {
   const tabContents = [
@@ -18,6 +19,14 @@ const FreePostList = () => {
   return (
     <Container>
       <AppTabContent tabContents={tabContents} />
+      <ButtonContainer>
+        <AppButton
+          width={"120px"}
+          className={"postBtn"}
+          text={"글쓰기"}
+          type={"button"}
+        />
+      </ButtonContainer>
     </Container>
   );
 };
