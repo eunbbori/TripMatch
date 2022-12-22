@@ -1,29 +1,5 @@
 import styled from "styled-components";
 
-export const Body = styled.div`
-  width: 100%;
-  height: 100vh;
-  background-color: ${(props) => props.theme.color.lightpink};
-`;
-
-export const Container = styled.div`
-  display: grid;
-  grid-template-rows: 0.5fr 1fr;
-  justify-content: start;
-  width: 1000px;
-  height: 700px;
-  margin: 30px auto;
-  background-color: ${(props) => props.theme.color.lightpink};
-`;
-
-export const MidContainer = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  width: 900px;
-  height: 540px;
-  margin-left: 30px;
-`;
-
 export const Content = styled.div`
   width: 750px;
   height: 540px;
@@ -35,21 +11,23 @@ export const Content = styled.div`
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
   box-shadow: 1px 1px 6px 1px rgba(0, 0, 0, 0.11);
+  font-size: ${(props) => props.theme.font.M};
+  font-weight: 600;
+
+  thead {
+    position: sticky;
+    top: 0;
+    z-index: 3;
+  }
 
   table {
     width: 750px;
     height: 540px;
     vertical-align: middle;
 
-    thead {
-      position: sticky;
-      top: 0;
-      z-index: 3;
-    }
-
     tr {
       display: grid;
-      grid-template-columns: 1fr 120px 210px 140px;
+      grid-template-columns: 1fr 150px 280px;
       gap: 20px;
       text-align: center;
       padding-top: 10px;
@@ -67,14 +45,18 @@ export const Content = styled.div`
     th {
       padding: 15px;
       height: 20px;
-      padding: 15px 10px 10px 23px;
+      padding: 15px 5px 10px 23px;
+      font-size: ${(props) => props.theme.font.M};
+      font-weight: 700;
       text-align: center;
       vertical-align: middle;
     }
 
     td {
-      padding: 15px 10px 10px 23px;
+      cursor: pointer;
+      padding: 15px 5px 10px 23px;
       height: 30px;
+      font-size: ${(props) => props.theme.font.S};
       text-align: center;
       vertical-align: middle;
       overflow: hidden;
@@ -82,8 +64,38 @@ export const Content = styled.div`
       white-space: nowrap;
     }
 
+    #title {
+      text-align: left;
+      padding-left: 40px;
+    }
+
     #last {
       padding-top: 7px;
+      margin-left: 15px;
+
+      button {
+        cursor: pointer;
+        width: 80px;
+        height: 35px;
+        margin-right: 10px;
+        border: none;
+        border-radius: 5px;
+        /* box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.11); */
+      }
+
+      button:first-child {
+        font-family: "S-CoreDream-3Light";
+        font-weight: 700;
+        font-size: ${(props) => props.theme.font.S};
+        background-color: ${(props) => props.theme.color.lightblue};
+      }
+
+      button:last-child {
+        font-family: "S-CoreDream-3Light";
+        font-weight: 700;
+        font-size: ${(props) => props.theme.font.S};
+        background-color: ${(props) => props.theme.color.lightpink};
+      }
     }
 
     select {

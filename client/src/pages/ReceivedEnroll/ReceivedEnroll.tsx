@@ -1,10 +1,10 @@
 import React from "react";
 import Top from "../MyPage/components/Top";
 import SideBar from "../MyPage/components/SideBar";
-import MyCommentTable from "../MyPage/components/MyCommentTable";
 import { Body, Container, MidContainer } from "../MyPage/MyPageContentsStyle";
+import ReceivedEnrollTable from "./ReceivedEnrollTable";
 
-const MyComment: React.FC = () => {
+const ReceivedEnroll: React.FC = () => {
   return (
     <>
       <Body>
@@ -12,7 +12,7 @@ const MyComment: React.FC = () => {
           <Top />
           <MidContainer>
             <SideBar />
-            <MyCommentTable />
+            <ReceivedEnrollTable />
           </MidContainer>
         </Container>
       </Body>
@@ -20,4 +20,4 @@ const MyComment: React.FC = () => {
   );
 };
 
-export default MyComment;
+export default ReceivedEnroll;

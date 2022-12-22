@@ -11,6 +11,8 @@ export const Content = styled.div`
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
   box-shadow: 1px 1px 6px 1px rgba(0, 0, 0, 0.11);
+  font-size: ${(props) => props.theme.font.M};
+  font-weight: 600;
 
   thead {
     position: sticky;
@@ -43,14 +45,18 @@ export const Content = styled.div`
     th {
       padding: 15px;
       height: 20px;
-      padding: 15px 10px 10px 23px;
+      padding: 15px 20px 10px 23px;
+      font-size: ${(props) => props.theme.font.M};
+      font-weight: 700;
       text-align: center;
       vertical-align: middle;
     }
 
     td {
-      padding: 15px 10px 10px 23px;
+      cursor: pointer;
+      padding: 15px 20px 10px 23px;
       height: 30px;
+      font-size: ${(props) => props.theme.font.S};
       text-align: center;
       vertical-align: middle;
       overflow: hidden;
@@ -60,7 +66,7 @@ export const Content = styled.div`
 
     #title {
       text-align: left;
-      padding-left: 30px;
+      padding-left: 40px;
     }
 
     #last {
@@ -73,6 +79,9 @@ export const Content = styled.div`
       height: 30px;
       border: none;
       padding: 5px;
+      font-family: "S-CoreDream-3Light";
+      font-size: ${(props) => props.theme.font.S};
+      font-weight: 600;
     }
 
     option {

@@ -11,10 +11,10 @@ export const Top = styled.div`
   background-color: white;
   border-radius: 10px;
   box-shadow: 1px 1px 6px 1px rgba(0, 0, 0, 0.11);
-
+  font-size: ${(props) => props.theme.font.M};
   h1 {
     margin-left: 30px;
-    font-size: 25px;
+    font-size: ${(props) => props.theme.font.XL};
     font-weight: 600;
   }
 `;
@@ -29,7 +29,7 @@ export const TripCount = styled.div`
   }
 
   span:last-child {
-    font-size: 30px;
+    font-size: ${(props) => props.theme.font.XL};
     font-weight: 600;
   }
 `;
@@ -40,14 +40,15 @@ export const Score = styled.div`
 
   span:first-child {
     padding-top: 7px;
+    margin-right: 3px;
   }
 
   span:last-child {
-    font-size: 30px;
+    font-size: ${(props) => props.theme.font.XL};
     font-weight: 600;
   }
 
   #scoreNum {
-    color: #ca8a8b;
+    color: #d75281;
   }
 `;

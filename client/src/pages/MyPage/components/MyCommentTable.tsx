@@ -1,50 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { Content, Layer } from "./TableContentStyle";
+import { PostType } from "../../../type/myComments";
 import axios from "axios";
 
-// export interface UserInfo {
-//   userId: number;
-//   nickname: string;
-//   profileImg?: string;
-//   tripCount?: number;
-//   score?: number;
-//   posts: Post[];
-// }
-
-export interface Post {
-  postId: number;
-  author: Author;
-  region: string;
-  title: string;
-  duration: DateType[];
-  createdAt: Date;
-}
-
-export interface Author {
-  authorId: number;
-  nickname: string;
-  profileImg?: string;
-}
-
-export interface DateType {
-  start: any;
-  end: any;
-}
-
 const MyCommentTable: React.FC = () => {
-  const [data, setData] = useState<Post[]>([]);
+  const [data, setData] = useState<PostType[]>([]);
 
-  const baseUrl = "https://e14cb7f4-6c52-45e6-84b4-2e92c7458bf0.mock.pstmn.io";
+  // const baseUrl = "https://e14cb7f4-6c52-45e6-84b4-2e92c7458bf0.mock.pstmn.io/commentedPost";
 
   useEffect(() => {
     const postData = async () => {
-      const fetchData = await axios.get(baseUrl + "/commentedPost");
-      setData(fetchData.data.posts);
+      const fetchData = await axios.get("http://localhost:4000/commentedPost");
+      setData(fetchData.data[0].posts);
     };
     postData();
   }, []);
-
-  console.log(data);
 
   return (
     <Content>
@@ -61,7 +31,6 @@ const MyCommentTable: React.FC = () => {
 
           <tbody>
             {data?.map((item) => {
-              console.log(item);
               return (
                 <tr key={item.postId}>
                   <td id="title">{item.title}</td>
