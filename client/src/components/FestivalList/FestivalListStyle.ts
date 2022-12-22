@@ -23,6 +23,29 @@ const Container = styled.div`
     cursor: pointer;
     font-weight: normal;
   }
+
+  .shortCutBtn {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    margin: 10px 0;
+
+    div {
+      width: 100%;
+      text-align: end;
+    }
+
+    button {
+      font-family: "S-CoreDream-3Light";
+      margin-top: 10px;
+      font-size: ${(props) => props.theme.font.M};
+      padding: 5px 10px;
+      background-color: ${(props) => props.theme.color.lightblue};
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  }
 `;
 
 const FestivalInfo = styled.div`

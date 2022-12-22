@@ -74,7 +74,9 @@ const FreePostPreview = () => {
   const [freePost, setFreePost] = useState([]);
 
   const getFreePost = async () => {
-    const data = await axios.get("/").then((res) => res.data);
+    const data = await axios
+      .get("/api/main/communities")
+      .then((res) => res.data);
     setFreePost(data);
     return;
   };

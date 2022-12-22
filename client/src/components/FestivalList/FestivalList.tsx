@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Container, FestivalInfo, ModalCard } from "./FestivalListStyle";
 import { mockData } from "./mockData";
 import axios from "axios";
@@ -7,28 +7,7 @@ import { closeModal, showModal } from "../../slice/modal";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 
 interface Item {
-  addr1: string;
-  addr2: string;
-  booktour: string;
-  cat1: string;
-  cat2: string;
-  cat3: string;
-  contentid: string;
-  contenttypeid: string;
-  createdtime: string;
-  eventstartdate: string;
-  eventenddate: string;
-  firstimage: string;
-  firstimage2: string;
-  mapx: string;
-  mapy: string;
-  mlevel: string;
-  modifiedtime: string;
-  readcount: number;
-  areacode: string;
-  sigungucode: string;
-  tel: string;
-  title: string;
+  [key: string]: string;
 }
 
 interface ItemObj {
@@ -39,34 +18,9 @@ interface PageProps {
   location: string;
 }
 
-const init = {
-  addr1: "",
-  addr2: "",
-  booktour: "",
-  cat1: "",
-  cat2: "",
-  cat3: "",
-  contentid: "",
-  contenttypeid: "",
-  createdtime: "",
-  eventstartdate: "",
-  eventenddate: "",
-  firstimage: "",
-  firstimage2: "",
-  mapx: "",
-  mapy: "",
-  mlevel: "",
-  modifiedtime: "",
-  readcount: 0,
-  areacode: "",
-  sigungucode: "",
-  tel: "",
-  title: "",
-};
-
 const FestivalList: React.FC<PageProps> = ({ location }) => {
   const [festivalInfo, setFestivalInfo] = useState<Item[]>([]);
-  const [itemInfo, setItemInfo] = useState<Item>(init);
+  const [itemInfo, setItemInfo] = useState<Item>({});
   const isShown = useAppSelector((state) => state.modal.show);
   const dispatch = useAppDispatch();
   const home = location === "home";
@@ -79,10 +33,15 @@ const FestivalList: React.FC<PageProps> = ({ location }) => {
     // const getData = async () => {
     //   const response = await axios.get(`http://apis.data.go.kr/B551011/KorService/searchFestival?numOfRows={home ? 8 : 20}&pageNo=1&MobileOS=ETC&MobileApp=AppTest&arrange=C&_type=json&serviceKey=${serviceKey}&eventStartDate=${eventStartDate}`)
     // }
-    mockData.sort((a, b) => {
-      return Number(a.eventstartdate) - Number(b.eventstartdate);
-    });
-    home ? setFestivalInfo(mockData.slice(0, 8)) : setFestivalInfo(mockData); //찐데이터로 받을 때 수정해야할 식
+    const newData = mockData
+      .sort((a, b) => {
+        return Number(a.eventstartdate) - Number(b.eventstartdate);
+      })
+      .map((item) => {
+        return { ...item, readcount: "0" };
+      });
+
+    home ? setFestivalInfo(newData.slice(0, 8)) : setFestivalInfo(newData); //찐데이터로 받을 때 수정해야할 식
   }, [home]);
 
   const dateFormat = (date: string) => {
@@ -124,7 +83,7 @@ const FestivalList: React.FC<PageProps> = ({ location }) => {
       </div>
       <FestivalInfo>
         {festivalInfo &&
-          festivalInfo.map((item, idx) => {
+          festivalInfo.map((item) => {
             return (
               <div
                 className="item"
@@ -146,6 +105,16 @@ const FestivalList: React.FC<PageProps> = ({ location }) => {
           })}
         {isShown && <InfoModal item={itemInfo} />}
       </FestivalInfo>
+      {location === "festival" ? (
+        <div className="shortCutBtn">
+          <div>혼자 가기 외로울 땐?</div>
+          <Link to="/match/write">
+            <button>동행 신청 바로가기</button>
+          </Link>
+        </div>
+      ) : (
+        false
+      )}
     </Container>
   );
 };
