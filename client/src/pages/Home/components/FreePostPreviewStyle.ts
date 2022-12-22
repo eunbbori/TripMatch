@@ -11,6 +11,12 @@ const Container = styled.div`
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     margin-bottom: 15px;
     cursor: default;
+    font-size: ${(props) => props.theme.font.L};
+
+    a {
+      font-size: ${(props) => props.theme.font.M};
+      align-self: flex-end;
+    }
   }
 
   a {
@@ -34,7 +40,7 @@ const FreePostList = styled.div`
 
     .region,
     .category {
-      font-weight: bold;
+      // font-weight: bold;
       margin-right: 1%;
     }
 

@@ -1,15 +1,27 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Carousel from "./components/Carousel";
-import FestivalList from "./components/FestivalList";
+import FestivalList from "../../components/FestivalList/FestivalList";
 import FreePostPreview from "./components/FreePostPreview";
 import MakeMatchPostList from "../../components/MakeMatchPostList/MakeMatchPostList";
 import { Title, ModalCard } from "./HomeStyle";
 
 const Home = () => {
-  const ReviewModal = () => {
-    const listArray = [0, 1, 2, 3, 4];
+  interface EmailProps {
+    email: string;
+  }
+
+  interface User {
+    email: string;
+    profileImg: string;
+    nickname: string;
+    introduce: string;
+    age: string;
+    gender: string;
+  }
+
+  const ReviewModal: React.FC<EmailProps> = ({ email }) => {
     const [starList, setStarList] = useState([
       false,
       false,
@@ -18,10 +30,40 @@ const Home = () => {
       false,
     ]);
     const [point, setPoint] = useState(0);
+    const [userInfo, setUserInfo] = useState({
+      email: "",
+      profileImg: "",
+      nickname: "",
+      introduce: "",
+      age: "",
+      gender: "",
+    });
+
+    const listArray = [0, 1, 2, 3, 4];
     const fullStar =
       "https://res.cloudinary.com/dk9scwone/image/upload/v1671520384/fullstar_ypgg1e.png";
     const emptyStar =
       "https://res.cloudinary.com/dk9scwone/image/upload/v1671520384/emptystar_pvmnrk.png";
+
+    useEffect(() => {
+      getUserInfo();
+    }, []);
+
+    const getUserInfo = async () => {
+      // const userInfo = await axios.get("").then((res) => res.data);
+
+      //임시 데이터
+      const userInfo = {
+        email: "aaaa@naver.com",
+        profileImg: "skdjflsf.png",
+        nickname: "닉네임은여덟글자",
+        introduce: "자기소개어쩌구저쩌구",
+        age: "50대 이상",
+        gender: "여",
+      };
+
+      setUserInfo(userInfo);
+    };
 
     const checkStar = (idx: number) => {
       const newStarList = new Array(5).fill(false);
@@ -33,7 +75,7 @@ const Home = () => {
     };
 
     const postPoint = async () => {
-      await axios.post("");
+      // await axios.post("");
     };
 
     return (
@@ -41,8 +83,10 @@ const Home = () => {
         <div className="modalCard">
           <div className="userInfo">
             <img src="https://picsum.photos/600/900" />
-            <div className="nickname">닉네임여덟글자다</div>
-            <div className="detailInfo">20대 여성</div>
+            <div className="nickname">{userInfo.nickname}</div>
+            <div className="detailInfo">
+              {userInfo.age} {userInfo.gender}성
+            </div>
           </div>
           <div className="question">동행과의 여행은 어떠셨나요?</div>
           <ul className="star">
@@ -62,7 +106,7 @@ const Home = () => {
           </ul>
           <div className="guide">평가는 익명으로 수집됩니다.</div>
           <div className="btn">
-            <button>확인</button>
+            <button onClick={postPoint}>확인</button>
             <button>취소</button>
           </div>
         </div>
@@ -80,8 +124,8 @@ const Home = () => {
         </Title>
         <MakeMatchPostList />
         <FreePostPreview />
-        <FestivalList />
-        {/* <ReviewModal /> */}
+        <FestivalList location="home" />
+        {/* <ReviewModal email="naver.com" /> */}
       </div>
     </div>
   );
