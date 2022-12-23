@@ -4,7 +4,7 @@ import PostDetail from "./../../components/PostDetail/PostDetail";
 import Comment from "../../components/CommentList/CommentList";
 import axios from "axios";
 import type { MatchPostType } from "../../type/matchPost";
-import { useAppSelector } from "../../store/hooks";
+import NotFound from "../../components/NotFound/NotFound";
 
 const MatchPostDetail = () => {
   const [post, setPost] = useState<MatchPostType>();
@@ -22,8 +22,12 @@ const MatchPostDetail = () => {
 
   return (
     <Container>
-      <PostDetail matchPost={post} user={post?.author} />
-      {post?.comments && <Comment comments={post.comments} />}
+      {post && (
+        <>
+          <PostDetail matchPost={post} user={post.author} />
+          {post.comments && <Comment comments={post.comments} />}
+        </>
+      )}
     </Container>
   );
 };

@@ -29,15 +29,15 @@ const Comment: React.FC<CommentProps> = ({ comment }) => {
   const onClickDelete = () => dispatch(showModal("댓글"));
 
   return (
-    <Container key={comment.id}>
+    <Container key={comment.commentId}>
       <ProfileContainer>
-        <UserProfile user={comment.user} />
+        <UserProfile user={comment.author} />
         <Date>({comment.createdAt})</Date>
       </ProfileContainer>
       {isClickUpdate ? (
-        <UpdateInput defaultValue={comment.comment} />
+        <UpdateInput defaultValue={comment.content} />
       ) : (
-        <Content>{comment.comment}</Content>
+        <Content>{comment.content}</Content>
       )}
       <ButtonContainer>
         {isClickUpdate ? (

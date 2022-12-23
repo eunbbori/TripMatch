@@ -10,7 +10,7 @@ const CommentList: React.FC<{ comments: CommentType[] }> = ({ comments }) => {
         <span>{comments.length}</span>개의 답변
       </CommentCount>
       {comments.map((comment) => (
-        <Comment comment={comment} key={comment.id} />
+        <Comment comment={comment} key={comment.commentId} />
       ))}
       <Form>
         <Textarea rows={5} />

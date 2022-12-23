@@ -24,17 +24,21 @@ export const Select = styled.select`
   }
 `;
 
-export const TitleInput = styled.input`
+export const TitleInputBox = styled.div`
   flex-grow: 1;
-  outline: none;
-  border: 1px solid #dbdbdb;
-  border-radius: 5px;
-  margin-left: 10px;
-  text-indent: 10px;
-
-  &:focus {
+  margin: 10px 0 10px 10px;
+  input {
+    width: 100%;
+    height: 40px;
     outline: none;
-    border: 2px solid ${Theme.color.blue};
+    border: 1px solid #dbdbdb;
+    border-radius: 5px;
+    text-indent: 10px;
+    box-sizing: border-box;
+    &:focus {
+      outline: none;
+      border: 2px solid ${Theme.color.blue};
+    }
   }
 `;
 

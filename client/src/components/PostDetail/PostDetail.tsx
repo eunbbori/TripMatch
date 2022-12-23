@@ -141,7 +141,7 @@ const PostDetail: React.FC<PostDetailProps> = ({
         )}
       </PostTitle>
       <UserContainer>
-        <UserProfile user={user} />
+        {user && <UserProfile user={user} />}
         <Date>{freePost?.createdAt || matchPost?.createdAt}</Date>
       </UserContainer>
       {matchPost && (

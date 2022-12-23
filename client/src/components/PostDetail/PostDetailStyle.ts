@@ -2,7 +2,7 @@ import styled from "styled-components";
 import Theme from "../../styles/Theme";
 
 export const PostTitle = styled.h3`
-  font-size: 20px;
+  font-size: ${(props) => props.theme.font.L};
   margin: 20px 0;
   display: flex;
   align-items: center;
@@ -17,14 +17,14 @@ export const PostTitle = styled.h3`
 export const MatchStatus = styled.span<{ status: boolean }>`
   display: inline-block;
   margin-right: 10px;
-  font-size: 18px;
+  font-size: ${(props) => props.theme.font.L};
   font-weight: bold;
   color: ${(props) => (props.status ? "#0088b9" : "#999")};
 `;
 
 export const Thumbnail = styled.div`
   width: 100%;
-  height: 300px;
+  height: 400px;
   overflow: hidden;
   margin-bottom: 10px;
   background-color: #ccc;
@@ -46,25 +46,25 @@ export const MatchContainer = styled.div`
   border-radius: 10px;
   margin-top: 20px;
   padding: 20px 30px;
-  font-size: 15px;
+  font-size: ${(props) => props.theme.font.M};
   line-height: 1.7;
   span {
     display: inline-block;
     margin-right: 10px;
     color: #747474;
-    font-size: 14px;
+    font-size: ${(props) => props.theme.font.S};
   }
 `;
 
 export const PostContent = styled.article`
   min-height: 300px;
   padding: 40px 0;
-  font-size: 14px;
+  font-size: ${(props) => props.theme.font.M};
   line-height: 1.7;
 `;
 
 export const Date = styled.p`
-  font-size: 13px;
+  font-size: ${(props) => props.theme.font.S};
   color: #747474;
 `;
 
@@ -95,7 +95,7 @@ export const MatchButton = styled.button<{ isApplying: boolean }>`
   cursor: pointer;
   background-color: ${(props) =>
     props.isApplying ? "grey" : props.theme.color.pink};
-  font-size: 17px;
+  font-size: ${(props) => props.theme.font.M};
   color: #fff;
   font-weight: bold;
   margin-bottom: 20px;

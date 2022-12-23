@@ -4,14 +4,14 @@ import type { AuthorType } from "../../type/freePost";
 import defaultImage from "./../../images/user-default.jpg";
 
 interface UserProfileProps {
-  user?: AuthorType;
+  user: AuthorType;
 }
 
 const UserProfile: React.FC<UserProfileProps> = ({ user }) => {
   return (
     <Container>
-      <ProfileImg src={defaultImage} alt="" />
-      <Nickname>{user?.nickname}</Nickname>
+      <ProfileImg src={user.profileImg} alt="profile image" />
+      <Nickname>{user.nickname}</Nickname>
     </Container>
   );
 };
@@ -31,5 +31,5 @@ const ProfileImg = styled.img`
 `;
 
 const Nickname = styled.p`
-  font-size: 14px;
+  font-size: ${(props) => props.theme.font.M};
 `;

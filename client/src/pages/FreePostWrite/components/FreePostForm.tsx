@@ -6,19 +6,14 @@ import {
   ButtonContainer,
   Select,
   TitleContainer,
-  TitleInput,
+  TitleInputBox,
 } from "./FreePostFormStyle";
 import type { FreePostType } from "../../../type/freePost";
-import {
-  addFreePost,
-  removeFreePost,
-  updateFreePost,
-} from "../../../slice/freePost";
 import AppSelect from "../../../components/AppSelect/AppSelect";
 import {
   useCreateFreePostMutation,
   useUpdateFreePostMutation,
-} from "../../../slice/api";
+} from "../../../slice/freePostApi";
 
 const FreePostForm = () => {
   const state: FreePostType = useLocation().state;
@@ -72,8 +67,6 @@ const FreePostForm = () => {
     }
   };
 
-  console.log(state.communityId);
-
   const onClickCancle = () => {
     state ? navigate(`/free/${state.communityId}`) : navigate("/");
   };
@@ -81,8 +74,7 @@ const FreePostForm = () => {
   return (
     <form onSubmit={onSubmit}>
       <TitleContainer>
-        {/* <AppSelect
-          label=""
+        <AppSelect
           options={[
             "서울",
             "경기도",
@@ -96,36 +88,17 @@ const FreePostForm = () => {
           className="region"
         />
         <AppSelect
-          label=""
           options={["맛집", "액티비티", "교통", "숙소", "기타"]}
-          className="region"
-        /> */}
-        <Select defaultValue={state ? state.region : "서울"} ref={regionRef}>
-          <option value="서울">서울</option>
-          <option value="경기도">경기도</option>
-          <option value="강원도">강원도</option>
-          <option value="충청도">충청도</option>
-          <option value="경상도">경상도</option>
-          <option value="전라도">전라도</option>
-          <option value="제주도">제주도</option>
-          <option value="기타">기타</option>
-        </Select>
-        <Select
-          defaultValue={state ? state.category : "맛집"}
-          ref={categoryRef}
-        >
-          <option value="맛집">맛집</option>
-          <option value="액티비티">액티비티</option>
-          <option value="교통">교통</option>
-          <option value="숙소">숙소</option>
-          <option value="기타">기타</option>
-        </Select>
-        <TitleInput
-          type="text"
-          placeholder="ex) 12월 31일 부산 해돋이 보러갈 동행 2명 구합니다"
-          defaultValue={state && state.title}
-          ref={titleRef}
+          className="category"
         />
+        <TitleInputBox>
+          <input
+            type="text"
+            placeholder="ex) 12월 31일 부산 해돋이 보러갈 동행 2명 구합니다"
+            defaultValue={state && state.title}
+            ref={titleRef}
+          />
+        </TitleInputBox>
       </TitleContainer>
       <Editor initialValue={state && state.content} setContent={setContent} />
       <ButtonContainer>

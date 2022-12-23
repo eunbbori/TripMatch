@@ -1,14 +1,17 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { freePostSlice } from "./../slice/freePost";
 import { modalSlice } from "../slice/modal";
-import { freePostApi } from "./../slice/api";
+import { freePostApi } from "../slice/freePostApi";
+import { commentApi } from "../slice/commentApi";
+import { matchPostApi } from "./../slice/matchPostApi";
+
 // ...
 
 export const store = configureStore({
   reducer: {
-    freePost: freePostSlice.reducer,
     modal: modalSlice.reducer,
     [freePostApi.reducerPath]: freePostApi.reducer,
+    [commentApi.reducerPath]: commentApi.reducer,
+    [matchPostApi.reducerPath]: matchPostApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(freePostApi.middleware),

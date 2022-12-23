@@ -17,14 +17,14 @@ export const ProfileContainer = styled.div`
 
 export const Date = styled.span`
   display: inline-block;
-  font-size: 13px;
+  font-size: ${(props) => props.theme.font.S};
   color: #747474;
   margin-left: 10px;
 `;
 
 export const Content = styled.p`
   padding: 14px 5px 10px;
-  font-size: 14px;
+  font-size: ${(props) => props.theme.font.M};
 `;
 
 export const UpdateInput = styled.textarea`
