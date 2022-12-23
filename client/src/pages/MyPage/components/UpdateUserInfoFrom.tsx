@@ -32,7 +32,7 @@ import {
   // ProfileInput,
   UpdateModal,
   WithdrawalText,
-} from "../MyPageStyle";
+} from "./UpdateInfoStyle";
 import { UpdateUserinfoTitle } from "./SideBarStyle";
 
 const UpdateUserInfoFrom = () => {

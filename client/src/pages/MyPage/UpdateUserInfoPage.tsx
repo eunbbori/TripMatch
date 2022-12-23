@@ -1,7 +1,12 @@
 import React from "react";
 import Top from "./components/Top";
 import SideBar from "./components/SideBar";
-import { Body, Container, Content, MidContainer } from "./MyPageStyle";
+import {
+  Body,
+  Container,
+  Content,
+  MidContainer,
+} from "./components/UpdateInfoStyle";
 import UpdateUserInfoFrom from "./components/UpdateUserInfoFrom";
 import { PinkBox } from "../../components/Auth/AuthStyle";
 
