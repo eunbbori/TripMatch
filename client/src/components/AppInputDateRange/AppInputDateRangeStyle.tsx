@@ -24,6 +24,7 @@ export const Input = styled.input`
   border-radius: 5px;
   text-indent: 10px;
   height: 40px;
+  font-family: "S-CoreDream-3Light";
 
   &:focus {
     outline: none;

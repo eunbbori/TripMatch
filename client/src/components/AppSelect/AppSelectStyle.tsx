@@ -14,6 +14,7 @@ export const Select = styled.select`
   height: 40px;
   outline: none;
   text-indent: 10px;
+  font-family: "S-CoreDream-3Light";
 
   &:focus {
     outline: none;

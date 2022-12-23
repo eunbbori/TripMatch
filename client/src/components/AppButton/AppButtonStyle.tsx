@@ -14,4 +14,6 @@ export const Button = styled.button<AppButtonProps>`
   &:hover {
     background-color: ${Theme.color.lightblue};
   }
+
+  font-family: "S-CoreDream-3Light";
 `;

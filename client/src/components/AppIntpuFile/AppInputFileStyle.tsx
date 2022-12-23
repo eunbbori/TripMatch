@@ -35,6 +35,7 @@ export const FileUploadName = styled.input`
     outline: none;
     border: 1px solid ${Theme.color.blue};
   }
+  font-family: "S-CoreDream-3Light";
 `;
 export const FileUploadLabel = styled.label`
   display: inline-block;
