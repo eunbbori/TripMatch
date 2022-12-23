@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { SideBar, Box } from "./SideBarStyle";
+import { SideBar, Box, SideBarNav } from "./SideBarStyle";
 
 const SideBarComponent: React.FC = () => {
   const navigate = useNavigate();
@@ -25,8 +25,10 @@ const SideBarComponent: React.FC = () => {
 
   return (
     <SideBar>
-      <Box value="정보 수정">정보 수정</Box>
-      {location.pathname === "/myPage/myContents" ? (
+      <Box>
+        <SideBarNav to="/mypage/userInfo">정보 수정</SideBarNav>
+      </Box>
+      {location.pathname === "/mypage" ? (
         <Box
           value="게시글 내역"
           style={{ color: "#d75281" }}

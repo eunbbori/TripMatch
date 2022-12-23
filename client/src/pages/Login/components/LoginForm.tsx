@@ -1,6 +1,11 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { AuthFormBlock, Footer, StyledInput, Button } from "./AuthStyle";
+import {
+  AuthFormBlock,
+  Footer,
+  StyledInput,
+  Button,
+} from "../../../components/Auth/AuthStyle";
 import { useImmer } from "use-immer";
 import axios from "axios";
 
@@ -28,20 +33,24 @@ const LoginForm = () => {
   const onSubmitLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("버튼은 눌려졌을걸?");
-    const res = await axios.post(`${domain}/main/auth/login`);
-    if (res.status === 201) {
-      console.log("요청은 성공했을걸?");
-      navigate("/");
-    } else if (res.status === 400) {
-      console.log("아이디랑 비번이 틀렸을껄?");
-      setUserState((draft) => {
-        draft.email = "";
-        draft.password = "";
-      });
-      alert("아이디와 비밀번호를 확인해주세요");
-    } else {
-      console.log("그냥 틀렸을걸?");
+    try {
+      const res = await axios.post(`${domain}/main/auth/login`);
+      console.log("axios 전송은 됐을걸");
+      if (res.status === 201) {
+        console.log("요청은 성공했을걸?");
+        navigate("/");
+      } else {
+        console.log("아이디랑 비번이 틀렸을껄?");
+        alert("아이디와 비밀번호를 확인해주세요");
+        throw new Error(`에러코드 ${res.status}. 회원가입에 실패하였습니다`);
+      }
+    } catch (error) {
+      console.error(error);
     }
+    // 성공하건 실패하건 비밀번호는 지워줘야함
+    setUserState((draft) => {
+      draft.password = "";
+    });
   };
 
   return (

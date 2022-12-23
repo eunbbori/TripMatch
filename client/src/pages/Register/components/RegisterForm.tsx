@@ -10,13 +10,13 @@ import {
   Select,
   ResultText,
   TextArea,
-} from "./AuthStyle";
+} from "../../../components/Auth/AuthStyle";
 import {
   checkConfirmPassword,
   checkIntroduce,
   checkNickname,
   checkPassword,
-} from "./validation";
+} from "../../../components/Auth/validation";
 
 const RegisterForm = () => {
   const domain = "http://localhost:5000";
@@ -123,7 +123,7 @@ const RegisterForm = () => {
             draft.reqAuthNumberAxios = false;
           });
           throw new Error(
-            "/api/main/auth/email 의 응답 status 코드가 201, 409 에 해당하지 않습니다",
+            `에러코드 ${res.status}. 인증번호 전송에 실패하였습니다`,
           );
         }
       } catch (error) {
@@ -189,9 +189,7 @@ const RegisterForm = () => {
             draft.certified = false;
           });
         } else {
-          throw new Error(
-            "/api/main/auth/certify 의 응답 status 코드가 200, 400 에 해당하지 않습니다",
-          );
+          throw new Error(`에러코드 ${res.status}. 인증에 실패하였습니다`);
         }
       } catch (error) {
         setValidText((draft) => {
@@ -309,9 +307,7 @@ const RegisterForm = () => {
       } else if (res.status === 403) {
         alert("이메일 인증 후에 회원가입 해주세요");
       } else {
-        console.error(
-          "/api/main/auth/join 의 응답 status 코드가 200, 400 에 해당하지 않습니다",
-        );
+        console.error(`에러코드 ${res.status}. 회원가입에 실패하였습니다`);
         alert("회원가입에 실패하였습니다. 인터넷 연결을 확인해주세요");
       }
     }
@@ -391,7 +387,7 @@ const RegisterForm = () => {
         />
         <ResultText>{validText.confirmPassword}</ResultText>
 
-        <label htmlFor="passwordInput">성별*</label>
+        <label>성별*</label>
         <label className="gender">
           <input
             type="radio"

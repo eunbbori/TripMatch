@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 
 export const SideBar = styled.div`
@@ -16,6 +17,12 @@ export const SideBar = styled.div`
   & .color {
     color: ${(props) => props.theme.color.pink};
   }
+  .active {
+    opacity: 0.7;
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: #ce7777;
+  }
 `;
 
 export const Box = styled.button`
@@ -29,4 +36,23 @@ export const Box = styled.button`
   font-size: ${(props) => props.theme.font.M};
   font-family: "S-CoreDream-3Light";
   font-weight: 700;
+`;
+
+export const SideBarNav = styled(NavLink)`
+  text-decoration: none;
+  color: black;
+  :hover {
+    opacity: 0.7;
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: #ce7777;
+  }
+`;
+
+export const UpdateUserinfoTitle = styled.p`
+  font-size: 1.2rem;
+  font-weight: 600;
+  &.withdrawalTitle {
+    margin-top: 5rem;
+  }
 `;
