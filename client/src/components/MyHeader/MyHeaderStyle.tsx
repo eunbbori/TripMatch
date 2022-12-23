@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Modal from "../../styles/Modal";
 
 const Header = styled.header`
   min-height: 100px;
@@ -34,7 +35,9 @@ const Header = styled.header`
     border-radius: 100px;
 
     input {
+      width: 10vw;
       border: none;
+      font-family: 'S-CoreDream-3Light';
 
       :focus {
         outline: white;
@@ -44,6 +47,7 @@ const Header = styled.header`
     img {
       height: 65%;
       margin-left: 10px;
+      cursor: pointer;
     }
   }
 
@@ -59,4 +63,32 @@ const Header = styled.header`
 }
 `;
 
-export default Header;
+const AlertModal = styled(Modal)`
+  .modalCard {
+    width: 14vw;
+    height: 12vh;
+
+    div {
+      margin-top: 10px;
+    }
+  }
+
+  button {
+    margin-top: 10%;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: ${(props) => props.theme.color.lightblue};
+    cursor: pointer;
+
+    :focus {
+      outline: none;
+    }
+
+    :hover {
+      background-color: ${(props) => props.theme.color.lightpink};
+    }
+  }
+`;
+
+export { Header, AlertModal };

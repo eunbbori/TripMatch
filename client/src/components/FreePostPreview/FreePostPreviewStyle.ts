@@ -2,22 +2,7 @@ import styled from "styled-components";
 
 const Container = styled.div`
   width: 60vw;
-  margin: 50px auto;
-
-  .title {
-    display: flex;
-    justify-content: space-between;
-    padding: 15px 0;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    margin-bottom: 15px;
-    cursor: default;
-    font-size: ${(props) => props.theme.font.L};
-
-    a {
-      font-size: ${(props) => props.theme.font.M};
-      align-self: flex-end;
-    }
-  }
+  margin: 15px auto 70px auto;
 
   a {
     color: black;
@@ -27,11 +12,12 @@ const Container = styled.div`
 `;
 
 const FreePostList = styled.div`
+  margin-top: 2%;
   .item {
     display: flex;
     align-items: center;
     height: 5vh;
-    margin: 0 1% 5px 1%;
+    margin: 1% 1% 5px 1%;
     padding: 0 2%;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
@@ -40,7 +26,7 @@ const FreePostList = styled.div`
 
     .region,
     .category {
-      // font-weight: bold;
+      font-weight: bold;
       margin-right: 1%;
     }
 

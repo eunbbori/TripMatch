@@ -3,11 +3,12 @@ import Modal from "../../styles/Modal";
 
 const Container = styled.div`
   width: 60vw;
-  margin: 50px auto;
+  margin: 1% auto 100px auto;
 
   .title {
     display: flex;
     justify-content: space-between;
+    align-items: flex-end;
     padding: 15px 0;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     margin-bottom: 15px;
@@ -44,6 +45,10 @@ const Container = styled.div`
       border: none;
       border-radius: 5px;
       cursor: pointer;
+
+      :hover {
+        background-color: ${(props) => props.theme.color.lightpink};
+      }
     }
   }
 `;

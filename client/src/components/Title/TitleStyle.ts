@@ -1,15 +1,19 @@
 import styled from "styled-components";
-import Modal from "../../styles/Modal";
 
-const Title = styled.div`
+const TitleStyle = styled.div`
   width: 60vw;
   margin: 50px auto 0 auto;
-
   display: flex;
   justify-content: space-between;
+  align-items: flex-end;
   padding: 15px 0;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  cursor: default;
+
+  h3 {
+    font-size: ${(props) => props.theme.font.L};
+    font-weight: bold;
+    cursor: default;
+  }
 
   a {
     color: black;
@@ -18,4 +22,4 @@ const Title = styled.div`
   }
 `;
 
-export default Title;
+export default TitleStyle;

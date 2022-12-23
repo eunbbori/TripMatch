@@ -14,6 +14,7 @@ const GlobalStyle = createGlobalStyle`
   body {
     box-sizing: border-box;
     font-family: 'S-CoreDream-3Light';
+    font-size: 16px;
   }
   
   main {

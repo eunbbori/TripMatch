@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Container, FestivalInfo, ModalCard } from "./FestivalListStyle";
 import { mockData } from "./mockData";
 import axios from "axios";
 import { closeModal, showModal } from "../../slice/modal";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import Title from "../Title/Title";
 
 interface Item {
   [key: string]: string;
@@ -14,16 +15,15 @@ interface ItemObj {
   item: Item;
 }
 
-interface PageProps {
+interface LocationProps {
   location: string;
 }
 
-const FestivalList: React.FC<PageProps> = ({ location }) => {
+const FestivalList: React.FC<LocationProps> = ({ location }) => {
   const [festivalInfo, setFestivalInfo] = useState<Item[]>([]);
   const [itemInfo, setItemInfo] = useState<Item>({});
-  const isShown = useAppSelector((state) => state.modal.show);
+  const { show: isShown, modalText } = useAppSelector((state) => state.modal);
   const dispatch = useAppDispatch();
-  const home = location === "home";
   const date = new Date();
   const eventStartDate = `${date.getFullYear()}${date.getMonth() + 1}01`;
   const serviceKey =
@@ -41,8 +41,10 @@ const FestivalList: React.FC<PageProps> = ({ location }) => {
         return { ...item, readcount: "0" };
       });
 
-    home ? setFestivalInfo(newData.slice(0, 8)) : setFestivalInfo(newData); //찐데이터로 받을 때 수정해야할 식
-  }, [home]);
+    location === "/"
+      ? setFestivalInfo(newData.slice(0, 8))
+      : setFestivalInfo(newData); //찐데이터로 받을 때 수정해야할 식
+  }, [location]);
 
   const dateFormat = (date: string) => {
     return date.slice(0, 4) + "." + date.slice(4, 6) + "." + date.slice(6, 8);
@@ -76,46 +78,45 @@ const FestivalList: React.FC<PageProps> = ({ location }) => {
   };
 
   return (
-    <Container>
-      <div className="title">
-        <h3>축제정보</h3>
-        {location === "home" ? <Link to="/festival">더보기</Link> : false}
-      </div>
-      <FestivalInfo>
-        {festivalInfo &&
-          festivalInfo.map((item) => {
-            return (
-              <div
-                className="item"
-                key={item.contentid}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setItemInfo(item);
-                  dispatch(showModal(null));
-                }}
-              >
-                <img src={item.firstimage} />
-                <div className="itemTitle">{item.title}</div>
-                <div className="itemDate">
-                  {dateFormat(item.eventstartdate)}~
-                  {dateFormat(item.eventenddate)}
+    <div>
+      <Title title="축제정보" location={location} />
+      <Container>
+        <FestivalInfo>
+          {festivalInfo &&
+            festivalInfo.map((item) => {
+              return (
+                <div
+                  className="item"
+                  key={item.contentid}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setItemInfo(item);
+                    dispatch(showModal(null));
+                  }}
+                >
+                  <img src={item.firstimage} />
+                  <div className="itemTitle">{item.title}</div>
+                  <div className="itemDate">
+                    {dateFormat(item.eventstartdate)}~
+                    {dateFormat(item.eventenddate)}
+                  </div>
                 </div>
-              </div>
-            );
-          })}
-        {isShown && <InfoModal item={itemInfo} />}
-      </FestivalInfo>
-      {location === "festival" ? (
-        <div className="shortCutBtn">
-          <div>혼자 가기 외로울 땐?</div>
-          <Link to="/match/write">
-            <button>동행 신청 바로가기</button>
-          </Link>
-        </div>
-      ) : (
-        false
-      )}
-    </Container>
+              );
+            })}
+          {isShown && <InfoModal item={itemInfo} />}
+        </FestivalInfo>
+        {location === "festival" ? (
+          <div className="shortCutBtn">
+            <div>혼자 가기 외로울 땐?</div>
+            <Link to="/match/write">
+              <button>동행 신청 바로가기</button>
+            </Link>
+          </div>
+        ) : (
+          false
+        )}
+      </Container>
+    </div>
   );
 };
 
