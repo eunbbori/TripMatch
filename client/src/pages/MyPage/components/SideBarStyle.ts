@@ -21,7 +21,7 @@ export const SideBar = styled.div`
     opacity: 0.7;
     font-weight: 600;
     font-size: 1.2rem;
-    color: #ce7777;
+    color: #d75281;
   }
 `;
 
@@ -45,7 +45,7 @@ export const SideBarNav = styled(NavLink)`
     opacity: 0.7;
     font-weight: 600;
     font-size: 1.2rem;
-    color: #ce7777;
+    color: #d75281;
   }
 `;
 

@@ -17,7 +17,7 @@ const ReceivedEnrollTable: React.FC = () => {
 
   useEffect(() => {
     const getData = async () => {
-      const fetchData = await axios.get("http://localhost:4001/enrolledPerson");
+      const fetchData = await axios.get("http://localhost:4000/enrolledPerson");
       setData(fetchData.data);
     };
     getData();

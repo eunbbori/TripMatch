@@ -9,12 +9,13 @@ import MyPageContents from "./pages/MyPage/MyPageContents";
 import FreePostWrite from "./pages/FreePostWrite/FreePostWrite";
 import LoginPage from "./pages/Login/LoginPage";
 import RegisterPage from "./pages/Register/RegisterPage";
-import MyComment from "./pages/MyComment/myComment";
+import MyComment from "./pages/MyComment/MyComment";
 import FreePostList from "./pages/FreePostList/FreePostList";
 import Admin from "./pages/Admin/Admin";
 import ReceivedEnroll from "./pages/ReceivedEnroll/ReceivedEnroll";
 import MatchPostList from "./pages/MatchPostList/MatchPostList";
 import MatchPostWrite from "./pages/MatchPostWrite/MatchPostWrite";
+import MyEnroll from "./pages/MyEnroll/MyEnroll";
 import FestivalList from "./components/FestivalList/FestivalList";
 import Search from "./pages/Search/Search";
 import UpdateUserInfoPage from "./pages/MyPage/UpdateUserInfoPage";
@@ -33,6 +34,7 @@ const App = () => {
           <Route path="/mypage/userInfo" element={<UpdateUserInfoPage />} />
           <Route path="/myPage/myComment" element={<MyComment />} />
           <Route path="/myPage/receivedEnroll" element={<ReceivedEnroll />} />
+          <Route path="/myPage/myEnroll" element={<MyEnroll />} />
           <Route path="/free/write" element={<FreePostWrite />} />
           <Route path="/free/write/:id" element={<FreePostWrite />} />
           <Route path="/match/write" element={<MatchPostWrite />} />
