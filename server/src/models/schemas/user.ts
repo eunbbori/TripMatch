@@ -9,7 +9,14 @@ const userSchema = new Schema<User>(
     gender: { type: String, required: true },
     age: { type: String, required: true },
     introduce: { type: String, required: false },
-    image: { type: String, required: true, default: "#" },
+    profileImg: {
+      type: String,
+      required: true,
+      default:
+        "https://res.cloudinary.com/dv6tzjgu4/image/upload/v1671081256/elice/default-user_bvvgsf.png",
+    },
+    matchCount: { type: Number, required: true, default: 0 },
+    matchPoint: { type: Number, required: true, default: 0 },
     role: {
       type: String,
       required: true,

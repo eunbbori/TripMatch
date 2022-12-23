@@ -5,6 +5,8 @@ export default interface User {
   gender: string;
   age: string;
   introduce: string;
-  image: string;
+  profileImg: string;
+  matchCount: number;
+  matchPoint: number;
   role: string;
 }

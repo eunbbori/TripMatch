@@ -49,6 +49,15 @@ class UserService {
     await redis.set(email as string, refresh);
     return { accessToken, refresh };
   }
+
+  async getAuthor(email: string) {
+    const user = await this.userModel.findByEmail(email);
+    return {
+      email: user?.email,
+      nickname: user?.nickname,
+      profileImg: user?.profileImg,
+    };
+  }
 }
 
 const userService = new UserService();
