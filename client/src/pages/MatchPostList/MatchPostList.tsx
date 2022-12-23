@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import AppButton from "../../components/AppButton/AppButton";
 import AppTabContent from "../../components/AppTabContent/AppTabContent";
 import MatchPostPanel from "../../components/AppTapPanel/MatchPostPanel";
@@ -20,12 +21,14 @@ const MatchPostList = () => {
     <Container>
       <AppTabContent tabContents={regions} />
       <ButtonContainer>
-        <AppButton
-          width={"120px"}
-          className={"postBtn"}
-          text={"글쓰기"}
-          type={"button"}
-        />
+        <Link to="/match/write">
+          <AppButton
+            width={"120px"}
+            className={"postBtn"}
+            text={"글쓰기"}
+            type={"button"}
+          />
+        </Link>
       </ButtonContainer>
     </Container>
   );

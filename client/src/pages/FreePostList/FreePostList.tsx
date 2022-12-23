@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import AppButton from "../../components/AppButton/AppButton";
 import AppTabContent from "../../components/AppTabContent/AppTabContent";
 import FreePostPanel from "../../components/AppTapPanel/FreePostPanel";
@@ -20,12 +21,14 @@ const FreePostList = () => {
     <Container>
       <AppTabContent tabContents={tabContents} />
       <ButtonContainer>
-        <AppButton
-          width={"120px"}
-          className={"postBtn"}
-          text={"글쓰기"}
-          type={"button"}
-        />
+        <Link to="/free/write">
+          <AppButton
+            width={"120px"}
+            className={"postBtn"}
+            text={"글쓰기"}
+            type={"button"}
+          />
+        </Link>
       </ButtonContainer>
     </Container>
   );

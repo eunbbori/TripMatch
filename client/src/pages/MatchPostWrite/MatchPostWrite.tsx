@@ -26,11 +26,18 @@ const ageList = [
   { value: "none", htmlValue: "연령대무관" },
 ];
 
-import { Container, Etc, ButtonContainer, Button } from "./MatchPostWriteStyle";
+import {
+  Container,
+  Etc,
+  ButtonContainer,
+  MatchPostAppButton,
+} from "./MatchPostWriteStyle";
 import AppInputText from "../../components/AppInputText/AppInputText";
 import AppInputRadioCheck from "../../components/AppInputRadioCheck/AppInputRadioCheck";
 import AppInputDateRange from "../../components/AppInputDateRange/AppInputDateRange";
 import AppInputFile from "../../components/AppIntpuFile/AppInputFile";
+import AppButton from "../../components/AppButton/AppButton";
+import { Link } from "react-router-dom";
 
 const MatchPostWrite = () => {
   // const [selectedGender, setSelectedGender] = useState<string>();
@@ -89,8 +96,20 @@ const MatchPostWrite = () => {
         }}
       />
       <ButtonContainer>
-        <Button>취소</Button>
-        <Button>작성 완료</Button>
+        <Link to="/match">
+          <MatchPostAppButton
+            width={"120px"}
+            className={"cancelBtn"}
+            type={"button"}
+            text={"취소"}
+          />
+        </Link>
+        <MatchPostAppButton
+          width={"120px"}
+          className={"finishBtn"}
+          type={"button"}
+          text={"작성 완료"}
+        />
       </ButtonContainer>
     </Container>
   );

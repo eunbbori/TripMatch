@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Theme from "../../styles/Theme";
+import AppButton from "../../components/AppButton/AppButton";
 
 export const Container = styled.div`
   width: 1000px;
@@ -17,16 +17,10 @@ export const ButtonContainer = styled.div`
   justify-content: center;
 `;
 
-export const Button = styled.button`
-  outline: none;
-  width: 200px;
-  height: 40px;
-  background-color: ${Theme.color.lightblue};
-  border: none;
-  border-radius: 40px;
+export const MatchPostAppButton = styled(AppButton)`
   cursor: pointer;
   margin-top: 10px;
-  + button {
-    margin-left: 100px;
+  :first-child {
+    margin-right: 150px;
   }
 `;

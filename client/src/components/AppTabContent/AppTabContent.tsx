@@ -3,6 +3,7 @@ import { TabContentType } from "../../type/tab";
 import { Tab, Tabs, TabPanel } from "react-tabs";
 import { Container, STabList } from "./AppTabContentStyle";
 import "react-tabs/style/react-tabs.css";
+import { Link } from "react-router-dom";
 
 interface TabProps {
   tabContents: TabContentType[];

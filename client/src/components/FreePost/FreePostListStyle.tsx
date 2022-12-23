@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const Container = styled.div`
@@ -69,4 +70,9 @@ export const CommentImage = styled.img`
 
 export const CommentCount = styled.div`
   margin-right: 5px;
+`;
+
+export const FreePostLink = styled(Link)`
+  color: inherit;
+  text-decoration: inherit;
 `;
