@@ -3,6 +3,12 @@ import Theme from "../../../styles/Theme";
 
 export const TitleContainer = styled.div`
   display: flex;
+
+  div {
+    + div {
+      margin-left: 10px;
+    }
+  }
 `;
 
 export const Select = styled.select`
@@ -26,7 +32,7 @@ export const Select = styled.select`
 
 export const TitleInputBox = styled.div`
   flex-grow: 1;
-  margin: 10px 0 10px 10px;
+  margin: 10px 0;
   input {
     width: 100%;
     height: 40px;
@@ -55,7 +61,7 @@ export const Button = styled.button`
   border: none;
   border-radius: 40px;
   cursor: pointer;
-
+  font-family: "S-CoreDream-3Light";
   + button {
     margin-left: 20px;
   }

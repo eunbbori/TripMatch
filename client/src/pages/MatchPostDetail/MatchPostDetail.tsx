@@ -5,9 +5,15 @@ import Comment from "../../components/CommentList/CommentList";
 import axios from "axios";
 import type { MatchPostType } from "../../type/matchPost";
 import NotFound from "../../components/NotFound/NotFound";
+import { useParams } from "react-router-dom";
+import { useGetMatchPostQuery } from "../../slice/matchPostApi";
 
 const MatchPostDetail = () => {
   const [post, setPost] = useState<MatchPostType>();
+
+  const { id } = useParams();
+  const postquery = useGetMatchPostQuery(id);
+  //const { data: post, isLoading, isError } = postquery;
 
   useEffect(() => {
     const getData = async () => {
@@ -20,14 +26,16 @@ const MatchPostDetail = () => {
     getData();
   }, []);
 
+  // if (isError) {
+  //   return <NotFound />;
+  // }
+
   return (
     <Container>
-      {post && (
-        <>
-          <PostDetail matchPost={post} user={post.author} />
-          {post.comments && <Comment comments={post.comments} />}
-        </>
-      )}
+      <>
+        <PostDetail matchPost={post} user={post?.author} />
+        {post?.comments && <Comment comments={post?.comments} />}
+      </>
     </Container>
   );
 };

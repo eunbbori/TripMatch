@@ -50,7 +50,6 @@ const PostDetail: React.FC<PostDetailProps> = ({
   };
 
   const onClickApply = () => {
-    setIsApplying(!isApplying); // 취소하거나 api 요청 실패시 바뀌지 않게 수정해야 함
     if (isApplying) {
       dispatch(
         showModal({
@@ -75,7 +74,7 @@ const PostDetail: React.FC<PostDetailProps> = ({
 
   const getUpdatePathname = () =>
     location.pathname.includes("match")
-      ? `/match/write/${matchPost?.postId}`
+      ? "/match/write" //`/match/write/${matchPost?.postId}`
       : `/free/write/${freePost?.communityId}`;
 
   const getListPathname = () =>
@@ -97,10 +96,12 @@ const PostDetail: React.FC<PostDetailProps> = ({
 
   const onApply = () => {
     console.log("동행 신청");
+    setIsApplying(!isApplying);
   };
 
   const onApplyCancle = () => {
     console.log("동행 취소");
+    setIsApplying(!isApplying);
   };
 
   const getModalCallback = () => {

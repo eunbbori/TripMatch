@@ -10,7 +10,10 @@ export const commentApi = createApi({
   }),
   endpoints: (builder) => ({
     // id에 해당하는 댓글을 업데이트
-    updateComment: builder.mutation<CommentType, CommentType>({
+    updateComment: builder.mutation<
+      CommentType,
+      { commentId: string; content: string }
+    >({
       query: (updatedComment) => ({
         url: `api/main/comment/${updatedComment.commentId}`,
         method: "PUT",
@@ -21,7 +24,10 @@ export const commentApi = createApi({
       ],
     }),
     // 댓글 추가
-    createComment: builder.mutation<CommentType, CommentType>({
+    createComment: builder.mutation<
+      CommentType,
+      { content: string; communityId?: string; postId?: string }
+    >({
       query: (newComment) => ({
         url: "api/main/comment",
         method: "POST",
@@ -29,7 +35,7 @@ export const commentApi = createApi({
       }),
       invalidatesTags: ["Comment"],
     }),
-    // id에 해당하는 게시글 삭제
+    // id에 해당하는 댓글 삭제
     deleteComment: builder.mutation<CommentType, string>({
       query: (commentId) => ({
         url: `api/main/comment/${commentId}`,

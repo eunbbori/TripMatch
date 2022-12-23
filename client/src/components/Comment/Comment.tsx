@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useUpdateCommentMutation } from "../../slice/commentApi";
 import { showModal } from "../../slice/modal";
 import { useAppDispatch } from "../../store/hooks";
 import { Button } from "../CommentList/CommentListStyle";
@@ -19,14 +20,34 @@ interface CommentProps {
 
 const Comment: React.FC<CommentProps> = ({ comment }) => {
   const [isClickUpdate, setIsClickUpdate] = useState<boolean>(false);
+  const [commentInput, setCommentInput] = useState("");
+
+  const [onUpdateComment, { isError, isSuccess }] = useUpdateCommentMutation();
 
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (isError) {
+      alert("댓글 수정에 실패했습니다.");
+      setIsClickUpdate(false);
+    }
+    if (isSuccess) {
+      setIsClickUpdate(true);
+    }
+  }, [isError, isSuccess]);
 
   const onClickUpdate = () => setIsClickUpdate(true);
 
   const onClickCancle = () => setIsClickUpdate(false);
 
   const onClickDelete = () => dispatch(showModal("댓글"));
+
+  const onClickUpdateCompleted = () => {
+    onUpdateComment({
+      commentId: comment.commentId,
+      content: commentInput,
+    });
+  };
 
   return (
     <Container key={comment.commentId}>
@@ -35,14 +56,17 @@ const Comment: React.FC<CommentProps> = ({ comment }) => {
         <Date>({comment.createdAt})</Date>
       </ProfileContainer>
       {isClickUpdate ? (
-        <UpdateInput defaultValue={comment.content} />
+        <UpdateInput
+          defaultValue={comment.content}
+          onChange={(e) => setCommentInput(e.target.value)}
+        />
       ) : (
         <Content>{comment.content}</Content>
       )}
       <ButtonContainer>
         {isClickUpdate ? (
           <>
-            <Button>수정 완료</Button>
+            <Button onClick={onClickUpdateCompleted}>수정 완료</Button>
             <Button onClick={onClickCancle}>취소</Button>
           </>
         ) : (

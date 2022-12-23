@@ -37,6 +37,7 @@ export default Modal;
 
 const ModalCard = styled(ModalStyle)`
   .modalCard {
+    width: 400px;
     justify-content: space-between;
   }
 `;
@@ -59,6 +60,7 @@ const ButtonContainer = styled.div`
     border-radius: 5px;
     border: none;
     cursor: pointer;
+    font-family: "S-CoreDream-3Light";
 
     &:nth-child(2) {
       background-color: ${(props) => props.theme.color.pink};

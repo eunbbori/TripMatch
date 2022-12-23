@@ -9,9 +9,9 @@ export const matchPostApi = createApi({
     baseUrl: "http://localhost:5000/",
   }),
   endpoints: (builder) => ({
-    // 전체 자유게시글을 불러옴
-    // query params 로 page, region을 보냄
-    // 예시 : useGetAllFreePostQuery({page: 1, region: ""})
+    // 전체 동행게시글을 불러옴
+    // query params 로 page, region, status를 보냄
+    // 예시 : useGetAllFreePostQuery({page: 1, region: "", status: ""})
     getAllMatchPost: builder.query<
       MatchPostType[],
       { page: number; region: string; status: string }

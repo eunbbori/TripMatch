@@ -85,6 +85,7 @@ export const Button = styled.button`
   cursor: pointer;
   background-color: ${(props) => props.theme.color.lightblue};
   color: #333;
+  font-family: "S-CoreDream-3Light";
 `;
 
 export const MatchButton = styled.button<{ isApplying: boolean }>`
@@ -99,4 +100,5 @@ export const MatchButton = styled.button<{ isApplying: boolean }>`
   color: #fff;
   font-weight: bold;
   margin-bottom: 20px;
+  font-family: "S-CoreDream-3Light";
 `;

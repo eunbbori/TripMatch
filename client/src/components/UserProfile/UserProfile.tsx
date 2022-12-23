@@ -10,7 +10,7 @@ interface UserProfileProps {
 const UserProfile: React.FC<UserProfileProps> = ({ user }) => {
   return (
     <Container>
-      <ProfileImg src={user.profileImg} alt="profile image" />
+      <ProfileImg src={defaultImage} alt="profile image" />
       <Nickname>{user.nickname}</Nickname>
     </Container>
   );

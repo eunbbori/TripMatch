@@ -14,7 +14,11 @@ export const store = configureStore({
     [matchPostApi.reducerPath]: matchPostApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(freePostApi.middleware),
+    getDefaultMiddleware().concat(
+      freePostApi.middleware,
+      commentApi.middleware,
+      matchPostApi.middleware,
+    ),
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

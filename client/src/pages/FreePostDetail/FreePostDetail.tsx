@@ -1,55 +1,90 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import PostDetail from "../../components/PostDetail/PostDetail";
 import styled from "styled-components";
 import Comment from "../../components/CommentList/CommentList";
 import pointer from "../../images/temporaryIconPointer.png";
-import axios from "axios";
-import type { FreePostType } from "../../type/freePost";
-import {
-  useGetAllFreePostQuery,
-  useGetFreePostQuery,
-} from "../../slice/freePostApi";
+import { useGetFreePostQuery } from "../../slice/freePostApi";
 import { useParams } from "react-router-dom";
 import NotFound from "../../components/NotFound/NotFound";
+import { FreePostType } from "./../../type/freePost";
 
 const FreePostDetail = () => {
-  //const [post, setPost] = useState<FreePostType>();
   const { id } = useParams();
   const postquery = useGetFreePostQuery(id);
-  const { data: post, isLoading } = postquery;
+  //const { data: post, isLoading, isError } = postquery;
 
-  // useEffect(() => {
-  //   const getPost = async () => {
-  //     const res = await axios.get(
-  //       "https://70aee874-8965-4db1-be06-07823d5c4dda.mock.pstmn.io/posts",
-  //     );
-  //     setPost(res.data);
-  //   };
-  //   getPost();
-  // }, []);
+  const post: FreePostType = {
+    communityId: "1",
+    title: "경상도 맛집 추천해주세요",
+    region: "경상도",
+    category: "맛집",
+    author: {
+      email: "1",
+      nickname: "nick",
+      profileImg: "",
+    },
+    content: "<p>1번 글입니다</p><p>맛집</p><p>추천해주세요</p>",
+    comments: [
+      {
+        commentId: "2",
+        author: {
+          email: "1",
+          nickname: "nick",
+          profileImg: "",
+        },
+        content: "반가워요?",
+        createdAt: "2022-12-11 16:10:02",
+      },
+      {
+        commentId: "3",
+        author: {
+          email: "1",
+          nickname: "nick",
+          profileImg: "",
+        },
+        content: "안녕하세요?",
+        createdAt: "2022-12-11 16:10:02",
+      },
+      {
+        commentId: "4",
+        author: {
+          email: "1",
+          nickname: "nick",
+          profileImg: "",
+        },
+        content: "밀면?",
+        createdAt: "2022-12-11 16:10:02",
+      },
+      {
+        commentId: "5",
+        author: {
+          email: "1",
+          nickname: "nick",
+          profileImg: "",
+        },
+        content: "돼지국밥?",
+        createdAt: "2022-12-11 16:10:02",
+      },
+    ],
+    createdAt: "2022-12-11 16:10:02",
+  };
 
-  const a = useGetAllFreePostQuery({ page: 1, region: "전체" });
-
-  console.log(a);
-
-  console.log(post);
+  // if (isError) {
+  //   return <NotFound />;
+  // }
 
   return (
     <Container>
-      {post ? (
-        <>
-          <div>
-            <CategoryName>
-              <Pointer src={pointer} />
-              {post?.region} &gt; {post?.category}
-            </CategoryName>
-          </div>
-          <PostDetail user={post?.author} freePost={post} />
-          {post?.comments && <Comment comments={post.comments} />}
-        </>
-      ) : (
-        <NotFound />
-      )}
+      <>
+        <div>
+          <CategoryName>
+            <Pointer src={pointer} />
+            {post?.region} &gt; {post?.category}
+          </CategoryName>
+        </div>
+        <PostDetail user={post?.author} freePost={post} />
+        {post?.comments && <Comment comments={post.comments} />}
+      </>
     </Container>
   );
 };
