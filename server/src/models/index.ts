@@ -4,6 +4,7 @@ import CommentModel from "./comment";
 import PostModel from "./post";
 import LikeModel from "./like";
 import MatchModel from "./match";
+import NoticeModel from "./notice";
 
 export {
   UserModel,
@@ -12,4 +13,5 @@ export {
   PostModel,
   LikeModel,
   MatchModel,
+  NoticeModel,
 };

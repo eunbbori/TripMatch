@@ -19,6 +19,16 @@ class UserModel {
   async updateOne(email: string, userInfo: object) {
     await this.userDB.updateOne({ email }, userInfo);
   }
+  async findForAdmin(condition: object) {
+    const users = await this.userDB.find(condition, {
+      _id: 0,
+      email: 1,
+      nickname: 1,
+      createdAt: 1,
+      role: 1,
+    });
+    return users;
+  }
 }
 
 export default UserModel;

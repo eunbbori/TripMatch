@@ -5,6 +5,7 @@ class LikeService {
 
   async getPostIds(email: string) {
     const likes = await this.likeModel.findByEmail(email);
+    if (likes.length === 0) throw new Error("204");
     return likes;
   }
   async create(likeInfo: object) {

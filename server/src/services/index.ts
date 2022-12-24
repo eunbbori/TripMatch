@@ -4,6 +4,7 @@ import commentService from "./comment";
 import postService from "./post";
 import likeService from "./like";
 import matchService from "./match";
+import noticeService from "./notice";
 
 export {
   userService,
@@ -12,4 +13,5 @@ export {
   postService,
   likeService,
   matchService,
+  noticeService,
 };

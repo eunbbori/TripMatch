@@ -93,6 +93,16 @@ class UserService {
     );
     return { "x-access-token": `Bearer ${newToken}` };
   }
+  async getUserList(keyword: string) {
+    const condition: { $or?: [{}, {}] } = {};
+    if (keyword) {
+      const regex = new RegExp(`(${[...keyword].join(".*")})`);
+      condition.$or = [{ email: regex }, { nickname: regex }];
+    }
+    const users = await this.userModel.findForAdmin(condition);
+    if (users.length === 0) throw new Error("204");
+    return users;
+  }
 }
 
 const userService = new UserService();

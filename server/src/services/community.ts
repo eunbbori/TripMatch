@@ -17,6 +17,7 @@ class CommunityService {
   }
   async getCommunity(communityId: string) {
     const community = await this.communityModel.findOne(communityId);
+    if (!community) throw new Error("204");
     return community;
   }
   async update(communityId: string, body: object) {

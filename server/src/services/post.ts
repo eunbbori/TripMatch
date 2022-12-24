@@ -49,6 +49,7 @@ class PostService {
       author: 1,
       status: 1,
     });
+    if (!post) throw new Error("204");
     return post;
   }
   async update(postId: string, body: object) {
