@@ -41,10 +41,9 @@ postsController.get("/:postId", async (req, res, next) => {
 });
 postsController.put("/:postId", async (req, res, next) => {
   const { postId } = req.params;
-  const { email } = req.user;
   try {
     const post = await postService.getPost(postId);
-    if (post?.author.email !== email) return next("403");
+    if (post?.author.email !== req.email) return next(new Error("403"));
     await postService.update(postId, req.body);
     res.status(200).end();
   } catch (err) {
@@ -53,10 +52,9 @@ postsController.put("/:postId", async (req, res, next) => {
 });
 postsController.delete("/:postId", async (req, res, next) => {
   const { postId } = req.params;
-  const { email } = req.user;
   try {
     const post = await postService.getPost(postId);
-    if (post?.author.email !== email) return next("403");
+    if (post?.author.email !== req.email) return next(new Error("403"));
     await postService.delete(postId);
     res.status(200).end();
   } catch (err) {
@@ -65,10 +63,9 @@ postsController.delete("/:postId", async (req, res, next) => {
 });
 postsController.post("/:postId", async (req, res, next) => {
   const { postId } = req.params;
-  const { email } = req.user;
   try {
     const author = await postService.getAuthor(postId);
-    const applicant = await userService.getAuthor(email);
+    const applicant = await userService.getAuthor(req.email);
     await matchService.create({ postId, ...author, applicant });
     res.status(201).end();
   } catch (err) {
@@ -76,9 +73,8 @@ postsController.post("/:postId", async (req, res, next) => {
   }
 });
 postsController.post("/post", async (req, res, next) => {
-  const { email } = req.user;
   try {
-    const author = await userService.getAuthor(email);
+    const author = await userService.getAuthor(req.email);
     await postService.create(req.body, author);
     res.status(201).end();
   } catch (err) {

@@ -10,22 +10,26 @@ const redisClient = createClient({
   url: `redis://${redisUsername}:${redisPassword}@${redisHost}:${redisPort}/0`,
   legacyMode: true,
 });
+redisClient.on("connect", () => console.log("redis connected"));
+redisClient.on("end", () => console.log("redis disconnected"));
+redisClient.on("error", (err) => console.log("Error[Redis]", err));
 
 class Redis {
   private redis = redisClient.v4;
 
-  async set(key: string, value: string): Promise<void> {
+  async set(key: string, value: string) {
+    await redisClient.connect();
     await this.redis.set(key, value);
+    await redisClient.disconnect();
   }
-  async get(key: string): Promise<string> {
+  async get(key: string) {
+    await redisClient.connect();
     const result = await this.redis.get(key);
+    await redisClient.disconnect();
     return result;
-  }
-  async del(key: string): Promise<void> {
-    await this.redis.del(key);
   }
 }
 
 const redis = new Redis();
 
-export { redisClient, redis };
+export default redis;

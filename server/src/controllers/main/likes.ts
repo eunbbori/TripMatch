@@ -4,9 +4,8 @@ import { likeService, postService } from "../../services";
 const likesController = Router();
 
 likesController.get("/", async (req, res, next) => {
-  const { email } = req.user;
   try {
-    const likes = await likeService.getPostIds(email);
+    const likes = await likeService.getPostIds(req.email);
     const posts = await postService.getWishlist(likes as []);
     res.status(200).json(posts);
   } catch (err) {
@@ -14,20 +13,18 @@ likesController.get("/", async (req, res, next) => {
   }
 });
 likesController.post("/like", async (req, res, next) => {
-  const { email } = req.user;
   const { postId } = req.body;
   try {
-    await likeService.create({ email, postId });
+    await likeService.create({ email: req.email, postId });
     res.status(201).end();
   } catch (err) {
     next(err);
   }
 });
 likesController.delete("/like", async (req, res, next) => {
-  const { email } = req.user;
   const { postId } = req.query;
   try {
-    await likeService.delete({ email, postId });
+    await likeService.delete({ email: req.email, postId });
     res.status(200).end();
   } catch (err) {
     next(err);

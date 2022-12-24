@@ -9,10 +9,7 @@ const transport = nodemailer.createTransport({
   },
 });
 
-export default async function sendMail(
-  email: string,
-  text: string
-): Promise<void> {
+export default async function sendMail(email: string, text: string) {
   await transport.sendMail({
     from: "TripMatch <tripmatch@elice.io>",
     to: email,

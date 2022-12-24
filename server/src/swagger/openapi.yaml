@@ -16,6 +16,14 @@ paths:
     $ref: "./auth.yaml#/~1auth~1join"
   /api/main/auth/login:
     $ref: "./auth.yaml#/~1auth~1login"
+  /api/main/auth/{email}:
+    $ref: "./auth.yaml#/~1auth~1{email}"
+  /api/main/auth/delete:
+    $ref: "./auth.yaml#/~1auth~1delete"
+  /api/main/auth/update:
+    $ref: "./auth.yaml#/~1auth~1update"
+  /api/main/auth/refresh:
+    $ref: "./auth.yaml#/~1auth~1refresh"
 components:
   schemas:
     status:

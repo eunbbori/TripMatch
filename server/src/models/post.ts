@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import { postSchema } from "./schemas";
 
 class PostModel {
-  private postDB = mongoose.model("communities", postSchema);
+  private postDB = mongoose.model("posts", postSchema);
 
   async countPages(condition: object) {
     const total = await this.postDB.countDocuments(condition);
