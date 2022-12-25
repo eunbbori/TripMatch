@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, {
-  // ChangeEvent,
-  // useCallback,
+  ChangeEvent,
+  useCallback,
   useEffect,
   useRef,
   useState,
@@ -28,12 +28,14 @@ import {
   ModalButtonContainer,
   ModalContentContainer,
   ModalTitle,
-  // ProfileImage,
-  // ProfileInput,
+  ProfileImage,
+  ProfileInput,
   UpdateModal,
   WithdrawalText,
 } from "./UpdateInfoStyle";
 import { UpdateUserinfoTitle } from "./SideBarStyle";
+
+const baseUrl = "http://localhost:5000";
 
 const UpdateUserInfoFrom = () => {
   type FormType =
@@ -55,8 +57,6 @@ const UpdateUserInfoFrom = () => {
   };
 
   type ActiveDataType = "nickName" | "password" | "age" | "introduce";
-
-  // const domain = "http://localhost:5000";
 
   const AgeOption = [
     { value: "default", name: "선택" },
@@ -81,7 +81,7 @@ const UpdateUserInfoFrom = () => {
   const [modalForm, setModalForm] = useState<FormType>();
   // 모달 외부 클릭 처리에 사용할 모달 엘리먼트
   const modalEl = useRef<HTMLDivElement>(null);
-  // const imgInputEl = useRef<HTMLInputElement>(null);
+  const imgInputEl = useRef<HTMLInputElement>(null);
 
   const [userState, setUserState] = useImmer({
     email: "",
@@ -124,9 +124,8 @@ const UpdateUserInfoFrom = () => {
     const loadUserInfo = async () => {
       // 응답 api url 추후 변경 예정
       try {
-        // 추후 api 구현 시 아래 api로 주석 해제 하여 교체 예정
-        // const res = await axios.get(`${domain}/api/main/myPage`);
-        const res = await axios.get("http://localhost:4000/userInfo");
+        const res = await axios.get(`${baseUrl}/api/main/myPage`);
+        // const res = await axios.get("http://localhost:4000/userInfo"); // 테스트용 json서버
         // 응답 코드 추후 변경 예정
         if (res.status === 200) {
           return res.data;
@@ -176,26 +175,24 @@ const UpdateUserInfoFrom = () => {
   ]);
 
   // 추후 이미지 api 스펙 확정 시 다시 제작
-  // const checkFileSize = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-  //   if (e.target.files) {
-  //     const file = e.target.files[0];
-  //     const fileSize = file.size;
-  //     const maxSize = 10 * 1024 * 1024;
-  //     if (fileSize > maxSize) {
-  //       alert("10MB 이하의 이미지만 사용가능합니다");
-  //       return false;
-  //     }
-  //     return true;
-  //   }
-  // }, []);
+  const checkFileSize = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const file = e.target.files[0];
+      const fileSize = file.size;
+      const maxSize = 10 * 1024 * 1024;
+      if (fileSize > maxSize) {
+        alert("10MB 이하의 이미지만 사용가능합니다");
+        return false;
+      }
+      return true;
+    }
+  }, []);
 
-  // const onChangeImage = (e: ChangeEvent<HTMLInputElement>) => {
-  //   if (checkFileSize(e)) {
-  //     setUserState((draft) => {
-  //       draft.profileImg = e.target.files[0];
-  //     });
-  //   }
-  // };
+  const onChangeImage = (e: ChangeEvent<HTMLInputElement>) => {
+    if (checkFileSize(e)) {
+      // 파일 크기 체크 후 클라우디너리로 업로드, url 받아서 서버로 api 보내기
+    }
+  };
 
   const onChangeNickName = (e: React.ChangeEvent<HTMLInputElement>) => {
     // 폐기 예정
@@ -319,17 +316,20 @@ const UpdateUserInfoFrom = () => {
         };
         console.log("수정 요청 api 실행됨!", sendOj);
         // api 완성 시, 주석 해제
-        // try {
-        //   const res = await axios.put(`${domain}/api/main/auth/update`, sendOj);
-        //   if (res.status === 200) {
-        //     alert("수정 완료!");
-        //   } else {
-        //     throw new Error(`에러코드 ${res.status}. 수정에 실패하였습니다`);
-        //   }
-        // } catch (error) {
-        //   alert("수정 실패");
-        //   console.error(error);
-        // }
+        try {
+          const res = await axios.put(
+            `${baseUrl}/api/main/auth/update`,
+            sendOj,
+          );
+          if (res.status === 200) {
+            alert("수정 완료!");
+          } else {
+            throw new Error(`에러코드 ${res.status}. 수정에 실패하였습니다`);
+          }
+        } catch (error) {
+          alert("수정 실패");
+          console.error(error);
+        }
 
         // valid === false 의 경우
       } else {
@@ -353,17 +353,17 @@ const UpdateUserInfoFrom = () => {
 
   // api 구현 시 주석 해제 예정
   const onClickWithdrawal = async () => {
-    // try {
-    //   const res = await axios.delete(`${domain}/api/main/auth/delete`);
-    //   if (res.status === 200) {
-    //     alert("회원탈퇴가 완료되었습니다");
-    //   } else {
-    //     throw new Error(`에러코드 ${res.status}. 수정에 실패하였습니다`);
-    //   }
-    // } catch (error) {
-    //   alert("회원탈퇴에 실패하였습니다");
-    //   console.error(error);
-    // }
+    try {
+      const res = await axios.delete(`${baseUrl}/api/main/auth/delete`);
+      if (res.status === 200) {
+        alert("회원탈퇴가 완료되었습니다");
+      } else {
+        throw new Error(`에러코드 ${res.status}. 수정에 실패하였습니다`);
+      }
+    } catch (error) {
+      alert("회원탈퇴에 실패하였습니다");
+      console.error(error);
+    }
   };
 
   const onClickCancelBtn = () => {
@@ -378,7 +378,6 @@ const UpdateUserInfoFrom = () => {
           <div className="updateModalForm" ref={modalEl}>
             <ModalTitle>{modalForm && krEncoding[modalForm]}</ModalTitle>
             <ModalContentContainer>
-              {/*변경 사항 구현부*/}
               {modalForm === "nickName" && (
                 <>
                   <StyledInput
@@ -484,15 +483,15 @@ const UpdateUserInfoFrom = () => {
       <AuthFormBlock>
         <UpdateUserinfoTitle>회원 정보 수정</UpdateUserinfoTitle>
 
-        {/* <label>프로필 사진</label>
+        <label>프로필 사진</label>
 
         <ProfileImage onClick={() => imgInputEl.current?.click()} />
         <ProfileInput
-          ref={imgInputEl}
+          // ref={imgInputEl}
           type="file"
           accept="image/*"
           onChange={onChangeImage}
-        /> */}
+        />
 
         <label htmlFor="emailInput">email</label>
         <StyledInput

@@ -19,7 +19,7 @@ import {
 } from "../../../components/Auth/validation";
 
 const RegisterForm = () => {
-  const domain = "http://localhost:5000";
+  const baseUrl = "http://localhost:5000";
 
   const AgeOption = [
     { value: "default", name: "선택" },
@@ -100,7 +100,7 @@ const RegisterForm = () => {
         setUserState((draft) => {
           draft.reqAuthNumber = true;
         });
-        const res = await axios.post(`${domain}/api/main/auth/email`, {
+        const res = await axios.post(`${baseUrl}/api/main/auth/email`, {
           email: userState.email,
         });
         console.log("axios 성공", res);
@@ -145,7 +145,7 @@ const RegisterForm = () => {
     // 할일: certified: true 시, 이메일 input과 인증번호 input 수정불가로 막기
 
     const checkAuthNumber = (authNumber: string) => {
-      const RegExp = /^[0-9]+$/g;
+      const RegExp = /^[a-zA-Z0-9]+$/g;
       if (userState.reqAuthNumber === false) {
         return "이메일로 인증번호를 재요청 해주세요";
       } else if (authNumber === "") {
@@ -169,9 +169,9 @@ const RegisterForm = () => {
         setUserState((draft) => {
           draft.checkAuthNumberAxios = true;
         });
-        const res = await axios.post(`${domain}/api/main/auth/certify`, {
+        const res = await axios.post(`${baseUrl}/api/main/auth/certify`, {
           email: userState.email,
-          number: parseInt(userState.authNumber),
+          authNumber: userState.authNumber,
         });
         console.log("인증번호 res: ", res);
         if (res.status === 200) {
@@ -300,7 +300,7 @@ const RegisterForm = () => {
     };
 
     if (userState.certified === true) {
-      const res = await axios.post(`${domain}/api/main/auth/join`, userData);
+      const res = await axios.post(`${baseUrl}/api/main/auth/join`, userData);
       if (res.status === 201) {
         console.log("회원가입이 완료되었습니다!");
         navigate("/login");

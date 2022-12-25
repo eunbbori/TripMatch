@@ -54,7 +54,7 @@ const MyHeader = () => {
             alt="자유게시판"
           />
         </Link>
-        <Link to="/wishList">
+        <Link to="/wishlist">
           <img
             src="https://res.cloudinary.com/dk9scwone/image/upload/v1671184505/free-icon-heart-shape-39559_aatqxl.png"
             alt="위시리스트"

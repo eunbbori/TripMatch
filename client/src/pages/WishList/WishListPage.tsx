@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import WishListContents from "./components/WishListContents";
 import WishTab from "./components/WishTab";
 
-const domain = "http://localhost:5000";
+const baseUrl = "http://localhost:5000";
 
 const WishListPage = () => {
   const [dataList, setDataList] = useState();
@@ -13,7 +13,7 @@ const WishListPage = () => {
   useEffect(() => {
     const getLikedDataList = async () => {
       try {
-        const res = await axios.get(`${domain}/api/main/likes`);
+        const res = await axios.get(`${baseUrl}/api/main/likes`);
         if (res.status === 200) {
           setDataList(res.data);
         } else {
