@@ -19,6 +19,7 @@ import MyEnroll from "./pages/MyEnroll/MyEnroll";
 import FestivalList from "./components/FestivalList/FestivalList";
 import Search from "./pages/Search/Search";
 import UpdateUserInfoPage from "./pages/MyPage/UpdateUserInfoPage";
+import WishListPage from "./pages/WishList/WishListPage";
 
 const App = () => {
   return (
@@ -40,6 +41,7 @@ const App = () => {
           <Route path="/match/write" element={<MatchPostWrite />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/wishList" element={<WishListPage />} />
           <Route path="admin" element={<Admin />} />
           <Route path="search/:keyword" element={<Search />} />
           <Route

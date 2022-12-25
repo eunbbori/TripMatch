@@ -54,13 +54,13 @@ const MyHeader = () => {
             alt="자유게시판"
           />
         </Link>
-        <Link to="/">
+        <Link to="/wishList">
           <img
             src="https://res.cloudinary.com/dk9scwone/image/upload/v1671184505/free-icon-heart-shape-39559_aatqxl.png"
             alt="위시리스트"
           />
         </Link>
-        <Link to="/mypage">
+        <Link to="/mypage/userInfo">
           <img
             src="https://res.cloudinary.com/dk9scwone/image/upload/v1671095094/temporaryIconHuman_j9fibe.png"
             alt="마이페이지"
