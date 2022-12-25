@@ -35,7 +35,7 @@ import {
 import AppInputText from "../../components/AppInputText/AppInputText";
 import AppInputRadioCheck from "../../components/AppInputRadioCheck/AppInputRadioCheck";
 import AppInputDateRange from "../../components/AppInputDateRange/AppInputDateRange";
-import AppInputFile from "../../components/AppIntpuFile/AppInputFile";
+import AppInputFile from "../../components/AppInputFile/AppInputFile";
 import AppButton from "../../components/AppButton/AppButton";
 import { Link } from "react-router-dom";
 
