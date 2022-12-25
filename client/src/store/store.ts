@@ -3,6 +3,7 @@ import { modalSlice } from "../slice/modal";
 import { freePostApi } from "../slice/freePostApi";
 import { commentApi } from "../slice/commentApi";
 import { matchPostApi } from "./../slice/matchPostApi";
+import { updateImgApi } from "./../slice/uploadImgApi";
 
 // ...
 
@@ -12,12 +13,14 @@ export const store = configureStore({
     [freePostApi.reducerPath]: freePostApi.reducer,
     [commentApi.reducerPath]: commentApi.reducer,
     [matchPostApi.reducerPath]: matchPostApi.reducer,
+    [updateImgApi.reducerPath]: updateImgApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
       freePostApi.middleware,
       commentApi.middleware,
       matchPostApi.middleware,
+      updateImgApi.middleware,
     ),
 });
 

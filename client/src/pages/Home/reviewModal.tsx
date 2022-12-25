@@ -18,7 +18,14 @@ interface User {
 const ReviewModal: React.FC<EmailProps> = ({ email }) => {
   const [starList, setStarList] = useState([false, false, false, false, false]);
   const [point, setPoint] = useState(0);
-  const [userInfo, setUserInfo] = useState<User>();
+  const [userInfo, setUserInfo] = useState<User>({
+    email: "",
+    profileImg: "",
+    nickname: "",
+    introduce: "",
+    age: "",
+    gender: "",
+  });
   const isShown = useAppSelector((state) => state.modal.show);
   const dispatch = useAppDispatch();
 
@@ -66,9 +73,9 @@ const ReviewModal: React.FC<EmailProps> = ({ email }) => {
       <div className="modalCard">
         <div className="userInfo">
           <img src="https://picsum.photos/600/900" />
-          <div className="nickname">{userInfo?.nickname}</div>
+          <div className="nickname">{userInfo.nickname}</div>
           <div className="detailInfo">
-            {userInfo?.age} {userInfo?.gender}성
+            {userInfo.age} {userInfo.gender}성
           </div>
         </div>
         <div className="question">동행과의 여행은 어떠셨나요?</div>
