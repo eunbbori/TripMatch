@@ -36,6 +36,10 @@ class CommunityService {
     });
     return communities;
   }
+  async checkAuthor(communityId: string, email: string) {
+    const community = await this.communityModel.findOne(communityId);
+    if (community?.author.email !== email) throw new Error("403");
+  }
 }
 
 const communityService = new CommunityService();

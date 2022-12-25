@@ -4,7 +4,6 @@ import {
   likeService,
   commentService,
   userService,
-  matchService,
 } from "../../services";
 
 const postsController = Router();
@@ -42,7 +41,7 @@ postsController.get("/:postId", async (req, res, next) => {
 postsController.put("/:postId", async (req, res, next) => {
   const { postId } = req.params;
   try {
-    const post = await postService.getPost(postId);
+    const post = await postService.getAuthor(postId);
     if (post?.author.email !== req.email) return next(new Error("403"));
     await postService.update(postId, req.body);
     res.status(200).end();
@@ -53,21 +52,10 @@ postsController.put("/:postId", async (req, res, next) => {
 postsController.delete("/:postId", async (req, res, next) => {
   const { postId } = req.params;
   try {
-    const post = await postService.getPost(postId);
+    const post = await postService.getAuthor(postId);
     if (post?.author.email !== req.email) return next(new Error("403"));
     await postService.delete(postId);
     res.status(200).end();
-  } catch (err) {
-    next(err);
-  }
-});
-postsController.post("/:postId", async (req, res, next) => {
-  const { postId } = req.params;
-  try {
-    const author = await postService.getAuthor(postId);
-    const applicant = await userService.getAuthor(req.email);
-    await matchService.create({ postId, ...author, applicant });
-    res.status(201).end();
   } catch (err) {
     next(err);
   }

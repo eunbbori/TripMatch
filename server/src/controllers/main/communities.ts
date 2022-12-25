@@ -29,8 +29,7 @@ communitiesController.get("/:communityId", async (req, res, next) => {
 communitiesController.put("/:communityId", async (req, res, next) => {
   const { communityId } = req.params;
   try {
-    const community = await communityService.getCommunity(communityId);
-    if (community?.author.email !== req.email) return next(new Error("403"));
+    await communityService.checkAuthor(communityId, req.email);
     await communityService.update(communityId, req.body);
     res.status(200).end();
   } catch (err) {
@@ -40,8 +39,7 @@ communitiesController.put("/:communityId", async (req, res, next) => {
 communitiesController.delete("/:communityId", async (req, res, next) => {
   const { communityId } = req.params;
   try {
-    const community = await communityService.getCommunity(communityId);
-    if (community?.author.email !== req.email) return next(new Error("403"));
+    await communityService.checkAuthor(communityId, req.email);
     await communityService.delete(communityId);
     res.status(200).end();
   } catch (err) {

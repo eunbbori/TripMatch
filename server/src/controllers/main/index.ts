@@ -6,6 +6,7 @@ import postsController from "./posts";
 import likesController from "./likes";
 import searchController from "./search";
 import noticesController from "./notices";
+import matchesController from "./matches";
 
 const mainController = Router();
 
@@ -16,5 +17,6 @@ mainController.use("/posts", postsController);
 mainController.use("/likes", likesController);
 mainController.use("/search", searchController);
 mainController.use("/notices", noticesController);
+mainController.use("/matches", matchesController);
 
 export default mainController;
