@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { AppInputProps } from "../../type/input";
 import {
   Div,

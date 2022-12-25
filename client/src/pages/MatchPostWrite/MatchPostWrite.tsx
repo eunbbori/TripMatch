@@ -1,6 +1,10 @@
 import { useState, useRef, ChangeEvent } from "react";
 import Editor from "../../components/Editor/Editor";
+import { useUpdateImgMutation } from "../../slice/uploadImgApi";
 import AppSelect from "../../components/AppSelect/AppSelect";
+import axios from "axios";
+
+const domain = "http://localhost:5000";
 
 const regions = [
   "서울",
@@ -35,11 +39,12 @@ import {
 } from "./MatchPostWriteStyle";
 import AppInputText from "../../components/AppInputText/AppInputText";
 import AppInputRadioCheck from "../../components/AppInputRadioCheck/AppInputRadioCheck";
-import AppInputDateRange from "../../components/AppInputDateRange/AppInputDateRange";
 import AppInputFile from "../../components/AppInputFile/AppInputFile";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const MatchPostWrite = () => {
+  const navigate = useNavigate();
+
   const regionRef = useRef<HTMLSelectElement>(null);
   const titleRef = useRef<HTMLInputElement>(null);
   const peopleCntRef = useRef<HTMLInputElement>(null);
@@ -52,12 +57,14 @@ const MatchPostWrite = () => {
   const [startDate, setStartDate] = useState<string>("");
   const [endDate, setEndDate] = useState<string>("");
 
-  const imageHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const [updateImg, { error, isLoading }] = useUpdateImgMutation();
+
+  const imageHandler = async (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files) {
       return;
     }
-    const files = event.target.files[0];
-    setImageUploaded(files);
+    const file = event.target.files[0];
+    setImageUploaded(file);
   };
 
   const handleAges = (event: ChangeEvent<HTMLInputElement>) => {
@@ -70,22 +77,40 @@ const MatchPostWrite = () => {
     setAges(updatedList);
   };
 
-  const submitHandler = (event: React.FormEvent) => {
+  const submitHandler = async (event: React.FormEvent) => {
     event.preventDefault();
+    const imgData = new FormData(); //formdata 객체 생성
+    imgData.append("file", imageUploaded || ""); //객체에 파일값 넣음
+    imgData.append("upload_preset", "tripMatch"); //클라우디너리 설정값이므로 반드시 넣어주세요.
+    imgData.append("cloud_name", "dk9scwone"); //클라우디너리 설정값이므로 반드시 넣어주세요.
+
+    const image = await updateImg(imgData).unwrap();
+    if (!image) {
+      alert("에러가 발생하였습니다. 관리자에게 문의해주세요.");
+    }
     const region = regionRef.current!.value;
     const title = titleRef.current!.value;
     const peopleCnt = peopleCntRef.current!.value;
     const contact = contactRef.current!.value;
 
-    console.log(region);
-    console.log(title);
-    console.log(peopleCnt);
-    console.log(`${startDate}~${endDate}`);
-    console.log(gender);
-    console.log(ages);
-    console.log(imageUploaded);
-    console.log(contact);
-    console.log(content);
+    axios
+      .post(`${domain}/api/main/posts/post`, {
+        region: region,
+        title: title,
+        userCount: peopleCnt,
+        duration: [startDate, endDate],
+        hopeGender: gender,
+        hopeAge: ages[0], // age는 여러개가 되어야함. api에서 수정한 후 수정할 예정
+        thumbnail: Object.values(image)[15],
+        contact: contact,
+        content: content,
+      })
+      .then(() => {
+        navigate("/match");
+      })
+      .catch(() => {
+        alert("에러가 발생하였습니다. 관리자에게 문의해주세요.");
+      });
   };
 
   return (
