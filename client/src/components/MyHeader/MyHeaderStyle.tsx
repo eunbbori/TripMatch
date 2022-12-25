@@ -37,7 +37,7 @@ const Header = styled.header`
     input {
       width: 10vw;
       border: none;
-      font-family: 'S-CoreDream-3Light';
+      font-family: "S-CoreDream-3Light";
 
       :focus {
         outline: white;
@@ -60,7 +60,6 @@ const Header = styled.header`
   .navBar .firstImg {
     margin-left: 0;
   }
-}
 `;
 
 const AlertModal = styled(Modal)`
