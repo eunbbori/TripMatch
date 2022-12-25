@@ -47,6 +47,13 @@ class PostModel {
       .sort({ createdAt: -1 });
     return posts;
   }
+  async findByAuthor(email: string) {
+    const posts = await this.postDB.find(
+      { "author.email": email },
+      { _id: 0, postId: 1, title: 1, region: 1, duration: 1, status: 1 }
+    );
+    return posts;
+  }
 }
 
 export default PostModel;

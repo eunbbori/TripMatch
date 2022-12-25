@@ -17,14 +17,8 @@ class CommentModel {
   async deleteOne(commentId: string) {
     await this.commentDB.deleteOne({ commentId });
   }
-  async findByPost(condition: object) {
-    const comments = await this.commentDB.find(condition, {
-      _id: 0,
-      commentId: 1,
-      content: 1,
-      author: 1,
-      createdAt: 1,
-    });
+  async findMany(condition: object, projection: object) {
+    const comments = await this.commentDB.find(condition, projection);
     return comments;
   }
 }

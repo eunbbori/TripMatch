@@ -17,6 +17,10 @@ class MatchModel {
   async deleteOne(matchId: string) {
     await this.matchDB.deleteOne({ matchId });
   }
+  async findMany(condition: object, projection: object) {
+    const matches = await this.matchDB.find(condition, projection);
+    return matches;
+  }
 }
 
 export default MatchModel;

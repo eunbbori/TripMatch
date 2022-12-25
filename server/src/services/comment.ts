@@ -17,7 +17,21 @@ class CommentService {
     await this.commentModel.deleteOne(commentId);
   }
   async getComments(condition: object) {
-    const comments = await this.commentModel.findByPost(condition);
+    const comments = await this.commentModel.findMany(condition, {
+      _id: 0,
+      commentId: 1,
+      content: 1,
+      author: 1,
+      createdAt: 1,
+    });
+    return comments;
+  }
+  async findByAuthor(email: string) {
+    const comments = await this.commentModel.findMany(
+      { "author.email": email, postId: { $exists: true } },
+      { _id: 0, postId: 1 }
+    );
+    if (comments.length === 0) throw new Error("204");
     return comments;
   }
 }

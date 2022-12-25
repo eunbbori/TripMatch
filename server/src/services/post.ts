@@ -17,9 +17,9 @@ class PostService {
     const posts = await this.postModel.findEight(page, condition);
     return posts;
   }
-  async getWishlist(likes: []) {
+  async getWishlist(postIds: []) {
     const posts = [];
-    for (const postId of likes) {
+    for (const { postId } of postIds) {
       posts.push(
         await this.postModel.findOne(postId, {
           _id: 0,
@@ -30,6 +30,7 @@ class PostService {
         })
       );
     }
+    if (posts.length === 0) throw new Error("204");
     return posts;
   }
   async getPost(postId: string) {
@@ -70,6 +71,56 @@ class PostService {
     const posts = await this.postModel.findByKeyword({
       $or: [{ title: regex }, { content: regex }],
     });
+    return posts;
+  }
+  async getCommentlist(postIds: []) {
+    const posts = [];
+    for (const { postId } of postIds) {
+      posts.push(
+        await this.postModel.findOne(postId, {
+          _id: 0,
+          postId: 1,
+          title: 1,
+          region: 1,
+          duration: 1,
+          author: 1,
+        })
+      );
+    }
+    if (posts.length === 0) throw new Error("204");
+    return posts;
+  }
+  async getMyEnroll(matches: []) {
+    const posts = [];
+    for (const { matchId, postId, author, status } of matches) {
+      const post = await this.postModel.findOne(postId, {
+        _id: 0,
+        title: 1,
+        duration: 1,
+        contact: 1,
+      });
+      posts.push({ matchId, postId, author, status, ...post });
+    }
+    if (posts.length === 0) throw new Error("204");
+    return posts;
+  }
+  async getRecvdEnroll(matches: []) {
+    const posts = [];
+    for (const { matchId, postId, applicant } of matches) {
+      const post = await this.postModel.findOne(postId, {
+        _id: 0,
+        title: 1,
+        duration: 1,
+        status: 1,
+      });
+      posts.push({ matchId, postId, applicant, ...post });
+    }
+    if (posts.length === 0) throw new Error("204");
+    return posts;
+  }
+  async getByAuthor(email: string) {
+    const posts = await this.postModel.findByAuthor(email);
+    if (posts.length === 0) throw new Error("204");
     return posts;
   }
 }
