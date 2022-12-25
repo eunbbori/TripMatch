@@ -1,6 +1,8 @@
+import { RefObject } from "react";
 import { RadioAndCheckBox } from "../components/AppInputRadioCheck/AppInputRadioCheck";
 
 export interface AppInputProps {
+  defaultValue?: string;
   label?: string;
   type: string;
   inputWidth?: string;
@@ -8,4 +10,6 @@ export interface AppInputProps {
   accept?: string;
   className: string;
   radioAndCheckBoxList?: RadioAndCheckBox[];
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  refer?: RefObject<HTMLInputElement>;
 }

@@ -8,26 +8,26 @@ import {
   FileUploadLabel,
 } from "./AppInputFileStyle";
 
-const AppInputFile: React.FC<AppInputProps> = ({ label, className }) => {
-  const [imageUploaded, setImageUploaded] = useState<string>();
-  const imageHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const fileName = event.target.value;
-    setImageUploaded(fileName);
-  };
+const AppInputFile: React.FC<AppInputProps> = ({
+  label,
+  defaultValue,
+  className,
+  onChange,
+}) => {
   return (
     <Div>
       {<Label htmlFor={className}>{label}</Label>}
       <FileInput
         id="file"
         type="file"
+        onChange={onChange}
         className={className}
         accept="image/jpg,image.png,image/jpeg"
-        onChange={imageHandler}
       />
       <FileUploadName
         className="uploadName"
         placeholder="jpg,png,jpeg 이미지"
-        value={imageUploaded}
+        defaultValue={defaultValue}
       />
       <FileUploadLabel htmlFor="file">업로드</FileUploadLabel>
     </Div>

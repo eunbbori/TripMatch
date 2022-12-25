@@ -10,9 +10,7 @@ const AppInputDateRange: React.FC<AppInputProps> = ({
   return (
     <DateRange>
       {<Label htmlFor={className}>{label}</Label>}
-      <Input type="date" className="startDatePicker" width={inputWidth} />
-      <p>~</p>
-      <Input type="date" className="endDatePicker" width={inputWidth} />
+      <Input type="date" className="datePicker" width={inputWidth} />
     </DateRange>
   );
 };

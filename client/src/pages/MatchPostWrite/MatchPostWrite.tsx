@@ -1,3 +1,4 @@
+import { useState, useRef, ChangeEvent } from "react";
 import Editor from "../../components/Editor/Editor";
 import AppSelect from "../../components/AppSelect/AppSelect";
 
@@ -28,90 +29,151 @@ const ageList = [
 
 import {
   Container,
-  Etc,
   ButtonContainer,
   MatchPostAppButton,
+  DateRange,
 } from "./MatchPostWriteStyle";
 import AppInputText from "../../components/AppInputText/AppInputText";
 import AppInputRadioCheck from "../../components/AppInputRadioCheck/AppInputRadioCheck";
 import AppInputDateRange from "../../components/AppInputDateRange/AppInputDateRange";
 import AppInputFile from "../../components/AppInputFile/AppInputFile";
-import AppButton from "../../components/AppButton/AppButton";
 import { Link } from "react-router-dom";
 
 const MatchPostWrite = () => {
-  // const [selectedGender, setSelectedGender] = useState<string>();
+  const regionRef = useRef<HTMLSelectElement>(null);
+  const titleRef = useRef<HTMLInputElement>(null);
+  const peopleCntRef = useRef<HTMLInputElement>(null);
+  const contactRef = useRef<HTMLInputElement>(null);
 
-  // const radioHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   setSelectedGender(event.target.value);
-  // };
+  const [gender, setGender] = useState<string>("남성");
+  const [ages, setAges] = useState<any[]>([]);
+  const [imageUploaded, setImageUploaded] = useState<File>();
+  const [content, setContent] = useState<string>("");
+  const [startDate, setStartDate] = useState<string>("");
+  const [endDate, setEndDate] = useState<string>("");
+
+  const imageHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (!event.target.files) {
+      return;
+    }
+    const files = event.target.files[0];
+    setImageUploaded(files);
+  };
+
+  const handleAges = (event: ChangeEvent<HTMLInputElement>) => {
+    let updatedList = [...ages];
+    if (event.target.checked) {
+      updatedList = [...ages, event.target.value];
+    } else {
+      updatedList.splice(ages.indexOf(event.target.value), 1);
+    }
+    setAges(updatedList);
+  };
+
+  const submitHandler = (event: React.FormEvent) => {
+    event.preventDefault();
+    const region = regionRef.current!.value;
+    const title = titleRef.current!.value;
+    const peopleCnt = peopleCntRef.current!.value;
+    const contact = contactRef.current!.value;
+
+    console.log(region);
+    console.log(title);
+    console.log(peopleCnt);
+    console.log(`${startDate}~${endDate}`);
+    console.log(gender);
+    console.log(ages);
+    console.log(imageUploaded);
+    console.log(contact);
+    console.log(content);
+  };
 
   return (
-    <Container>
-      <AppSelect className={"region"} options={regions} label={"지 역"} />
-      <AppInputText
-        inputWidth="100%"
-        type={"text"}
-        label={"제 목"}
-        className={"title large"}
-        placeholder={"전주 여행 같이 가실 분"}
-      />
-      <AppInputText
-        inputWidth="5%"
-        type={"number"}
-        label={"모집 인원"}
-        className={"peopleCount"}
-      />
-      <AppInputDateRange
-        inputWidth="20%"
-        type={"dateRange"}
-        label={"여행 기간"}
-        className={"datePicker"}
-      />
-      <AppInputRadioCheck
-        radioAndCheckBoxList={genderList}
-        type={"radio"}
-        label={"희망 성별"}
-        className={"gender"}
-      />
-      <AppInputRadioCheck
-        radioAndCheckBoxList={ageList}
-        type={"checkbox"}
-        label={"희망 연령대"}
-        className={"age"}
-      />
-      <Etc>
-        <AppInputFile type={"file"} label={"사진 첨부"} className={"file"} />
-      </Etc>
-      <AppInputText
-        inputWidth="20%"
-        type={"text"}
-        label={"연락 수단"}
-        className={"contact"}
-        placeholder={"인스타그램, 전화번호 등"}
-      />
-      <Editor
-        setContent={function (): void {
-          throw new Error("Function not implemented.");
-        }}
-      />
-      <ButtonContainer>
-        <Link to="/match">
+    <form onSubmit={submitHandler}>
+      <Container>
+        <AppSelect
+          refer={regionRef}
+          className={"region"}
+          options={regions}
+          label={"지 역"}
+        />
+        <AppInputText
+          refer={titleRef}
+          inputWidth="100%"
+          type={"text"}
+          label={"제 목"}
+          className={"title large"}
+          placeholder={"전주 여행 같이 가실 분"}
+        />
+        <AppInputText
+          refer={peopleCntRef}
+          inputWidth="5%"
+          type={"number"}
+          label={"모집 인원"}
+          className={"peopleCount"}
+        />
+        <DateRange>
+          <AppInputText
+            type={"date"}
+            label={"여행 기간"}
+            className={"startDatePicker"}
+            onChange={(e) => setStartDate(e.target.value)}
+          />
+          <p>~</p>
+          <AppInputText
+            type={"date"}
+            className={"endDatePicker"}
+            onChange={(e) => setEndDate(e.target.value)}
+          />
+        </DateRange>
+        <AppInputRadioCheck
+          radioAndCheckBoxList={genderList}
+          type={"radio"}
+          label={"희망 성별"}
+          className={"gender"}
+          onChange={(e) => setGender(e.target.value)}
+        />
+        <AppInputRadioCheck
+          radioAndCheckBoxList={ageList}
+          onChange={(e) => handleAges(e)}
+          type={"checkbox"}
+          label={"희망 연령대"}
+          className={"age"}
+        />
+        <AppInputFile
+          type={"file"}
+          defaultValue={imageUploaded?.name}
+          onChange={(e) => imageHandler(e)}
+          label={"사진 첨부"}
+          className={"file"}
+        />
+        <AppInputText
+          refer={contactRef}
+          inputWidth="20%"
+          type={"text"}
+          label={"연락 수단"}
+          className={"contact"}
+          placeholder={"인스타그램, 전화번호 등"}
+        />
+        <Editor setContent={setContent} />
+        <ButtonContainer>
+          <Link to="/match">
+            <MatchPostAppButton
+              width={"120px"}
+              className={"cancelBtn"}
+              type={"submit"}
+              text={"취소"}
+            />
+          </Link>
           <MatchPostAppButton
             width={"120px"}
-            className={"cancelBtn"}
-            type={"button"}
-            text={"취소"}
+            className={"finishBtn"}
+            type={"submit"}
+            text={"작성 완료"}
           />
-        </Link>
-        <MatchPostAppButton
-          width={"120px"}
-          className={"finishBtn"}
-          type={"button"}
-          text={"작성 완료"}
-        />
-      </ButtonContainer>
-    </Container>
+        </ButtonContainer>
+      </Container>
+    </form>
   );
 };
 

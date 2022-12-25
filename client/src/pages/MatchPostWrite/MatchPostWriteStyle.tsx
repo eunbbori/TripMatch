@@ -7,9 +7,16 @@ export const Container = styled.div`
   margin: 0 auto;
 `;
 
-export const Etc = styled.div`
+export const DateRange = styled.div`
   display: flex;
-  justify-content: space-between;
+  input {
+    text-indent: 5px;
+  }
+  p {
+    align-self: center;
+    margin-left: 10px;
+  }
+  /* justify-content: space-between; */
 `;
 
 export const ButtonContainer = styled.div`

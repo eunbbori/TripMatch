@@ -16,6 +16,7 @@ export interface RadioAndCheckBox {
 const AppInputRadioCheck: React.FC<AppInputProps> = ({
   label,
   type,
+  onChange,
   radioAndCheckBoxList,
   className,
 }) => {
@@ -26,6 +27,7 @@ const AppInputRadioCheck: React.FC<AppInputProps> = ({
         <RadioAndCheckBoxDiv key={object.htmlValue}>
           <RadioAndCheckBoxInput
             type={type}
+            onChange={onChange}
             value={object.value}
             id={object.value}
             name={className}

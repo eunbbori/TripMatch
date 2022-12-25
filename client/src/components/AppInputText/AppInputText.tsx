@@ -8,15 +8,19 @@ const AppInputText: React.FC<AppInputProps> = ({
   inputWidth,
   className,
   placeholder,
+  refer,
+  onChange,
 }) => {
   return (
     <Div>
       {<Label htmlFor={className}>{label}</Label>}
       <Input
+        ref={refer}
         type={type}
         width={inputWidth}
         placeholder={placeholder}
         className={className}
+        onChange={onChange}
       />
     </Div>
   );
