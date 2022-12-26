@@ -3,6 +3,7 @@ import MakeMatchPostList from "../MakeMatchPostList/MakeMatchPostList";
 import Paging from "../Pagination/Paging";
 import { FilterType } from "../../type/filter";
 import { FilterAppSelect } from "./MatchPostPanelStyle";
+import { matchMockData } from "../../pages/Home/components/mockData";
 
 interface MatchPostPanelProps {
   region: string;
@@ -25,7 +26,7 @@ const MatchPostPanel: React.FC<MatchPostPanelProps> = ({ region }) => {
         className="filter"
         onChange={selectEvent}
       />
-      <MakeMatchPostList filter={filters} />
+      <MakeMatchPostList data={matchMockData} filter={filters} />
       <Paging />
     </>
   );

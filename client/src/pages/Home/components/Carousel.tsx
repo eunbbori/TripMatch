@@ -2,11 +2,12 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import CarouselStyle from "./CarouselStyle";
+import { Link } from "react-router-dom";
 
 const slide = [
-  "https://picsum.photos/3000/500",
-  "https://res.cloudinary.com/dk9scwone/image/upload/v1671095095/temporaryLogo_l9x22i.png",
-  "https://picsum.photos/3000/600",
+  "https://res.cloudinary.com/dk9scwone/image/upload/v1671965858/001_oh2732.png",
+  "https://res.cloudinary.com/dk9scwone/image/upload/v1671965859/002_p0rf6a.png",
+  "https://res.cloudinary.com/dk9scwone/image/upload/v1671965858/003_sxjpc3.png",
 ];
 
 const Carousel = () => {
@@ -16,7 +17,7 @@ const Carousel = () => {
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 2000,
+    autoplaySpeed: 3000,
     pauseOnHover: true,
   };
 
@@ -26,7 +27,9 @@ const Carousel = () => {
         {slide.map((item, idx) => {
           return (
             <div key={idx}>
-              <img src={item} />
+              <Link to={idx === 0 ? "/match" : idx === 1 ? "/" : "/free"}>
+                <img src={item} />
+              </Link>
             </div>
           );
         })}

@@ -32,6 +32,7 @@ const SearchBar = styled.div`
 
   input {
     border: none;
+    font-family: "S-CoreDream-3Light";
 
     :focus {
       outline: white;
@@ -63,7 +64,7 @@ const MemberList = styled.div`
     line-height: 20px;
 
     .name {
-      width: 55%;
+      width: 50%;
 
       .nickname {
         font-weight: bold;
@@ -79,20 +80,28 @@ const MemberList = styled.div`
       width: 33%;
       color: #b1b1b1;
     }
+  }
+`;
 
-    button {
-      width: 12%;
-      padding: 10px;
-      border: none;
-      border-radius: 5px;
-      background-color: ${(props) => props.theme.color.pink};
-      cursor: pointer;
+const Management = styled.div`
+  width: 17%;
 
-      &:hover {
-        background-color: ${(props) => props.theme.color.blue};
-      }
+  select:focus {
+    border: 1px solid #dbdbdb;
+  }
+
+  button {
+    width: 100%;
+    padding: 5px;
+    border: none;
+    border-radius: 5px;
+    background-color: ${(props) => props.theme.color.pink};
+    cursor: pointer;
+
+    &:hover {
+      background-color: ${(props) => props.theme.color.blue};
     }
   }
 `;
 
-export { Container, SearchBar, MemberList };
+export { Container, SearchBar, MemberList, Management };

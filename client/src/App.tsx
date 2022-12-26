@@ -41,7 +41,7 @@ const App = () => {
           <Route path="/match/write" element={<MatchPostWrite />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
-          <Route path="/wishList" element={<WishListPage />} />
+          <Route path="/wishlist" element={<WishListPage />} />
           <Route path="admin" element={<Admin />} />
           <Route path="search/:keyword" element={<Search />} />
           <Route

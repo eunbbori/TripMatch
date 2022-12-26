@@ -41,26 +41,40 @@ const MyHeader = () => {
         />
       </div>
       <div className="navBar">
-        <Link to="/match">
+        <Link
+          to={sessionStorage.getItem("x-access-token") ? "/match" : "/login"}
+        >
           <img
             className="firstImg"
             src="https://res.cloudinary.com/dk9scwone/image/upload/v1671095094/temporaryIconShake_jywmku.png"
             alt="동행게시판"
           />
         </Link>
-        <Link to="/free">
+        <Link
+          to={sessionStorage.getItem("x-access-token") ? "/free" : "/login"}
+        >
           <img
             src="https://res.cloudinary.com/dk9scwone/image/upload/v1671095094/temporaryIconbubble_h1lmf7.png"
             alt="자유게시판"
           />
         </Link>
-        <Link to="/wishlist">
+        <Link
+          to={sessionStorage.getItem("x-access-token") ? "/wishlist" : "/login"}
+        >
           <img
             src="https://res.cloudinary.com/dk9scwone/image/upload/v1671184505/free-icon-heart-shape-39559_aatqxl.png"
             alt="위시리스트"
           />
         </Link>
-        <Link to="/mypage/userInfo">
+        <Link
+          to={
+            !sessionStorage.getItem("x-access-token")
+              ? "/login"
+              : sessionStorage.getItem("roleToken") === "관리자"
+              ? "/admin"
+              : "/mypage/userInfo"
+          }
+        >
           <img
             src="https://res.cloudinary.com/dk9scwone/image/upload/v1671095094/temporaryIconHuman_j9fibe.png"
             alt="마이페이지"

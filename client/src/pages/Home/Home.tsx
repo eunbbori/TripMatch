@@ -7,8 +7,23 @@ import MakeMatchPostList from "../../components/MakeMatchPostList/MakeMatchPostL
 import { matchMockData, freeMockData } from "./components/mockData";
 import Title from "../../components/Title/Title";
 import { useUpdateImgMutation } from "../../slice/uploadImgApi";
+import { useGetAllMatchPostQuery } from "../../slice/matchPostApi";
+import NotFound from "../../components/NotFound/NotFound";
+import { useGetAllFreePostQuery } from "../../slice/freePostApi";
 
 const Home = () => {
+  const {
+    data: matchData,
+    isError: matchError,
+    isLoading: matchLoading,
+  } = useGetAllMatchPostQuery({ page: 1 });
+
+  const {
+    data: freeData,
+    isError: freeError,
+    isLoading: freeLoading,
+  } = useGetAllFreePostQuery({ page: 1 });
+
   // useUpdateImgMutation을 import하여 사용해 주세요.
   // input에서 파일을 선택했을 때 바로 updateImg 함수를 적용하지 마세요.
   // input onChange에 함수를 걸어버리시면 사용자가 input에서 사진을 바꿀 때마다(사용자가 어떤 사진을 올릴지 고민할 때...) 클라우드에 업로드 됩니다.
@@ -20,10 +35,16 @@ const Home = () => {
 
   //useRef 사용하고 싶었는데 타입과 싸우다가 포기하고 useState로... useRef로 성공하신 분들은 알려주세요ㅠㅠ
   const [img, setImg] = useState<File | string>("");
-  const [updateImg, { error, isLoading }] = useUpdateImgMutation();
+  const [updateImg, { error: UploadImgError, isLoading: UploadImgIsLoading }] =
+    useUpdateImgMutation();
+  // const {
+  //   data: MatchPost,
+  //   error: MatchPostError,
+  //   isLoading: MatchPostIsLoading,
+  // } = useGetAllMatchPostQuery({ page: 1, region: "", status: "" });
 
   return (
-    <div>
+    <>
       {/* 사진 업로드 input 예시 */}
       <input
         name="photo"
@@ -53,17 +74,20 @@ const Home = () => {
       >
         업로드하기
       </button>
-      {error && <div>에러</div>}
-      {isLoading && <div>로딩중...</div>}
+      {UploadImgError && <div>에러</div>}
+      {UploadImgIsLoading && <div>로딩중...</div>}
       {/* 예시는 여기까지 */}
 
       <Carousel />
       <Title title="동행게시판" location="/" />
-      <MakeMatchPostList data={matchMockData} />
-      <FreePostPreview freePostList={freeMockData} location="/" />
+      {matchData ? <MakeMatchPostList data={matchData.posts} /> : <NotFound />}
+      {freeData ? (
+        <FreePostPreview freePostList={freeData?.communities} location="/" />
+      ) : (
+        <NotFound />
+      )}
       <FestivalList location="/" />
-      {/* <ReviewModal email="naver.com" /> */}
-    </div>
+    </>
   );
 };
 

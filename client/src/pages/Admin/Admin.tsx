@@ -1,72 +1,76 @@
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
-import { Container, MemberList, SearchBar } from "./AdminStyle";
+import AppSelect from "../../components/AppSelect/AppSelect";
+import Modal from "../../components/Modal/Modal";
+import { showModal } from "../../slice/modal";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { Container, Management, MemberList, SearchBar } from "./AdminStyle";
 
 const mockData = [
   {
-    userID: "1",
     email: "111@naver.com",
     nickname: "쥰",
+    role: "관리자",
     createdAt: "2022-11-04T04:57:01.267Z",
   },
   {
-    userID: "2",
     email: "111@naver.com",
     nickname: "김지윤",
+    role: "관리자",
     createdAt: "2022-11-04T04:57:01.267Z",
   },
   {
-    userID: "3",
     email: "longlongemail@naver.com",
     nickname: "듐듐",
+    role: "회원",
     createdAt: "2022-11-04T04:57:01.267Z",
   },
   {
-    userID: "4",
     email: "111@naver.com",
     nickname: "최대길이닉네임임",
+    role: "회원",
     createdAt: "2022-11-04T04:57:01.267Z",
   },
   {
-    userID: "5",
     email: "tripMatch1234@naver.com",
     nickname: "최대길이닉네임임",
+    role: "회원",
     createdAt: "2022-11-04T04:57:01.267Z",
   },
   {
-    userID: "6",
     email: "111@naver.com",
     nickname: "최대길이닉네임임",
+    role: "회원",
     createdAt: "2022-11-04T04:57:01.267Z",
   },
   {
-    userID: "7",
     email: "111@naver.com",
     nickname: "최대길이닉네임임",
+    role: "회원",
     createdAt: "2022-11-04T04:57:01.267Z",
   },
   {
-    userID: "8",
     email: "111@naver.com",
     nickname: "최대길이닉네임임",
+    role: "회원",
     createdAt: "2022-11-04T04:57:01.267Z",
   },
   {
-    userID: "9",
     email: "111@naver.com",
     nickname: "최대길이닉네임임",
+    role: "회원",
     createdAt: "2022-11-04T04:57:01.267Z",
   },
   {
-    userID: "10",
     email: "jjyy5017@naver.com",
     nickname: "최대길이닉네임임",
+    role: "회원",
     createdAt: "2022-11-04T04:57:01.267Z",
   },
   {
-    userID: "11",
     email: "111@naver.com",
     nickname: "최대길이닉네임임",
+    role: "회원",
     createdAt: "2022-11-04T04:57:01.267Z",
   },
 ];
@@ -83,20 +87,47 @@ const joinDateFormat = (createdAt: string) => {
 
 const Admin = () => {
   const [members, setMembers] = useState([]);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const searchRef = useRef<HTMLInputElement>(null);
+  const { show: isShown, modalText } = useAppSelector((state) => state.modal);
+  const dispatch = useAppDispatch();
 
-  const getMember = async (ninkname?: string) => {
-    const memberList = await axios.get("").then((res) => res.data);
+  const getMember = async (search?: string) => {
+    const searchKeyword = search ? `?keyword=${search}` : "";
+    const memberList = await axios
+      .get(`/api/admin/users${searchKeyword}`)
+      .then((res) => res.data);
     setMembers(memberList);
     return;
   };
 
-  const deleteMember = async (userID: string) => {
-    await axios.delete("");
+  const deleteMember = async (email: string) => {
+    await axios
+      .delete(`/api/admin/users/${email}`)
+      .then()
+      .catch((err) => console.log(err));
+  };
+
+  const roleChange = async (email: string, role: string) => {
+    await axios
+      .put(`/api/admin/users/${email}`, { role: role })
+      .then()
+      .catch((err) => console.log(err));
+  };
+
+  const deleteMemberModal = (ninkname: string, email: string) => {
+    const content = `${ninkname}${email} 
+      회원을 강제 탈퇴하시겠습니까?`;
+    dispatch(
+      showModal({
+        title: "탈퇴",
+        content: content,
+        rightButton: "탈퇴",
+      }),
+    );
   };
 
   useEffect(() => {
-    // getMember();
+    getMember();
   }, []);
 
   return (
@@ -104,10 +135,15 @@ const Admin = () => {
       <div className="title">
         <h3>회원관리</h3>
         <SearchBar>
-          <input type="text" placeholder="닉네임 검색"></input>
+          <input type="text" ref={searchRef} placeholder="회원 검색"></input>
           <img
             src="https://res.cloudinary.com/dk9scwone/image/upload/v1671095050/freeIconMagnifyingglass_p7owop.png"
             alt="검색"
+            onClick={() => {
+              if (searchRef.current?.value) {
+                getMember(searchRef.current.value);
+              }
+            }}
           />
         </SearchBar>
       </div>
@@ -115,7 +151,7 @@ const Admin = () => {
         {mockData &&
           mockData.map((member) => {
             return (
-              <div className="member" key={member.userID}>
+              <div className="member" key={member.email}>
                 <div className="name">
                   <div className="nickname">{member.nickname}</div>
                   <div className="email">{member.email}</div>
@@ -123,10 +159,27 @@ const Admin = () => {
                 <span className="joinDate">
                   {joinDateFormat(member.createdAt)} 가입
                 </span>
-                <button>탈퇴</button>
+                <Management>
+                  <AppSelect
+                    options={["회원", "관리자"]}
+                    className="role"
+                    defaultValue={member.role}
+                    onChange={(e) => {
+                      roleChange(member.email, e.currentTarget.value);
+                    }}
+                  />
+                  <button
+                    onClick={() => {
+                      deleteMemberModal(member.nickname, member.email);
+                    }}
+                  >
+                    탈퇴
+                  </button>
+                </Management>
               </div>
             );
           })}
+        {isShown && <Modal />}
       </MemberList>
     </Container>
   );
