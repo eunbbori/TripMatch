@@ -1,22 +1,27 @@
 import React, { useState } from "react";
 import MakeMatchPostList from "../MakeMatchPostList/MakeMatchPostList";
 import Paging from "../Pagination/Paging";
-import { FilterType } from "../../type/filter";
-import { matchMockData } from "../../pages/Home/components/mockData";
 import { FilterAppSelect, Container } from "./MatchPostPanelStyle";
+import { useGetAllMatchPostQuery } from "../../slice/matchPostApi";
 
 interface MatchPostPanelProps {
   region: string;
 }
 
 const MatchPostPanel: React.FC<MatchPostPanelProps> = ({ region }) => {
-  const [filters, setFilters] = useState<FilterType>({
-    region: region,
-    status: "전체",
+  const [status, setStatus] = useState<string>("전체");
+  const [page, setPage] = useState(1);
+  const email = sessionStorage.getItem("email");
+
+  const { data } = useGetAllMatchPostQuery({
+    page: page,
+    ...(region !== "전체" && { region }),
+    ...(status !== "전체" && { status: true }),
+    ...(email && { email }),
   });
 
   const selectEvent = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setFilters({ ...filters, status: event.target.value });
+    setStatus(event.target.value);
   };
 
   return (
@@ -27,7 +32,7 @@ const MatchPostPanel: React.FC<MatchPostPanelProps> = ({ region }) => {
           className="filter"
           onChange={selectEvent}
         />
-        <MakeMatchPostList data={matchMockData} />
+        <MakeMatchPostList data={data?.posts || []} />
       </Container>
       {/* <Paging /> */}
     </>

@@ -16,7 +16,7 @@ export const matchPostApi = createApi({
     // get 요청 이외에는 토큰이 필요해서 인터셉터를 먼저 구현해봐야 테스트할 수 있습니다!
     getAllMatchPost: builder.query<
       { totalPage: number; posts: MatchPostType[] },
-      { page: number; region?: string; status?: string; email?: string }
+      { page: number; region?: string; status?: boolean; email?: string }
     >({
       query: ({ page, region, status, email }) => {
         return {
