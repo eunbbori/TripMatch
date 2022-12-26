@@ -10,7 +10,7 @@ import { useImmer } from "use-immer";
 import axios from "axios";
 
 const LoginForm = () => {
-  const baseUrl = "http://localhost:5000";
+  const baseUrl = "http://34.64.156.80:3003";
   // const loginUrl = `${baseUrl}/main/auth/login`;
   const navigate = useNavigate();
 
@@ -42,9 +42,14 @@ const LoginForm = () => {
       console.log("axios 전송은 됐을걸");
       if (res.status === 201) {
         console.log("요청은 성공했을걸?");
-        const { refreshToken, accessToken, role, email } = res.data;
-        sessionStorage.setItem("refreshToken", refreshToken);
-        sessionStorage.setItem("x-access-Token", accessToken);
+        const {
+          refresh,
+          ["x-access-token"]: accessToken,
+          role,
+          email,
+        } = res.data;
+        sessionStorage.setItem("refreshToken", refresh);
+        sessionStorage.setItem("x-access-token", accessToken);
         sessionStorage.setItem("roleToken", role);
         sessionStorage.setItem("email", email);
         navigate("/");

@@ -3,19 +3,22 @@ import axios from "axios";
 // accesstoken 이 필요한 api 요청에는 해당 authAxios 를 사용해주시고, 필요하지 않은 api 요청에는 기본 axios 를 사용해주세요
 
 // tempUrl 은 추후 삭제 예정
-const baseUrl = "http://localhost:5000/";
+const baseUrl = "http://localhost:3003/";
 const refreshTokenURl = `${baseUrl}/api/main/auth/refresh`;
 
 const refreshAccessToken = async () => {
   // 세션스토리지에서 refresh token 가져오기
   const refreshToken = sessionStorage.getItem("refreshToken");
   // 서버에 새 access token 요청해서 받기
-  const response = await axios.post(refreshTokenURl, {
-    refreshToken,
+  const response = await axios.get(refreshTokenURl, {
+    headers: {
+      ["x-access-token"]: sessionStorage.getItem("x-access-token"),
+      refresh: refreshToken,
+    },
   });
-  const accessToken = response.data.accessToken;
+  const accessToken = response.data["x-access-token"];
   // 새 accesstoke 저장하기
-  sessionStorage.setItem("x-access-Token", accessToken);
+  sessionStorage.setItem("x-access-token", accessToken);
 };
 
 const authAxios = axios.create({
@@ -39,7 +42,7 @@ authAxios.interceptors.request.use(
     }
     // 요청 객체 헤더에 Authorizaion 은 null 이 아니므로 non-null 연산자 (!.) 를 사용하여 lint 에러를 해결하고 bearer 로 세션에서 가져온 엑세스 토큰을 넣어주자
     console.log("header 가 없나?");
-    config.headers!.Authorization = `Bearer ${sessionStorage.getItem(
+    config.headers!["x-access-token"] = `Bearer ${sessionStorage.getItem(
       "x-access-token",
     )}`;
     // 엑세스 토큰을 헤더에 가진 요청 객체를 반환하여, 정상적인 axios 요청을 계속 실행하자
@@ -70,9 +73,9 @@ authAxios.interceptors.response.use(
       // refresh 토큰으로 Access 토큰을 갱신해준다(세션에 저장해준다)
       await refreshAccessToken();
       // 요청 객체의 heaers 속성에 Authorization 속성에 Bearer로 세션에서 가져온 엑세스 토큰을 넣어준다
-      originalRequest.headers.Authorization = `Bearer ${sessionStorage.getItem(
-        "x-access-token",
-      )}`;
+      originalRequest.headers![
+        "x-access-token"
+      ] = `Bearer ${sessionStorage.getItem("x-access-token")}`;
       // 위의 과정을 거쳐서 헤더에 엑세스 토큰을 담은  axios 요청 객체를 return 하여 axios 요청을 실행해준다
       return axios(originalRequest);
     }
