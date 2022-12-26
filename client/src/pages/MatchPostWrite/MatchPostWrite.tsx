@@ -1,4 +1,4 @@
-import { useState, useRef, ChangeEvent } from "react";
+import { useState, useRef, ChangeEvent, LegacyRef } from "react";
 import Editor from "../../components/Editor/Editor";
 import { useUpdateImgMutation } from "../../slice/uploadImgApi";
 import AppSelect from "../../components/AppSelect/AppSelect";
@@ -41,6 +41,7 @@ import AppInputText from "../../components/AppInputText/AppInputText";
 import AppInputRadioCheck from "../../components/AppInputRadioCheck/AppInputRadioCheck";
 import AppInputFile from "../../components/AppInputFile/AppInputFile";
 import { Link, useNavigate } from "react-router-dom";
+import { Editor as ToastEditor } from "@toast-ui/react-editor";
 
 const MatchPostWrite = () => {
   const navigate = useNavigate();
@@ -49,11 +50,11 @@ const MatchPostWrite = () => {
   const titleRef = useRef<HTMLInputElement>(null);
   const peopleCntRef = useRef<HTMLInputElement>(null);
   const contactRef = useRef<HTMLInputElement>(null);
+  const contentRef: LegacyRef<ToastEditor> = useRef(null);
 
   const [gender, setGender] = useState<string>("남성");
   const [ages, setAges] = useState<any[]>([]);
   const [imageUploaded, setImageUploaded] = useState<File>();
-  const [content, setContent] = useState<string>("");
   const [startDate, setStartDate] = useState<string>("");
   const [endDate, setEndDate] = useState<string>("");
 
@@ -92,7 +93,7 @@ const MatchPostWrite = () => {
     const title = titleRef.current!.value;
     const peopleCnt = peopleCntRef.current!.value;
     const contact = contactRef.current!.value;
-
+    const content = contentRef.current?.getInstance().getHTML();
     axios
       .post(`${domain}/api/main/posts/post`, {
         region: region,
@@ -180,7 +181,7 @@ const MatchPostWrite = () => {
           className={"contact"}
           placeholder={"인스타그램, 전화번호 등"}
         />
-        <Editor setContent={setContent} />
+        <Editor contentRef={contentRef} />
         <ButtonContainer>
           <Link to="/match">
             <MatchPostAppButton

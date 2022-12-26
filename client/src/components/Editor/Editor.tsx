@@ -7,15 +7,13 @@ import styled from "styled-components";
 interface EditorProps {
   placeholder?: string;
   initialValue?: string;
-  contentRef?: React.RefObject<ToastEditor>;
-  setContent?: React.Dispatch<React.SetStateAction<string>>;
+  contentRef?: React.LegacyRef<ToastEditor>;
 }
 
 const Editor: React.FC<EditorProps> = ({
   placeholder,
   initialValue,
   contentRef,
-  setContent,
 }) => {
   return (
     <Container>
