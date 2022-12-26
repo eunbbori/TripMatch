@@ -21,8 +21,8 @@ const FreePostPanel: React.FC<FreePostPanelProps> = ({ region }) => {
 
   return (
     <>
-      <Paging />
       <FreePostList region={region} communities={data?.communities || []} />
+      {/* <Paging /> */}
     </>
   );
 };

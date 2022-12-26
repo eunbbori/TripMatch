@@ -1,24 +1,31 @@
-import React, { useState } from "react";
+import React from "react";
 import Pagination from "react-js-pagination";
 import { PaginationStyleContainer } from "./PagingStyle";
 
-const Paging = () => {
-  const [page, setPage] = useState(1);
+type OnHandler = {
+  (pageNumber: number): void;
+};
+interface PageProps {
+  onHandler: OnHandler;
+  paging?: number;
+  totalCount?: number;
+}
 
-  const handlePageChange = (page: React.SetStateAction<number>) => {
-    setPage(page);
-  };
-
+const Paging: React.FC<PageProps> = ({
+  totalCount = 0,
+  paging = 1,
+  onHandler,
+}) => {
   return (
     <PaginationStyleContainer>
       <Pagination
-        activePage={page}
+        activePage={paging}
         itemsCountPerPage={10}
-        totalItemsCount={450}
+        totalItemsCount={totalCount}
         pageRangeDisplayed={10}
         prevPageText={"‹"}
         nextPageText={"›"}
-        onChange={handlePageChange}
+        onChange={onHandler}
       />
     </PaginationStyleContainer>
   );

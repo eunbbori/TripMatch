@@ -29,7 +29,7 @@ const MatchPostPanel: React.FC<MatchPostPanelProps> = ({ region }) => {
         />
         <MakeMatchPostList data={matchMockData} filter={filters} />
       </Container>
-      <Paging />
+      {/* <Paging /> */}
     </>
   );
 };
