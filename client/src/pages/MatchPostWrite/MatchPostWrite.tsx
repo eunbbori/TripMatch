@@ -54,7 +54,7 @@ const MatchPostWrite = () => {
   const contentRef: LegacyRef<ToastEditor> = useRef(null);
 
   const [gender, setGender] = useState<string>("남성");
-  const [ages, setAges] = useState<any[]>([]);
+  const [ages, setAges] = useState<string[]>([]);
   const [imageUploaded, setImageUploaded] = useState<File>();
   const [startDate, setStartDate] = useState<string>("");
   const [endDate, setEndDate] = useState<string>("");
@@ -102,7 +102,7 @@ const MatchPostWrite = () => {
       userCount: peopleCnt,
       duration: [startDate, endDate],
       hopeGender: gender,
-      hopeAge: ages[0], // age는 여러개가 되어야함. api에서 수정한 후 수정할 예정
+      hopeAge: ages,
       thumbnail: Object.values(image)[15],
       contact: contact,
       content: content,

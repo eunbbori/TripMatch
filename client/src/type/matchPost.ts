@@ -7,7 +7,7 @@ export interface MatchPostType {
   region: string;
   userCount: number;
   hopeGender: string;
-  hopeAge: string;
+  hopeAge: string[];
   title: string;
   content: string;
   status?: boolean;
