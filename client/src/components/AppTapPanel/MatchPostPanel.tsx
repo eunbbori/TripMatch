@@ -27,7 +27,7 @@ const MatchPostPanel: React.FC<MatchPostPanelProps> = ({ region }) => {
           className="filter"
           onChange={selectEvent}
         />
-        <MakeMatchPostList data={matchMockData} filter={filters} />
+        <MakeMatchPostList data={matchMockData} />
       </Container>
       {/* <Paging /> */}
     </>
