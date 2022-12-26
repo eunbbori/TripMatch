@@ -2,6 +2,19 @@ import { useState, useRef, ChangeEvent, LegacyRef } from "react";
 import Editor from "../../components/Editor/Editor";
 import { useUpdateImgMutation } from "../../slice/uploadImgApi";
 import AppSelect from "../../components/AppSelect/AppSelect";
+import {
+  Container,
+  ButtonContainer,
+  MatchPostAppButton,
+  DateRange,
+} from "./MatchPostWriteStyle";
+import AppInputText from "../../components/AppInputText/AppInputText";
+import AppInputRadioCheck from "../../components/AppInputRadioCheck/AppInputRadioCheck";
+import AppInputFile from "../../components/AppInputFile/AppInputFile";
+import { Link, useNavigate } from "react-router-dom";
+import { Editor as ToastEditor } from "@toast-ui/react-editor";
+import { MatchPostType } from "../../type/matchPost";
+import { useCreateMatchPostMutation } from "../../slice/matchPostApi";
 
 const regions = [
   "서울",
@@ -27,20 +40,6 @@ const ageList = [
   { value: "50", htmlValue: "50대" },
   { value: "none", htmlValue: "연령대무관" },
 ];
-
-import {
-  Container,
-  ButtonContainer,
-  MatchPostAppButton,
-  DateRange,
-} from "./MatchPostWriteStyle";
-import AppInputText from "../../components/AppInputText/AppInputText";
-import AppInputRadioCheck from "../../components/AppInputRadioCheck/AppInputRadioCheck";
-import AppInputFile from "../../components/AppInputFile/AppInputFile";
-import { Link, useNavigate } from "react-router-dom";
-import { Editor as ToastEditor } from "@toast-ui/react-editor";
-import { MatchPostType } from "../../type/matchPost";
-import { useCreateMatchPostMutation } from "../../slice/matchPostApi";
 
 const MatchPostWrite = () => {
   const navigate = useNavigate();
