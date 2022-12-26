@@ -33,7 +33,7 @@ class MatchService {
   }
   async getByAuthor(email: string) {
     const matches = await this.matchModel.findMany(
-      { "author.email": email },
+      { "author.email": email, status: "대기중" },
       { _id: 0, matchId: 1, postId: 1, applicant: 1 }
     );
     if (matches.length === 0) throw new Error("204");

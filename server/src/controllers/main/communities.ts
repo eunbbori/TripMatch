@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { communityService, commentService, userService } from "../../services";
+import { loginCheck } from "../../middlewares";
 
 const communitiesController = Router();
 
@@ -26,27 +27,35 @@ communitiesController.get("/:communityId", async (req, res, next) => {
     next(err);
   }
 });
-communitiesController.put("/:communityId", async (req, res, next) => {
-  const { communityId } = req.params;
-  try {
-    await communityService.checkAuthor(communityId, req.email);
-    await communityService.update(communityId, req.body);
-    res.status(200).end();
-  } catch (err) {
-    next(err);
+communitiesController.put(
+  "/:communityId",
+  loginCheck,
+  async (req, res, next) => {
+    const { communityId } = req.params;
+    try {
+      await communityService.checkAuthor(communityId, req.email);
+      await communityService.update(communityId, req.body);
+      res.status(200).end();
+    } catch (err) {
+      next(err);
+    }
   }
-});
-communitiesController.delete("/:communityId", async (req, res, next) => {
-  const { communityId } = req.params;
-  try {
-    await communityService.checkAuthor(communityId, req.email);
-    await communityService.delete(communityId);
-    res.status(200).end();
-  } catch (err) {
-    next(err);
+);
+communitiesController.delete(
+  "/:communityId",
+  loginCheck,
+  async (req, res, next) => {
+    const { communityId } = req.params;
+    try {
+      await communityService.checkAuthor(communityId, req.email);
+      await communityService.delete(communityId);
+      res.status(200).end();
+    } catch (err) {
+      next(err);
+    }
   }
-});
-communitiesController.post("/community", async (req, res, next) => {
+);
+communitiesController.post("/community", loginCheck, async (req, res, next) => {
   try {
     const author = await userService.getAuthor(req.email);
     await communityService.create(req.body, author);

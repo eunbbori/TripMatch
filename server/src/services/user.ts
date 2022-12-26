@@ -42,7 +42,7 @@ class UserService {
     const refresh = await jwt.create({}, "7d");
     await redis.set(user.email, refresh);
     return {
-      "x-access-token": `Bearer ${accessToken}`,
+      "x-access-token": accessToken,
       refresh,
       email: user.email,
       role: user.role,
@@ -91,7 +91,7 @@ class UserService {
       { email: decoded.email, role: decoded.role },
       "1h"
     );
-    return { "x-access-token": `Bearer ${newToken}` };
+    return { "x-access-token": newToken };
   }
   async getUserList(keyword: string) {
     const condition: { $or?: [{}, {}] } = {};

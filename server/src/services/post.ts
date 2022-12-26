@@ -99,7 +99,15 @@ class PostService {
         duration: 1,
         contact: 1,
       });
-      posts.push({ matchId, postId, author, status, ...post });
+      posts.push({
+        matchId,
+        postId,
+        author,
+        status,
+        title: post?.title,
+        duration: post?.duration,
+        contact: post?.contact,
+      });
     }
     if (posts.length === 0) throw new Error("204");
     return posts;
@@ -113,7 +121,14 @@ class PostService {
         duration: 1,
         status: 1,
       });
-      posts.push({ matchId, postId, applicant, ...post });
+      posts.push({
+        matchId,
+        postId,
+        applicant,
+        title: post?.title,
+        duration: post?.duration,
+        status: post?.status,
+      });
     }
     if (posts.length === 0) throw new Error("204");
     return posts;

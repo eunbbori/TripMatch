@@ -15,6 +15,7 @@ const communitySchema = new Schema<Community>(
     author: {
       type: { email: String, nickname: String, profileImg: String },
       required: true,
+      _id: false,
     },
     title: { type: String, required: true },
     content: { type: String, required: true },

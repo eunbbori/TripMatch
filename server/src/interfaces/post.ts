@@ -7,7 +7,7 @@ export default interface Post {
   thumbnail: string;
   duration: [string];
   hopeGender: string;
-  hopeAge: string;
+  hopeAge: [string];
   userCount: number;
   contact: string;
   status: boolean;

@@ -15,6 +15,7 @@ const postSchema = new Schema<Post>(
     author: {
       type: { email: String, nickname: String, profileImg: String },
       required: true,
+      _id: false,
     },
     title: { type: String, required: true },
     content: { type: String, required: true },
@@ -35,7 +36,7 @@ const postSchema = new Schema<Post>(
     thumbnail: { type: String, required: true },
     duration: { type: [String], required: true },
     hopeGender: { type: String, required: true },
-    hopeAge: { type: String, required: true },
+    hopeAge: { type: [String], required: true },
     userCount: { type: Number, required: true },
     contact: { type: String, required: true },
     status: { type: Boolean, required: true, default: true },

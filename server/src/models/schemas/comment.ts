@@ -15,6 +15,7 @@ const commentSchema = new Schema<Comment>(
     author: {
       type: { email: String, nickname: String, profileImg: String },
       required: true,
+      _id: false,
     },
     content: { type: String, required: true },
     communityId: { type: String, required: false },

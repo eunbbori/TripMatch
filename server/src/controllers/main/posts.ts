@@ -5,6 +5,7 @@ import {
   commentService,
   userService,
 } from "../../services";
+import { loginCheck } from "../../middlewares";
 
 const postsController = Router();
 
@@ -21,7 +22,10 @@ postsController.get("/", async (req, res, next) => {
       status as string
     );
     if (email) {
-      const postsWithLike = likeService.isLiked(posts as [], email as string);
+      const postsWithLike = await likeService.isLiked(
+        posts as [],
+        email as string
+      );
       res.status(200).json({ totalPage, posts: postsWithLike });
     } else res.status(200).json({ totalPage, posts });
   } catch (err) {
@@ -38,7 +42,7 @@ postsController.get("/:postId", async (req, res, next) => {
     next(err);
   }
 });
-postsController.put("/:postId", async (req, res, next) => {
+postsController.put("/:postId", loginCheck, async (req, res, next) => {
   const { postId } = req.params;
   try {
     const post = await postService.getAuthor(postId);
@@ -49,7 +53,7 @@ postsController.put("/:postId", async (req, res, next) => {
     next(err);
   }
 });
-postsController.delete("/:postId", async (req, res, next) => {
+postsController.delete("/:postId", loginCheck, async (req, res, next) => {
   const { postId } = req.params;
   try {
     const post = await postService.getAuthor(postId);
@@ -60,7 +64,7 @@ postsController.delete("/:postId", async (req, res, next) => {
     next(err);
   }
 });
-postsController.post("/post", async (req, res, next) => {
+postsController.post("/post", loginCheck, async (req, res, next) => {
   try {
     const author = await userService.getAuthor(req.email);
     await postService.create(req.body, author);

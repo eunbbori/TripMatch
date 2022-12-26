@@ -6,7 +6,7 @@ info:
   license:
     name: KJ
 servers:
-  - url: http://localhost:5000/
+  - url: http://localhost:3003/
 paths:
   /api/main/auth/email:
     $ref: "./auth.yaml#/~1auth~1email"
@@ -24,6 +24,54 @@ paths:
     $ref: "./auth.yaml#/~1auth~1update"
   /api/main/auth/refresh:
     $ref: "./auth.yaml#/~1auth~1refresh"
+  /api/main/comment:
+    $ref: "./comment.yaml#/~1comment"
+  /api/main/comment/{commentId}:
+    $ref: "./comment.yaml#/~1comment~1{commentId}"
+  /api/main/communities:
+    $ref: "./communities.yaml#/~1communities"
+  /api/main/communities/{communityId}:
+    $ref: "./communities.yaml#/~1communities~1{communityId}"
+  /api/main/communities/community:
+    $ref: "./communities.yaml#/~1communities~1community"
+  /api/main/likes:
+    $ref: "./likes.yaml#/~1likes"
+  /api/main/likes/like:
+    $ref: "./likes.yaml#/~1likes~1like"
+  /api/main/matches/match:
+    $ref: "./matches.yaml#/~1matches~1match"
+  /api/main/matches/{matchId}:
+    $ref: "./matches.yaml#/~1matches~1{matchId}"
+  /api/main/mypage:
+    $ref: "./mypage.yaml#/~1mypage"
+  /api/main/mypage/comments:
+    $ref: "./mypage.yaml#/~1mypage~1comments"
+  /api/main/mypage/myEnroll:
+    $ref: "./mypage.yaml#/~1mypage~1myEnroll"
+  /api/main/mypage/receivedEnroll:
+    $ref: "./mypage.yaml#/~1mypage~1receivedEnroll"
+  /api/main/mypage/posts:
+    $ref: "./mypage.yaml#/~1mypage~1posts"
+  /api/main/notices:
+    $ref: "./notices.yaml#/~1notices"
+  /api/main/notices/{noticeId}:
+    $ref: "./notices.yaml#/~1notices~1{noticeId}"
+  /api/main/posts:
+    $ref: "./posts.yaml#/~1posts"
+  /api/main/posts/{postId}:
+    $ref: "./posts.yaml#/~1posts~1{postId}"
+  /api/main/posts/post:
+    $ref: "./posts.yaml#/~1posts~1post"
+  /api/main/search:
+    $ref: "./search.yaml#/~1search"
+  /api/admin/notices/{noticeId}:
+    $ref: "./admin.yaml#/~1notices~1{noticeId}"
+  /api/admin/notices/notice:
+    $ref: "./admin.yaml#/~1notices~1notice"
+  /api/admin/users:
+    $ref: "./admin.yaml#/~1users"
+  /api/admin/users/{email}:
+    $ref: "./admin.yaml#/~1users~1{email}"
 components:
   schemas:
     status:
@@ -59,6 +107,159 @@ components:
           properties:
             500:
               description: 기타 에러
+    comment:
+      properties:
+        commentId:
+          type: string
+          description: 댓글 id
+        author:
+          type: object
+          description: 댓글 작성자
+          properties:
+            email:
+              type: string
+            nickname:
+              type: string
+            profileImg:
+              type: String
+        content:
+          type: string
+          description: 댓글 내용
+        communityId:
+          type: string
+          description: 자유게시글 id
+        postId:
+          type: string
+          description: 동행게시글 id
+    community:
+      properties:
+        communityId:
+          type: string
+          description: 자유게시글 id
+        author:
+          type: object
+          description: 자유게시글 작성자
+          properties:
+            email:
+              type: string
+            nickname:
+              type: string
+            profileImg:
+              type: String
+        title:
+          type: string
+          description: 자유게시글 제목
+        content:
+          type: string
+          description: 자유게시글 내용
+        region:
+          type: string
+          description: 지역
+        category:
+          type: string
+          description: 카테고리
+        commentCount:
+          type: string
+          description: 댓글 수
+    like:
+      properties:
+        email:
+          type: string
+          description: 좋아요 표시한 유저 이메일
+        postId:
+          type: string
+          description: 좋아요 표시된 동행게시글 id
+    match:
+      properties:
+        matchId:
+          type: string
+          description: 동행 신청 id
+        postId:
+          type: string
+          description: 신청한 동행게시글 id
+        author:
+          type: object
+          description: 동행게시글 작성자, 신청받은 유저
+          properties:
+            email:
+              type: string
+            nickname:
+              type: string
+            profileImg:
+              type: String
+        applicant:
+          type: object
+          description: 동행 신청한 유저
+          properties:
+            email:
+              type: string
+            nickname:
+              type: string
+            profileImg:
+              type: String
+        status:
+          type: string
+          description: 대기중/수락/거절
+    notice:
+      properties:
+        noticeId:
+          type: string
+          description: 공지사항 id
+        title:
+          type: string
+          description: 공지사항 제목
+        content:
+          type: string
+          description: 공지사항 내용
+    post:
+      properties:
+        postId:
+          type: string
+          description: 동행게시글 id
+        author:
+          type: object
+          description: 동행게시글 작성자
+          properties:
+            email:
+              type: string
+            nickname:
+              type: string
+            profileImg:
+              type: String
+        title:
+          type: string
+          description: 동행게시글 제목
+        content:
+          type: string
+          description: 동행게시글 내용
+        region:
+          type: string
+          description: 지역
+        thumbnail:
+          type: string
+          description: 동행게시글 썸네일
+        duration:
+          type: array
+          items:
+            type: string
+          description: 여행기간
+        hopeGender:
+          type: string
+          description: 희망 성별
+        hopeAge:
+          type: array
+          items:
+            type: string
+          description: 희망 나이
+        userCount:
+          type: number
+          description: 최대 인원
+        contact:
+          type: string
+          description: 작성자 연락처
+        status:
+          type: boolean
+          description: 모집상태
     user:
       properties:
         email:
@@ -79,9 +280,15 @@ components:
         introduce:
           type: string
           description: 자기소개
-        image:
+        profileImg:
           type: string
           description: 프로필 사진
+        matchCount:
+          type: number
+          description: 동행 횟수
+        matchPoint:
+          type: number
+          description: 동행 점수
         role:
           type: string
           description: 권한(user 또는 admin)

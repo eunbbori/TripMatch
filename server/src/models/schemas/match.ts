@@ -16,10 +16,12 @@ const matchSchema = new Schema<Match>(
     author: {
       type: { email: String, nickname: String, profileImg: String },
       required: true,
+      _id: false,
     },
     applicant: {
       type: { email: String, nickname: String, profileImg: String },
       required: true,
+      _id: false,
     },
     status: {
       type: String,

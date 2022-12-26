@@ -34,6 +34,10 @@ class CommentService {
     if (comments.length === 0) throw new Error("204");
     return comments;
   }
+  async getCommunityId(commentId: string) {
+    const comment = await this.commentModel.findOne(commentId);
+    return comment?.communityId || "";
+  }
 }
 
 const commentService = new CommentService();

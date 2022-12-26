@@ -8,17 +8,18 @@ import searchController from "./search";
 import noticesController from "./notices";
 import matchesController from "./matches";
 import mypageController from "./mypage";
+import { loginCheck } from "../../middlewares";
 
 const mainController = Router();
 
 mainController.use("/auth", authController);
 mainController.use("/communities", communitiesController);
-mainController.use("/comment", commentController);
+mainController.use("/comment", loginCheck, commentController);
 mainController.use("/posts", postsController);
-mainController.use("/likes", likesController);
+mainController.use("/likes", loginCheck, likesController);
 mainController.use("/search", searchController);
 mainController.use("/notices", noticesController);
-mainController.use("/matches", matchesController);
-mainController.use("/mypage", mypageController);
+mainController.use("/matches", loginCheck, matchesController);
+mainController.use("/mypage", loginCheck, mypageController);
 
 export default mainController;

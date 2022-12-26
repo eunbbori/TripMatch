@@ -8,7 +8,7 @@ matchesController.post("/match", async (req, res, next) => {
   try {
     const author = await postService.getAuthor(postId);
     const applicant = await userService.getAuthor(req.email);
-    await matchService.create({ postId, ...author, applicant });
+    await matchService.create({ postId, author: author?.author, applicant });
     res.status(201).end();
   } catch (err) {
     next(err);
@@ -24,7 +24,7 @@ matchesController.put("/:matchId", async (req, res, next) => {
     next(err);
   }
 });
-matchesController.put("/:matchId", async (req, res, next) => {
+matchesController.delete("/:matchId", async (req, res, next) => {
   const { matchId } = req.params;
   try {
     await matchService.checkApplicant(matchId, req.email);
