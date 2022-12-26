@@ -14,6 +14,7 @@ import {
   useCreateFreePostMutation,
   useUpdateFreePostMutation,
 } from "../../../slice/freePostApi";
+import { Editor as ToastEditor } from "@toast-ui/react-editor";
 
 const FreePostForm = () => {
   const state: FreePostType = useLocation().state;
@@ -33,6 +34,7 @@ const FreePostForm = () => {
   const regionRef: RefObject<HTMLSelectElement> = useRef(null);
   const categoryRef: RefObject<HTMLSelectElement> = useRef(null);
   const titleRef: RefObject<HTMLInputElement> = useRef(null);
+  const contentRef: RefObject<ToastEditor> = useRef(null);
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -99,10 +101,7 @@ const FreePostForm = () => {
           />
         </TitleInputBox>
       </TitleContainer>
-      <Editor
-        initialValue={state && state.content}
-        setContent={setContentInput}
-      />
+      <Editor initialValue={state && state.content} contentRef={contentRef} />
       <ButtonContainer>
         <Button type="button" onClick={onClickCancle}>
           취소
