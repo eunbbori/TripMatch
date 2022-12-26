@@ -7,6 +7,7 @@ export interface FreePostType {
   category: string;
   title: string;
   content: string;
+  commentCount?: number;
   comments?: CommentType[];
   createdAt?: string;
 }
