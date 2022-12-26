@@ -21,6 +21,7 @@ interface CommentProps {
 const Comment: React.FC<CommentProps> = ({ comment }) => {
   const [isClickUpdate, setIsClickUpdate] = useState<boolean>(false);
   const [commentInput, setCommentInput] = useState("");
+  const [isAuthor, setIsAuthor] = useState(false);
 
   const [onUpdateComment, { isError, isSuccess }] = useUpdateCommentMutation();
 
@@ -35,6 +36,10 @@ const Comment: React.FC<CommentProps> = ({ comment }) => {
       setIsClickUpdate(true);
     }
   }, [isError, isSuccess]);
+
+  useEffect(() => {
+    setIsAuthor(sessionStorage.getItem("email") === comment.author.email);
+  }, [comment.author.email]);
 
   const onClickUpdate = () => setIsClickUpdate(true);
 
@@ -63,19 +68,21 @@ const Comment: React.FC<CommentProps> = ({ comment }) => {
       ) : (
         <Content>{comment.content}</Content>
       )}
-      <ButtonContainer>
-        {isClickUpdate ? (
-          <>
-            <Button onClick={onClickUpdateCompleted}>수정 완료</Button>
-            <Button onClick={onClickCancle}>취소</Button>
-          </>
-        ) : (
-          <>
-            <Button onClick={onClickUpdate}>수정</Button>
-            <Button onClick={onClickDelete}>삭제</Button>
-          </>
-        )}
-      </ButtonContainer>
+      {isAuthor && (
+        <ButtonContainer>
+          {isClickUpdate ? (
+            <>
+              <Button onClick={onClickUpdateCompleted}>수정 완료</Button>
+              <Button onClick={onClickCancle}>취소</Button>
+            </>
+          ) : (
+            <>
+              <Button onClick={onClickUpdate}>수정</Button>
+              <Button onClick={onClickDelete}>삭제</Button>
+            </>
+          )}
+        </ButtonContainer>
+      )}
     </Container>
   );
 };

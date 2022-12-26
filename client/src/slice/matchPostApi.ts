@@ -1,12 +1,13 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import type { MatchPostType } from "./../type/matchPost";
 import { axiosBaseQuery } from "./axiosBaseQuery";
+import { CommentType } from "./../type/comment";
 
 export const matchPostApi = createApi({
   reducerPath: "matchPostApi",
   tagTypes: ["MatchPost"],
   baseQuery: axiosBaseQuery({
-    baseUrl: "http://localhost:5000/",
+    baseUrl: "http://34.64.156.80:3003/api/",
   }),
   endpoints: (builder) => ({
     // 전체 동행게시글을 불러옴
@@ -19,7 +20,7 @@ export const matchPostApi = createApi({
     >({
       query: ({ page, region, status, email }) => {
         return {
-          url: "api/main/posts",
+          url: "main/posts",
           method: "get",
           params: { page, region, status, email },
         };
@@ -36,9 +37,12 @@ export const matchPostApi = createApi({
           : ["MatchPost"],
     }),
     // id에 해당하는 게시글을 불러옴
-    getMatchPost: builder.query<MatchPostType, string | undefined>({
+    getMatchPost: builder.query<
+      { post: MatchPostType; comments: CommentType[] },
+      string | undefined
+    >({
       query: (postId) => ({
-        url: `api/main/posts/${postId}`,
+        url: `main/posts/${postId}`,
         method: "get",
       }),
       providesTags: (result, error, arg) => [{ type: "MatchPost", id: arg }],
@@ -48,7 +52,7 @@ export const matchPostApi = createApi({
       query: (updatedPost) => ({
         url: `api/main/posts/${updatedPost.postId}`,
         method: "PUT",
-        body: updatedPost,
+        data: updatedPost,
       }),
       invalidatesTags: (result, error, arg) => [
         { type: "MatchPost", id: arg.postId },
@@ -57,25 +61,25 @@ export const matchPostApi = createApi({
     // 게시글 추가
     createMatchPost: builder.mutation<MatchPostType, MatchPostType>({
       query: (newPost) => ({
-        url: "api/main/posts/post",
+        url: "main/posts/post",
         method: "POST",
-        body: newPost,
+        data: newPost,
       }),
       invalidatesTags: ["MatchPost"],
     }),
     // id에 해당하는 게시글 삭제
     deleteMatchPost: builder.mutation<MatchPostType, string | undefined>({
       query: (postId) => ({
-        url: `api/main/posts/${postId}`,
+        url: `main/posts/${postId}`,
         method: "DELETE",
       }),
       invalidatesTags: ["MatchPost"],
     }),
     applyMatch: builder.mutation<null, string>({
       query: (postId) => ({
-        url: "api/main/matches/match",
+        url: "main/matches/match",
         method: "POST",
-        body: { postId },
+        data: { postId },
       }),
     }),
     //cancelMatch: builder.mutation<null, string>({})

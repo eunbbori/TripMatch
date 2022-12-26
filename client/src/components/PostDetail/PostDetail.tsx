@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import UserProfile from "../UserProfile/UserProfile";
 import {
@@ -39,6 +39,8 @@ const PostDetail: React.FC<PostDetailProps> = ({
   const [isLikePost, setIsLikePost] = useState(false);
   const [isApplying, setIsApplying] = useState(false);
 
+  const [isAuthor, setIsAuthor] = useState(false);
+
   const fullHeart =
     "https://res.cloudinary.com/dk9scwone/image/upload/v1671341657/fullheart_adk06q.png";
   const emptyHeart =
@@ -48,6 +50,12 @@ const PostDetail: React.FC<PostDetailProps> = ({
     setIsLikePost(!isLikePost);
     // await axios.post('') 좋아요 게시글 api 작성
   };
+
+  useEffect(() => {
+    const currentPost = matchPost || freePost;
+
+    setIsAuthor(sessionStorage.getItem("email") === currentPost?.author?.email);
+  }, [freePost, matchPost]);
 
   const onClickApply = () => {
     if (isApplying) {
@@ -184,10 +192,14 @@ const PostDetail: React.FC<PostDetailProps> = ({
         <Link to={getListPathname()}>
           <Button>목록</Button>
         </Link>
-        <Link to={getUpdatePathname()} state={freePost || matchPost}>
-          <Button>글수정</Button>
-        </Link>
-        <Button onClick={onClickDelete}>글삭제</Button>
+        {isAuthor && (
+          <>
+            <Link to={getUpdatePathname()} state={freePost || matchPost}>
+              <Button>글수정</Button>
+            </Link>
+            <Button onClick={onClickDelete}>글삭제</Button>
+          </>
+        )}
       </ButtonContainer>
       {isShown && <Modal callBackFn={getModalCallback()} />}
     </div>

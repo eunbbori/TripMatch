@@ -14,69 +14,14 @@ import { FreePostType } from "./../../type/freePost";
 const FreePostDetail = () => {
   const { id } = useParams();
   const postquery = useGetFreePostQuery(id);
+  console.log(postquery);
+
   const { data: post, isLoading, isError } = postquery;
 
   // useGetAllFreePostQuery 예시
   // const { data, isLoading, isError } = useGetAllFreePostQuery({ page: 0, region: "서울" });
 
-  // 목데이터
-  // const post: FreePostType = {
-  //   communityId: "1",
-  //   title: "경상도 맛집 추천해주세요",
-  //   region: "경상도",
-  //   category: "맛집",
-  //   author: {
-  //     email: "1",
-  //     nickname: "nick",
-  //     profileImg: "",
-  //   },
-  //   content: "<p>1번 글입니다</p><p>맛집</p><p>추천해주세요</p>",
-  //   comments: [
-  //     {
-  //       commentId: "2",
-  //       author: {
-  //         email: "1",
-  //         nickname: "nick",
-  //         profileImg: "",
-  //       },
-  //       content: "반가워요?",
-  //       createdAt: "2022-12-11 16:10:02",
-  //     },
-  //     {
-  //       commentId: "3",
-  //       author: {
-  //         email: "1",
-  //         nickname: "nick",
-  //         profileImg: "",
-  //       },
-  //       content: "안녕하세요?",
-  //       createdAt: "2022-12-11 16:10:02",
-  //     },
-  //     {
-  //       commentId: "4",
-  //       author: {
-  //         email: "1",
-  //         nickname: "nick",
-  //         profileImg: "",
-  //       },
-  //       content: "밀면?",
-  //       createdAt: "2022-12-11 16:10:02",
-  //     },
-  //     {
-  //       commentId: "5",
-  //       author: {
-  //         email: "1",
-  //         nickname: "nick",
-  //         profileImg: "",
-  //       },
-  //       content: "돼지국밥?",
-  //       createdAt: "2022-12-11 16:10:02",
-  //     },
-  //   ],
-  //   createdAt: "2022-12-11 16:10:02",
-  // };
-
-  if (!post) {
+  if (isError) {
     return <NotFound />;
   }
 
@@ -86,11 +31,11 @@ const FreePostDetail = () => {
         <div>
           <CategoryName>
             <Pointer src={pointer} />
-            {post.region} &gt; {post.category}
+            {post?.community.region} &gt; {post?.community.category}
           </CategoryName>
         </div>
-        <PostDetail user={post.author} freePost={post} />
-        {post.comments && <Comment comments={post.comments} />}
+        <PostDetail user={post?.community.author} freePost={post?.community} />
+        {post?.comments && <Comment comments={post?.comments} />}
       </>
     </Container>
   );
