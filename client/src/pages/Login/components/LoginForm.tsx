@@ -11,6 +11,7 @@ import axios from "axios";
 
 const LoginForm = () => {
   const baseUrl = "http://localhost:5000";
+  // const loginUrl = `${baseUrl}/main/auth/login`;
   const navigate = useNavigate();
 
   const [userState, setUserState] = useImmer({
@@ -34,10 +35,18 @@ const LoginForm = () => {
     e.preventDefault();
     console.log("버튼은 눌려졌을걸?");
     try {
-      const res = await axios.post(`${baseUrl}/main/auth/login`);
+      const res = await axios.post(`${baseUrl}/api/main/auth/login`, {
+        email: userState.email,
+        password: userState.password,
+      });
       console.log("axios 전송은 됐을걸");
       if (res.status === 201) {
         console.log("요청은 성공했을걸?");
+        const { refreshToken, accessToken, role, email } = res.data;
+        sessionStorage.setItem("refreshToken", refreshToken);
+        sessionStorage.setItem("x-access-Token", accessToken);
+        sessionStorage.setItem("roleToken", role);
+        sessionStorage.setItem("email", email);
         navigate("/");
       } else {
         console.log("아이디랑 비번이 틀렸을껄?");

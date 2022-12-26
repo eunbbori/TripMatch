@@ -83,6 +83,8 @@ const RegisterForm = () => {
 
       if (email === "") {
         return "이메일 주소를 입력해주세요";
+      } else if (userState.reqAuthNumber) {
+        return "인증번호 전송에 실패하였습니다";
       } else if (RegExp.test(email)) {
         return "이메일로 인증번호를 전송하였습니다";
       } else {
