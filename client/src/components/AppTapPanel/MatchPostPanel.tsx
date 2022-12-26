@@ -20,6 +20,10 @@ const MatchPostPanel: React.FC<MatchPostPanelProps> = ({ region }) => {
     ...(email && { email }),
   });
 
+  const handlePageChange = (page: React.SetStateAction<number>) => {
+    setPage(page);
+  };
+
   const selectEvent = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setStatus(event.target.value);
   };
@@ -34,7 +38,11 @@ const MatchPostPanel: React.FC<MatchPostPanelProps> = ({ region }) => {
         />
         <MakeMatchPostList data={data?.posts || []} />
       </Container>
-      {/* <Paging /> */}
+      <Paging
+        paging={page}
+        onHandler={handlePageChange}
+        totalCount={data?.posts.length}
+      />
     </>
   );
 };
