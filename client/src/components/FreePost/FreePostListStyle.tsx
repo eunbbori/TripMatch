@@ -1,15 +1,21 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import Theme from "./../../styles/Theme";
 
 export const Container = styled.div`
   .container {
     width: 1000px;
     height: 50px;
     margin: auto;
-    padding: 10px;
+    padding: 15px;
     display: flex;
-    border: 1px solid black;
+    border: 1px solid ${Theme.color.lightblue};
     justify-content: space-between;
+    background: linear-gradient(
+      100deg,
+      ${(props) => props.theme.color.lightpink},
+      ${(props) => props.theme.color.lightblue}
+    );
   }
 `;
 

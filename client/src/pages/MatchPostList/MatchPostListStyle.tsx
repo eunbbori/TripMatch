@@ -5,7 +5,7 @@ export const Container = styled.div`
 `;
 
 export const ButtonContainer = styled.div`
-  width: 1000px;
+  width: 60vw;
   display: flex;
   margin-inline: auto;
   justify-content: flex-end;

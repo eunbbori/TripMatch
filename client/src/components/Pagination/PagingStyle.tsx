@@ -7,6 +7,7 @@ export const PaginationStyleContainer = styled.ul`
     margin-top: 15px;
     list-style: none;
     padding: 0;
+    margin-top: 50px;
   }
   .pagination li {
     display: inline-block;

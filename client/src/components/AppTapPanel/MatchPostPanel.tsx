@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import MakeMatchPostList from "../MakeMatchPostList/MakeMatchPostList";
 import Paging from "../Pagination/Paging";
 import { FilterType } from "../../type/filter";
-import { FilterAppSelect } from "./MatchPostPanelStyle";
 import { matchMockData } from "../../pages/Home/components/mockData";
+import { FilterAppSelect, Container } from "./MatchPostPanelStyle";
 
 interface MatchPostPanelProps {
   region: string;
@@ -21,12 +21,14 @@ const MatchPostPanel: React.FC<MatchPostPanelProps> = ({ region }) => {
 
   return (
     <>
-      <FilterAppSelect
-        options={["전체", "모집중"]}
-        className="filter"
-        onChange={selectEvent}
-      />
-      <MakeMatchPostList data={matchMockData} filter={filters} />
+      <Container>
+        <FilterAppSelect
+          options={["전체", "모집중"]}
+          className="filter"
+          onChange={selectEvent}
+        />
+        <MakeMatchPostList data={matchMockData} filter={filters} />
+      </Container>
       <Paging />
     </>
   );
