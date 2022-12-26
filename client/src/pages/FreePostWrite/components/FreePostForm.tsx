@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { RefObject, useRef, useState } from "react";
 import Editor from "../../../components/Editor/Editor";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
@@ -22,51 +22,48 @@ const FreePostForm = () => {
     createFreePost,
     { isLoading: isLoadingCreate, isError: isErrorCreate },
   ] = useCreateFreePostMutation();
+
   const [
     updateFreePost,
     { isLoading: isLoadingUpdate, isError: isErrorUpdate },
   ] = useUpdateFreePostMutation();
 
   const [contentInput, setContentInput] = useState("");
-  const [regionSelect, setRegionSelect] = useState("");
-  const [categorySelect, setCategorySelect] = useState("");
-  const [titleInput, setTitleInput] = useState("");
+
+  const regionRef: RefObject<HTMLSelectElement> = useRef(null);
+  const categoryRef: RefObject<HTMLSelectElement> = useRef(null);
+  const titleRef: RefObject<HTMLInputElement> = useRef(null);
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (state) {
+    if (state && regionRef.current && categoryRef.current && titleRef.current) {
       const newObj: FreePostType = {
-        communityId: state.communityId,
-        comments: state.comments,
-        createdAt: state.createdAt,
-        author: state.author,
-        // 여기까지의 값은 api 완성시 삭제 예정
-        title: titleInput,
-        region: regionSelect,
-        category: categorySelect,
+        title: titleRef.current.value,
+        region: regionRef.current.value,
+        category: categoryRef.current.value,
         content: contentInput,
       };
       updateFreePost(newObj);
-      navigate(`/free/${state.communityId}`);
-    } else {
+      //navigate(`/free/${state.communityId}`);
+    } else if (
+      !state &&
+      regionRef.current &&
+      categoryRef.current &&
+      titleRef.current
+    ) {
       const newObj: FreePostType = {
-        communityId: Date.now().toString(),
-        comments: [],
-        createdAt: "",
-        author: { email: "111", nickname: "111", profileImg: "" },
-        // 여기까지의 값은 api 완성시 삭제 예정
-        title: titleInput,
-        region: regionSelect,
-        category: categorySelect,
+        title: titleRef.current.value,
+        region: regionRef.current.value,
+        category: categoryRef.current.value,
         content: contentInput,
       };
       createFreePost(newObj);
-      navigate("/free");
+      //navigate("/free");
     }
   };
 
   const onClickCancle = () => {
-    state ? navigate(`/free/${state.communityId}`) : navigate("/");
+    state ? navigate(`/free/${state.communityId}`) : navigate("/free");
   };
 
   return (
@@ -84,19 +81,21 @@ const FreePostForm = () => {
             "기타",
           ]}
           className="region"
-          onChange={(e) => setRegionSelect(e.target.value)}
+          defaultValue={state && state.region}
+          refer={regionRef}
         />
         <AppSelect
           options={["맛집", "액티비티", "교통", "숙소", "기타"]}
           className="category"
-          onChange={(e) => setCategorySelect(e.target.value)}
+          defaultValue={state && state.category}
+          refer={categoryRef}
         />
         <TitleInputBox>
           <input
             type="text"
             placeholder="ex) 12월 31일 부산 해돋이 보러갈 동행 2명 구합니다"
             defaultValue={state && state.title}
-            onChange={(e) => setTitleInput(e.target.value)}
+            ref={titleRef}
           />
         </TitleInputBox>
       </TitleContainer>

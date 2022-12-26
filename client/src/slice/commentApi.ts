@@ -25,7 +25,7 @@ export const commentApi = createApi({
     }),
     // 댓글 추가
     createComment: builder.mutation<
-      CommentType,
+      null,
       { content: string; communityId?: string; postId?: string }
     >({
       query: (newComment) => ({
@@ -36,7 +36,7 @@ export const commentApi = createApi({
       invalidatesTags: ["Comment"],
     }),
     // id에 해당하는 댓글 삭제
-    deleteComment: builder.mutation<CommentType, string>({
+    deleteComment: builder.mutation<null, string>({
       query: (commentId) => ({
         url: `api/main/comment/${commentId}`,
         method: "DELETE",

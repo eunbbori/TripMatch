@@ -14,6 +14,7 @@ export interface MatchPostType {
   duration: string[];
   thumbnail: string;
   contact: string;
+  like?: boolean;
   comments?: CommentType[];
   createdAt?: string;
 }

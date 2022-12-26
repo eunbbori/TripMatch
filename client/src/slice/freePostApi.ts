@@ -1,5 +1,4 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-
 import type { FreePostType } from "../type/freePost";
 import { axiosBaseQuery } from "./axiosBaseQuery";
 
@@ -12,10 +11,11 @@ export const freePostApi = createApi({
   endpoints: (builder) => ({
     // 전체 자유게시글을 불러옴
     // query params 로 page, region을 보냄
-    // 예시 : useGetAllFreePostQuery({page: 1, region: ""})
+    // 예시 : useGetAllFreePostQuery({page: 0, region: "서울"})
+    // get 요청 이외에는 토큰이 필요해서 인터셉터를 먼저 구현해봐야 테스트할 수 있습니다!
     getAllFreePost: builder.query<
-      FreePostType[],
-      { page: number; region: string }
+      { totalPage: number; communities: FreePostType[] },
+      { page: number; region?: string }
     >({
       query: ({ page, region }) => {
         return {
@@ -24,11 +24,11 @@ export const freePostApi = createApi({
           params: { page, region },
         };
       },
-      providesTags: (result = [], error, arg) =>
+      providesTags: (result, error, arg) =>
         result
           ? [
               "FreePost",
-              ...result.map((post) => ({
+              ...result.communities.map((post) => ({
                 type: "FreePost" as const,
                 id: post.communityId,
               })),
@@ -43,8 +43,8 @@ export const freePostApi = createApi({
       }),
       providesTags: (result, error, arg) => [{ type: "FreePost", id: arg }],
     }),
-    // id에 해당하는 게시글을 업데이트
-    updateFreePost: builder.mutation<FreePostType, FreePostType>({
+    // id에 해당하는 게시글을 업데이트 {communityId, title, content, region, category}
+    updateFreePost: builder.mutation<null, FreePostType>({
       query: (updatedPost) => ({
         url: `api/main/communities/${updatedPost.communityId}`,
         method: "PUT",
@@ -54,8 +54,8 @@ export const freePostApi = createApi({
         { type: "FreePost", id: arg.communityId },
       ],
     }),
-    // 게시글 추가
-    createFreePost: builder.mutation<FreePostType, FreePostType>({
+    // 게시글 추가 {title,content,region,category}
+    createFreePost: builder.mutation<null, FreePostType>({
       query: (newPost) => ({
         url: "api/main/communities/community",
         method: "POST",
@@ -63,8 +63,8 @@ export const freePostApi = createApi({
       }),
       invalidatesTags: ["FreePost"],
     }),
-    // id에 해당하는 게시글 삭제
-    deleteFreePost: builder.mutation<FreePostType, string | undefined>({
+    // id에 해당하는 게시글 삭제 useDeleteFreePost(id)
+    deleteFreePost: builder.mutation<null, string | undefined>({
       query: (communityId) => ({
         url: `api/main/communities/${communityId}`,
         method: "DELETE",
