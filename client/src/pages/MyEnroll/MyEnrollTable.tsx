@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Content, Layer, ReviewDiv } from "./MyEnrollTableStyle";
+// import ReviewModal from "../Home/reviewModal";
+import Modal from "../../components/Modal/Modal";
+import { showModal } from "../../slice/modal";
 import axios from "axios";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import ReviewModal from "../Home/reviewModal";
 
 export interface Post {
   postId: number;
@@ -14,11 +19,13 @@ export interface Post {
 
 export interface Author {
   authorId: number;
+  profileImg?: string;
+  email: string;
   nickname: string;
   gender: string;
   age: number;
-  contactInfo: string;
-  score: number;
+  contactInfo?: string;
+  score?: number;
 }
 
 export interface Duration {
@@ -28,7 +35,10 @@ export interface Duration {
 
 const MyEnrollTable: React.FC = () => {
   const [data, setData] = useState<Post[]>([]);
-  // const [state, setState] = useState<string>("수락");
+  const [isCancel, setCancel] = useState(false);
+  const [isReview, setReview] = useState(false);
+  const dispatch = useAppDispatch();
+  const { show: isShown, modalText } = useAppSelector((state) => state.modal);
 
   useEffect(() => {
     const getData = async () => {
@@ -37,6 +47,32 @@ const MyEnrollTable: React.FC = () => {
     };
     getData();
   }, []);
+
+  const onCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setCancel(!isCancel);
+    if (isCancel) {
+      dispatch(
+        showModal({
+          title: "동행 신청 취소",
+          content: "동행 신청을 취소하시겠습니까?",
+          rightButton: "예",
+          leftButton: "아니요",
+        }),
+      );
+    }
+  };
+
+  const handleCancel = () => {
+    if (modalText?.title === "동행 신청 취소") {
+      return onCancel;
+    }
+  };
+
+  const onReview = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setReview(!isReview);
+  };
 
   return (
     <Content>
@@ -76,14 +112,28 @@ const MyEnrollTable: React.FC = () => {
                     elapse <= 7 &&
                     item.agreeStatus === "수락" ? (
                       <ReviewDiv>
-                        <button id="review">리뷰</button>
+                        <button id="review" onClick={onReview}>
+                          리뷰
+                        </button>
+                        {isReview && (
+                          <ReviewModal
+                            email={item.author[0].email}
+                            setReview={setReview}
+                          />
+                        )}
                         <span>여행 종료로부터 + {elapse}</span>
                       </ReviewDiv>
                     ) : elapse < 1 && item.agreeStatus === "수락" ? (
                       <span></span> // 여행 시작도 안했고 수락 됐을때
                     ) : elapse < 1 && item.agreeStatus === "대기중" ? (
-                      <button id="cancel">취소</button> // 여행 시작 안했고 대기중일 때
+                      <div>
+                        <button id="cancel" onClick={onCancel}>
+                          취소
+                        </button>
+                        {isShown && <Modal callBackFn={handleCancel} />}
+                      </div>
                     ) : (
+                      // 여행 시작 안했고 대기중일 때
                       <span></span> // 여행 끝난지 한참됨
                     )}
                   </td>

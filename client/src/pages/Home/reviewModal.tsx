@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import ModalCard from "./reviewModalStyle";
+import axios from "axios";
 
 interface EmailProps {
   email: string;
+  setReview: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 interface User {
@@ -15,7 +17,7 @@ interface User {
   gender: string;
 }
 
-const ReviewModal: React.FC<EmailProps> = ({ email }) => {
+const ReviewModal: React.FC<EmailProps> = ({ email, setReview }) => {
   const [starList, setStarList] = useState([false, false, false, false, false]);
   const [point, setPoint] = useState(0);
   const [userInfo, setUserInfo] = useState<User>({
@@ -26,8 +28,8 @@ const ReviewModal: React.FC<EmailProps> = ({ email }) => {
     age: "",
     gender: "",
   });
-  const isShown = useAppSelector((state) => state.modal.show);
-  const dispatch = useAppDispatch();
+  // const isShown = useAppSelector((state) => state.modal.show);
+  // const dispatch = useAppDispatch();
 
   const listArray = [0, 1, 2, 3, 4];
   const fullStar =
@@ -97,9 +99,11 @@ const ReviewModal: React.FC<EmailProps> = ({ email }) => {
         <div className="guide">평가는 익명으로 수집됩니다.</div>
         <div className="btn">
           <button onClick={postPoint}>확인</button>
-          <button>취소</button>
+          <button onClick={() => setReview(false)}>취소</button>
         </div>
       </div>
     </ModalCard>
   );
 };
+
+export default ReviewModal;

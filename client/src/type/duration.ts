@@ -1,4 +1,4 @@
 export interface DateType {
-  start: any;
-  end: any;
+  start: string;
+  end: string;
 }

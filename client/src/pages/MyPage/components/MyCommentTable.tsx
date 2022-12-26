@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Content, Layer } from "./TableContentStyle";
 import { PostType } from "../../../type/myComments";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const MyCommentTable: React.FC = () => {
   const [data, setData] = useState<PostType[]>([]);
@@ -33,7 +34,11 @@ const MyCommentTable: React.FC = () => {
             {data?.map((item) => {
               return (
                 <tr key={item.postId}>
-                  <td id="title">{item.title}</td>
+                  <td id="title">
+                    <Link to={`/mypage/mycomment/${item.postId}`}>
+                      {item.title}
+                    </Link>
+                  </td>
                   <td>{item.region}</td>
                   <td>
                     {item.duration[0].start} ~ {item.duration[0].end}

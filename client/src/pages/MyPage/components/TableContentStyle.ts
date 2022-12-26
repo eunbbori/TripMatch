@@ -82,6 +82,10 @@ export const Content = styled.div`
       font-family: "S-CoreDream-3Light";
       font-size: ${(props) => props.theme.font.S};
       font-weight: 600;
+
+      &:focus {
+        outline: none;
+      }
     }
 
     option {

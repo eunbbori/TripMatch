@@ -3,8 +3,9 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import WishListContents from "./components/WishListContents";
 import WishTab from "./components/WishTab";
+import authAxios from "../../axios/authAxios";
 
-const baseUrl = "http://localhost:5000";
+// const baseUrl = "http://localhost:3003";
 
 const WishListPage = () => {
   const [dataList, setDataList] = useState();
@@ -13,7 +14,7 @@ const WishListPage = () => {
   useEffect(() => {
     const getLikedDataList = async () => {
       try {
-        const res = await axios.get(`${baseUrl}/api/main/likes`);
+        const res = await authAxios.get(`/api/main/likes`);
         if (res.status === 200) {
           setDataList(res.data);
         } else {
@@ -27,11 +28,11 @@ const WishListPage = () => {
       }
     };
     getLikedDataList();
-  });
+  }, []);
 
   return (
     <div>
-      <WishTab />
+      <WishTab data={dataList} />
       <WishListContents data={dataList} likes={dataList} />
     </div>
   );
