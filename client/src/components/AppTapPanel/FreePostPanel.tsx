@@ -22,7 +22,11 @@ const FreePostPanel: React.FC<FreePostPanelProps> = ({ region }) => {
   return (
     <>
       <FreePostList region={region} communities={data?.communities || []} />
-      {/* <Paging /> */}
+      <Paging
+        paging={page}
+        onHandler={handlePageChange}
+        totalCount={data?.communities.length}
+      />
     </>
   );
 };
