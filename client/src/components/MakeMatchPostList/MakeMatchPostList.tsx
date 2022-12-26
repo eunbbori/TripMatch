@@ -35,6 +35,7 @@ const MakeMatchPostList: React.FC<DataProps> = ({ data }) => {
       <MatchPosList>
         {data &&
           data.map((item, idx) => {
+            const url = `/match/${item.postId}`;
             return (
               <div className="item" key={item.postId}>
                 {item.like ? (
@@ -48,7 +49,7 @@ const MakeMatchPostList: React.FC<DataProps> = ({ data }) => {
                 ) : (
                   <img src={emptyHeart} className="heart" />
                 )}
-                <Link to="/">
+                <Link to={url}>
                   <span className="region">{item.region}</span>
                   <img src={item.thumbnail} className="itemImg" />
                   <div className="itemTitle">{item.title}</div>
