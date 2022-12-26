@@ -19,7 +19,7 @@ import {
 } from "../../../components/Auth/validation";
 
 const RegisterForm = () => {
-  const baseUrl = "http://localhost:5000";
+  const baseUrl = "http://34.64.156.80:3003";
 
   const AgeOption = [
     { value: "default", name: "선택" },
