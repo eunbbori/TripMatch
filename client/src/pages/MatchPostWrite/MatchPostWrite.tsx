@@ -7,6 +7,8 @@ import {
   ButtonContainer,
   MatchPostAppButton,
   DateRange,
+  RadioAndCheckBoxLabel,
+  RadioAndCheckBoxDiv,
 } from "./MatchPostWriteStyle";
 import AppInputText from "../../components/AppInputText/AppInputText";
 import AppInputRadioCheck from "../../components/AppInputRadioCheck/AppInputRadioCheck";
@@ -59,7 +61,7 @@ const MatchPostWrite = () => {
   const endDateRef = useRef<HTMLInputElement>(null);
   const contentRef: LegacyRef<ToastEditor> = useRef(null);
 
-  const [gender, setGender] = useState<string>(state ? state.hopeGender : "");
+  const [genders, setGender] = useState<string>(state ? state.hopeGender : "");
   const [ages, setAges] = useState<string[]>(state ? state.hopeAge : []);
 
   const [updateImg] = useUpdateImgMutation();
@@ -107,19 +109,19 @@ const MatchPostWrite = () => {
     const startDate = startDateRef.current!.value;
     const endDate = endDateRef.current!.value;
     const content = contentRef.current?.getInstance().getHTML() || "";
-
     const matchPost: MatchPostType = {
       ...(state && { postId: state.postId }),
       title: title,
       region: region,
       userCount: peopleCnt,
       duration: [startDate, endDate],
-      hopeGender: gender,
+      hopeGender: genders,
       hopeAge: ages,
       thumbnail: fileUrl,
       contact: contact,
       content: content,
     };
+
     if (state) {
       updateMatchPost(matchPost)
         .then(() => {
@@ -182,22 +184,42 @@ const MatchPostWrite = () => {
             className={"endDatePicker"}
           />
         </DateRange>
-        <AppInputRadioCheck
-          radioAndCheckBoxList={genderList}
-          type={"radio"}
-          defaultValue={state && state.hopeGender}
-          label={"희망 성별"}
-          className={"gender"}
-          onChange={(e) => setGender(e.target.value)}
-        />
-        <AppInputRadioCheck
-          radioAndCheckBoxList={ageList}
-          defaultValues={state && state.hopeAge}
-          onChange={(e) => handleAges(e)}
-          type={"checkbox"}
-          label={"희망 연령대"}
-          className={"age"}
-        />
+        <RadioAndCheckBoxDiv>
+          <RadioAndCheckBoxLabel>희망 성별</RadioAndCheckBoxLabel>
+          {genderList.map((gender) => {
+            return (
+              <AppInputRadioCheck
+                key={gender.value}
+                type="radio"
+                value={gender.value}
+                checked={genders.includes(gender.value)}
+                onClick={(e) => setGender(e.target.value)}
+                htmlValue={gender.htmlValue}
+                className="gender"
+              />
+            );
+          })}
+        </RadioAndCheckBoxDiv>
+        <RadioAndCheckBoxDiv>
+          <RadioAndCheckBoxLabel>희망 연령대</RadioAndCheckBoxLabel>
+          {ageList.map((age) => {
+            return (
+              <AppInputRadioCheck
+                key={age.value}
+                type="checkbox"
+                value={age.value}
+                checked={Boolean(
+                  ages.find((stateAge) => {
+                    return age.value === stateAge;
+                  }),
+                )}
+                htmlValue={age.htmlValue}
+                onClick={handleAges}
+                className="age"
+              />
+            );
+          })}
+        </RadioAndCheckBoxDiv>
         <AppInputFile
           refer={fileRef}
           defaultValue={state && state.thumbnail}

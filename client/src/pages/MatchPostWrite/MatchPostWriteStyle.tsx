@@ -31,3 +31,15 @@ export const MatchPostAppButton = styled(AppButton)`
     margin-right: 150px;
   }
 `;
+
+export const RadioAndCheckBoxLabel = styled.label`
+  flex: none;
+  align-self: center;
+  margin-right: 15px;
+`;
+
+export const RadioAndCheckBoxDiv = styled.div`
+  height: 40px;
+  margin: 10px 0;
+  display: flex;
+`;

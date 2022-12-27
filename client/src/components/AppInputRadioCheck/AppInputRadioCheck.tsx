@@ -1,56 +1,38 @@
-import React, { ChangeEvent, useState } from "react";
-import { AppInputProps } from "../../type/input";
+import React, { ChangeEventHandler } from "react";
 import {
-  Div,
-  Label,
-  RadioAndCheckBoxDiv,
   RadioAndCheckBoxInput,
   RadioAndCheckBoxLabel,
 } from "./AppInputRadioCheckStyle";
 
 export interface RadioAndCheckBox {
+  className: string;
+  type: string;
   value: string;
   htmlValue: string;
+  onClick?: ChangeEventHandler<HTMLInputElement>;
   checked?: boolean;
 }
 
-const AppInputRadioCheck: React.FC<AppInputProps> = ({
-  label,
-  type,
-  onChange,
-  defaultValue,
-  defaultValues,
-  radioAndCheckBoxList,
+const AppInputRadioCheck: React.FC<RadioAndCheckBox> = ({
   className,
+  type,
+  value,
+  onClick,
+  htmlValue,
+  checked,
 }) => {
-  radioAndCheckBoxList?.map((object) => {
-    if (defaultValue && object.value === defaultValue) {
-      object.checked = true;
-    }
-    if (defaultValues && defaultValues.includes(object.value)) {
-      object.checked = true;
-    }
-    return object;
-  });
   return (
-    <Div>
-      {<Label htmlFor={className}>{label}</Label>}
-      {radioAndCheckBoxList?.map((object) => (
-        <RadioAndCheckBoxDiv key={object.htmlValue}>
-          <RadioAndCheckBoxInput
-            type={type}
-            onChange={onChange}
-            value={object.value}
-            id={object.value}
-            name={className}
-            checked={object.checked}
-          />
-          <RadioAndCheckBoxLabel htmlFor={object.value}>
-            {object.htmlValue}
-          </RadioAndCheckBoxLabel>
-        </RadioAndCheckBoxDiv>
-      ))}
-    </Div>
+    <>
+      <RadioAndCheckBoxInput
+        type={type}
+        value={value}
+        id={value}
+        name={className}
+        checked={checked}
+        onChange={onClick}
+      />
+      <RadioAndCheckBoxLabel htmlFor={value}>{htmlValue}</RadioAndCheckBoxLabel>
+    </>
   );
 };
 
