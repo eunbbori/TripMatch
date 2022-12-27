@@ -102,9 +102,7 @@ const ProfileModal: React.FC<TProfileModal> = ({ email }) => {
                   </div>
                   <div className="matches">
                     <span className="etc">
-                      동행횟수&#x2001;{" "}
-                      {userData.matchCount === 0 ? "-1" : userData.matchCount}{" "}
-                      회
+                      동행횟수&#x2001; {userData.matchCount} 회
                     </span>
                     <span className="etc">
                       동행점수&#x2001;{" "}

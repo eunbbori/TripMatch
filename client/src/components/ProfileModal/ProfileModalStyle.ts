@@ -48,6 +48,7 @@ export const Modal = styled.div`
     height: 5rem;
     border-radius: 50%;
     margin-right: 1.5rem;
+    border: 0.2rem solid ${Theme.color.blue};
   }
 
   .infoContainer {
