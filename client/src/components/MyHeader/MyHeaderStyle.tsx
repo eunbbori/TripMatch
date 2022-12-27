@@ -90,4 +90,26 @@ const AlertModal = styled(Modal)`
   }
 `;
 
-export { Header, AlertModal };
+const MyPageModal = styled.div`
+  position: absolute;
+  top: 7vh;
+  right: 10vw;
+  z-index: 99;
+  background-color: white;
+  filter: drop-shadow(0px 0px 3px rgba(0, 0, 0, 0.161));
+  border-radius: 5px;
+
+  .modalCard {
+    width: 120px;
+    height: 60px;
+
+    div {
+      width: 100px;
+      margin: 10% auto;
+      text-align: center;
+      cursor: pointer;
+    }
+  }
+`;
+
+export { Header, AlertModal, MyPageModal };

@@ -1,4 +1,4 @@
-import { Header, AlertModal } from "./MyHeaderStyle";
+import { Header, AlertModal, MyPageModal } from "./MyHeaderStyle";
 import { Link, useNavigate } from "react-router-dom";
 import { useRef, useState } from "react";
 
@@ -6,6 +6,9 @@ const MyHeader = () => {
   const searchRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
   const [alert, setAlert] = useState(false);
+  const [myPageDrop, setMyPageDrop] = useState(false);
+
+  const role = sessionStorage.getItem("roleToken");
 
   const onSearch = () => {
     if (!searchRef.current?.value) {
@@ -41,26 +44,20 @@ const MyHeader = () => {
         />
       </div>
       <div className="navBar">
-        <Link
-          to={sessionStorage.getItem("x-access-token") ? "/match" : "/login"}
-        >
+        <Link to={role ? "/match" : "/login"}>
           <img
             className="firstImg"
             src="https://res.cloudinary.com/dk9scwone/image/upload/v1671095094/temporaryIconShake_jywmku.png"
             alt="동행게시판"
           />
         </Link>
-        <Link
-          to={sessionStorage.getItem("x-access-token") ? "/free" : "/login"}
-        >
+        <Link to={role ? "/free" : "/login"}>
           <img
             src="https://res.cloudinary.com/dk9scwone/image/upload/v1671095094/temporaryIconbubble_h1lmf7.png"
             alt="자유게시판"
           />
         </Link>
-        <Link
-          to={sessionStorage.getItem("x-access-token") ? "/wishlist" : "/login"}
-        >
+        <Link to={role ? "/wishlist" : "/login"}>
           <img
             src="https://res.cloudinary.com/dk9scwone/image/upload/v1671184505/free-icon-heart-shape-39559_aatqxl.png"
             alt="위시리스트"
@@ -68,16 +65,22 @@ const MyHeader = () => {
         </Link>
         <Link
           to={
-            !sessionStorage.getItem("x-access-token")
-              ? "/login"
-              : sessionStorage.getItem("roleToken") === "admin"
-              ? "/admin"
-              : "/mypage/userInfo"
+            role ? (role === "user" ? "/mypage/userInfo" : "/admin") : "/login"
           }
         >
           <img
             src="https://res.cloudinary.com/dk9scwone/image/upload/v1671095094/temporaryIconHuman_j9fibe.png"
             alt="마이페이지"
+            onMouseEnter={() => {
+              if (!role) {
+                setMyPageDrop(false);
+              } else {
+                setMyPageDrop(true);
+              }
+            }}
+            onMouseLeave={() => {
+              setMyPageDrop(false);
+            }}
           />
         </Link>
       </div>
@@ -94,6 +97,39 @@ const MyHeader = () => {
             </button>
           </div>
         </AlertModal>
+      )}
+
+      {myPageDrop && (
+        <MyPageModal
+          onMouseEnter={() => {
+            setMyPageDrop(true);
+          }}
+          onMouseLeave={() => {
+            setMyPageDrop(false);
+          }}
+        >
+          <div className="modalCard">
+            <div
+              onClick={() => {
+                if (role === "user") {
+                  navigate("/mypage/userInfo");
+                } else {
+                  navigate("/admin");
+                }
+              }}
+            >
+              마이페이지
+            </div>
+            <div
+              onClick={() => {
+                sessionStorage.clear();
+                window.location.href = "/";
+              }}
+            >
+              로그아웃
+            </div>
+          </div>
+        </MyPageModal>
       )}
     </Header>
   );
