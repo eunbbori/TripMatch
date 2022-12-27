@@ -13,6 +13,7 @@ import {
   MatchButton,
   ButtonContainer,
   Button,
+  ThumbnailModalButton,
 } from "./PostDetailStyle";
 import type { FreePostType, AuthorType } from "./../../type/freePost";
 import type { MatchPostType } from "../../type/matchPost";
@@ -30,6 +31,7 @@ interface PostDetailProps {
   user?: AuthorType;
   isApplying?: boolean;
   setMatchId?: React.Dispatch<React.SetStateAction<string>>;
+  setOpenThumbnail?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const PostDetail: React.FC<PostDetailProps> = ({
@@ -37,6 +39,7 @@ const PostDetail: React.FC<PostDetailProps> = ({
   user,
   freePost,
   isApplying,
+  setOpenThumbnail,
 }) => {
   const location = useLocation();
   const { id } = useParams();
@@ -156,6 +159,16 @@ const PostDetail: React.FC<PostDetailProps> = ({
       {matchPost && (
         <Thumbnail>
           <ThumbnailImg src={matchPost.thumbnail} />
+          <ThumbnailModalButton
+            onClick={() => {
+              setOpenThumbnail && setOpenThumbnail(true);
+            }}
+          >
+            <img
+              src="https://res.cloudinary.com/dv6tzjgu4/image/upload/v1672134240/Editing-Expand-icon_bgd0em.png"
+              alt="expand thumbnail"
+            />
+          </ThumbnailModalButton>
         </Thumbnail>
       )}
       <PostTitle>

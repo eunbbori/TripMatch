@@ -33,10 +33,24 @@ export const Thumbnail = styled.div`
   overflow: hidden;
   margin-bottom: 10px;
   background-color: #ccc;
+  position: relative;
 `;
 
 export const ThumbnailImg = styled.img`
   width: 100%;
+`;
+
+export const ThumbnailModalButton = styled.button`
+  position: absolute;
+  padding: 0;
+  right: 10px;
+  top: 10px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  img {
+    width: 30px;
+  }
 `;
 
 export const UserContainer = styled.div`

@@ -118,6 +118,7 @@ const MatchPostDetail = () => {
           user={matchPost.post.author}
           isApplying={isApplying}
           setMatchId={setMatchId}
+          setOpenThumbnail={setOpenThumbnail}
         />
       )}
       {matchPost?.comments && (
@@ -129,7 +130,10 @@ const MatchPostDetail = () => {
       {isShown && <Modal callBackFn={getModalCallback()} />}
       <button onClick={() => setOpenThumbnail(true)}></button>
       {openThumbnail && (
-        <ThumbnailModal onToggleThumbnail={onToggleThumbnail} />
+        <ThumbnailModal
+          onToggleThumbnail={onToggleThumbnail}
+          imgUrl={matchPost!.post.thumbnail}
+        />
       )}
     </Container>
   );

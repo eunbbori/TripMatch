@@ -2,17 +2,18 @@ import React from "react";
 import styled from "styled-components";
 import Modal from "./../../../styles/Modal";
 
-const ThumbnailModal: React.FC<{ onToggleThumbnail: () => void }> = ({
+interface ThumbnailModalProps {
+  onToggleThumbnail: () => void;
+  imgUrl: string;
+}
+
+const ThumbnailModal: React.FC<ThumbnailModalProps> = ({
   onToggleThumbnail,
+  imgUrl,
 }) => {
   return (
     <Modal onClick={() => onToggleThumbnail && onToggleThumbnail()}>
-      <Thumbnail
-        src={
-          "https://res.klook.com/image/upload/Mobile/City/g9ynzkjz1nsrvhrjml4j.jpg"
-        }
-        onClick={(e) => e.stopPropagation()}
-      />
+      <Thumbnail src={imgUrl} onClick={(e) => e.stopPropagation()} />
     </Modal>
   );
 };
