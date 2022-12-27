@@ -22,8 +22,7 @@ interface LocationProps {
 const FestivalList: React.FC<LocationProps> = ({ location }) => {
   const [festivalInfo, setFestivalInfo] = useState<Item[]>([]);
   const [itemInfo, setItemInfo] = useState<Item>({});
-  const { show: isShown, modalText } = useAppSelector((state) => state.modal);
-  const dispatch = useAppDispatch();
+  const [festivalModal, setFestivalModal] = useState(false);
   const date = new Date();
   const eventStartDate = `${date.getFullYear()}${date.getMonth() + 1}01`;
   const serviceKey =
@@ -59,7 +58,7 @@ const FestivalList: React.FC<LocationProps> = ({ location }) => {
             src="https://res.cloudinary.com/dk9scwone/image/upload/v1671625307/free-icon-cancel-8532370_kuiqk1.png"
             onClick={(e) => {
               e.stopPropagation();
-              dispatch(closeModal());
+              setFestivalModal(false);
             }}
           />
 
@@ -91,7 +90,7 @@ const FestivalList: React.FC<LocationProps> = ({ location }) => {
                   onClick={(e) => {
                     e.stopPropagation();
                     setItemInfo(item);
-                    dispatch(showModal(null));
+                    setFestivalModal(true);
                   }}
                 >
                   <img src={item.firstimage} />
@@ -103,7 +102,7 @@ const FestivalList: React.FC<LocationProps> = ({ location }) => {
                 </div>
               );
             })}
-          {isShown && <InfoModal item={itemInfo} />}
+          {festivalModal && <InfoModal item={itemInfo} />}
         </FestivalInfo>
         {location === "festival" ? (
           <div className="shortCutBtn">

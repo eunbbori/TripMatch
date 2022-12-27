@@ -70,7 +70,7 @@ const MyHeader = () => {
           to={
             !sessionStorage.getItem("x-access-token")
               ? "/login"
-              : sessionStorage.getItem("roleToken") === "관리자"
+              : sessionStorage.getItem("roleToken") === "admin"
               ? "/admin"
               : "/mypage/userInfo"
           }

@@ -93,6 +93,7 @@ const Management = styled.div`
   button {
     width: 100%;
     padding: 5px;
+    margin-top: 5px;
     border: none;
     border-radius: 5px;
     background-color: ${(props) => props.theme.color.pink};

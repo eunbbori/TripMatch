@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Container, FreePostList } from "./FreePostPreviewStyle";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { FreePostType } from "../../type/freePost";
-import Title from "../Title/Title";
 
 const joinDateFormat = (createdAt: string | undefined) => {
   return (
@@ -32,7 +31,6 @@ const FreePostPreview: React.FC<FreePostProps> = ({
 
   return (
     <div style={{ marginBottom: "30px" }}>
-      {location === "/" && <Title title="자유게시판" location={location} />}
       <Container>
         <FreePostList>
           {freePost.map((item) => {

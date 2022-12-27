@@ -2,12 +2,20 @@ import React from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
-const NotFound = () => {
+interface ErrorMessage {
+  message?: string;
+}
+
+const NotFound: React.FC<ErrorMessage> = ({ message }) => {
   const navigate = useNavigate();
 
   return (
     <Container>
-      <Message>해당 게시글이 존재하지 않습니다.</Message>
+      {message ? (
+        <Message>{message}</Message>
+      ) : (
+        <Message>해당 게시글이 존재하지 않습니다.</Message>
+      )}
       <Button onClick={() => navigate(-1)}>되돌아가기</Button>
     </Container>
   );
