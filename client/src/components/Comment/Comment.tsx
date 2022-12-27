@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useUpdateCommentMutation } from "../../slice/commentApi";
 import { showModal } from "../../slice/modal";
 import { useAppDispatch } from "../../store/hooks";
+import { dateFormat } from "../../util/dateFormatting";
 import { Button } from "../CommentList/CommentListStyle";
 import UserProfile from "../UserProfile/UserProfile";
 import type { CommentType } from "./../../type/comment";
@@ -74,7 +75,7 @@ const Comment: React.FC<CommentProps> = ({ comment, setDeleteCommentId }) => {
     <Container key={comment.commentId}>
       <ProfileContainer>
         <UserProfile user={comment.author} />
-        <Date>({comment.createdAt})</Date>
+        <Date>({dateFormat(comment.createdAt)})</Date>
       </ProfileContainer>
       {isClickUpdate ? (
         <UpdateInput

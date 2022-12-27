@@ -1,12 +1,12 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import type { FreePostType } from "../type/freePost";
-import { axiosBaseQuery } from "./axiosBaseQuery";
+import { authAxiosBaseQuery, axiosBaseQuery } from "./axiosBaseQuery";
 import { CommentType } from "./../type/comment";
 
 export const freePostApi = createApi({
   reducerPath: "freePostApi",
   tagTypes: ["FreePost"],
-  baseQuery: axiosBaseQuery({
+  baseQuery: authAxiosBaseQuery({
     baseUrl: "http://34.64.156.80:3003/api/",
   }),
   endpoints: (builder) => ({

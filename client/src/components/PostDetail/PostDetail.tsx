@@ -21,6 +21,8 @@ import { useAppSelector } from "../../store/hooks";
 import { useAppDispatch } from "./../../store/hooks";
 import { showModal } from "../../slice/modal";
 import axios from "axios";
+import { dateFormat } from "../../util/dateFormatting";
+import ProfileModal from "../ProfileModal/ProfileModal";
 
 interface PostDetailProps {
   matchPost?: MatchPostType;
@@ -177,7 +179,9 @@ const PostDetail: React.FC<PostDetailProps> = ({
       </PostTitle>
       <UserContainer>
         {user && <UserProfile user={user} />}
-        <Date>{freePost?.createdAt || matchPost?.createdAt}</Date>
+        <Date>
+          {dateFormat(freePost?.createdAt || matchPost?.createdAt || "")}
+        </Date>
       </UserContainer>
       {matchPost && (
         <MatchContainer>

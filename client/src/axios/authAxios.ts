@@ -54,23 +54,6 @@ authAxios.interceptors.request.use(
   },
 );
 
-// // 인터셉터 마저 구현시 추후 삭제 예정
-axios.interceptors.request.use(
-  async (config) => {
-    if (!config.headers) {
-      return config;
-    }
-
-    const accessToken = sessionStorage.getItem("x-access-token");
-
-    config.headers["x-access-token"] = `Bearer ${accessToken}`;
-
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  },
-);
 /* axios response 로 받은 데이터는 모두 아래 코드를 거쳐서 받음
 첫번째 인자로 성공 시 실행할 코드, 두번째 인자는 요청 실패시 재시도 하는 코드 */
 authAxios.interceptors.response.use(

@@ -1,11 +1,11 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import type { CommentType } from "../type/comment";
-import { axiosBaseQuery } from "./axiosBaseQuery";
+import { authAxiosBaseQuery, axiosBaseQuery } from "./axiosBaseQuery";
 
 export const commentApi = createApi({
   reducerPath: "commentApi",
   tagTypes: ["Comment"],
-  baseQuery: axiosBaseQuery({
+  baseQuery: authAxiosBaseQuery({
     baseUrl: "http://34.64.156.80:3003/api/",
   }),
   endpoints: (builder) => ({
