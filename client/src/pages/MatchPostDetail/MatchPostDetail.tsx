@@ -77,7 +77,7 @@ const MatchPostDetail = () => {
   const onClickDeletePost = () => {
     console.log("삭제");
     onDeletePost(id);
-    navigate("/free");
+    navigate("/match");
   };
 
   const onClickDeleteComment = () => {

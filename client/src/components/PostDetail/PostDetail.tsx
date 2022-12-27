@@ -138,7 +138,7 @@ const PostDetail: React.FC<PostDetailProps> = ({
 
   const getUpdatePathname = () =>
     location.pathname.includes("match")
-      ? "/match/write" //`/match/write/${matchPost?.postId}`
+      ? `/match/write/${matchPost?.postId}`
       : `/free/write/${freePost?.communityId}`;
 
   const getListPathname = () =>
