@@ -8,11 +8,13 @@ import NotFound from "../../components/NotFound/NotFound";
 import { useGetAllFreePostQuery } from "../../slice/freePostApi";
 
 const Home = () => {
+  const email = sessionStorage.getItem("email");
+
   const {
     data: matchData,
     isError: matchError,
     isLoading: matchLoading,
-  } = useGetAllMatchPostQuery({ page: 1 });
+  } = useGetAllMatchPostQuery({ page: 1, ...(email && { email }) });
 
   const {
     data: freeData,

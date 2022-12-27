@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Container, MatchPosList } from "./MakeMatchPostListStyle";
 import { MatchPostType } from "../../type/matchPost";
-import { Link } from "react-router-dom";
-import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
+import { useAppSelector, useAppDispatch } from "../../store/hooks";
+import { showModal } from "../../slice/modal";
+import Modal from "../Modal/Modal";
+import authAxios from "./../../axios/authAxios";
 
 interface DataProps {
   data: MatchPostType[];
@@ -17,38 +20,54 @@ const MakeMatchPostList: React.FC<DataProps> = ({ data }) => {
   const emptyHeart =
     "https://res.cloudinary.com/dk9scwone/image/upload/v1671341657/emptyheart_ra2kqf.png";
 
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
   useEffect(() => {
     setMatchPost(data);
   }, [data]);
 
-  const toggleLikes = async (idx: number) => {
-    const newData = data;
-    newData[idx].like = !data[idx];
-    setMatchPost(newData);
-    await axios.post("http://localhost:5000/api/main/likes/like", {
-      postId: data[idx].postId,
-    });
+  const { show: isShown, modalText } = useAppSelector((state) => state.modal);
+
+  const toggleLikes = async (item: MatchPostType) => {
+    if (!sessionStorage.getItem("email")) {
+      dispatch(
+        showModal({
+          title: "로그인",
+          content: "로그인 하시겠습니까?",
+          rightButton: "예",
+          leftButton: "아니요",
+        }),
+      );
+      return;
+    } else {
+      if (item.like) {
+        await authAxios.delete(
+          `http://34.64.156.80:3003/api/main/likes/like?postId=${item.postId}`,
+        );
+      } else {
+        await authAxios.post("http://34.64.156.80:3003/api/main/likes/like", {
+          postId: item.postId,
+        });
+      }
+    }
   };
 
   return (
     <Container>
       <MatchPosList>
         {data &&
-          data.map((item, idx) => {
+          data.map((item) => {
             const url = `/match/${item.postId}`;
             return (
               <div className="item" key={item.postId}>
-                {item.like ? (
-                  <img
-                    src={item.like ? fullHeart : emptyHeart}
-                    className="heart"
-                    onClick={() => {
-                      toggleLikes(idx);
-                    }}
-                  />
-                ) : (
-                  <img src={emptyHeart} className="heart" />
-                )}
+                <img
+                  src={item.like ? fullHeart : emptyHeart}
+                  className="heart"
+                  onClick={() => {
+                    toggleLikes(item);
+                  }}
+                />
                 <Link to={url}>
                   <span className="region">{item.region}</span>
                   <img src={item.thumbnail} className="itemImg" />
@@ -58,6 +77,13 @@ const MakeMatchPostList: React.FC<DataProps> = ({ data }) => {
             );
           })}
       </MatchPosList>
+      {isShown && (
+        <Modal
+          callBackFn={() => {
+            navigate("/login");
+          }}
+        />
+      )}
     </Container>
   );
 };
