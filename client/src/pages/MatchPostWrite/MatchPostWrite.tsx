@@ -28,17 +28,17 @@ const regions = [
 ];
 
 const genderList = [
-  { value: "man", htmlValue: "남성" },
-  { value: "woman", htmlValue: "여성" },
-  { value: "both", htmlValue: "성별무관" },
+  { value: "남성", htmlValue: "남성" },
+  { value: "여성", htmlValue: "여성" },
+  { value: "성별무관", htmlValue: "성별무관" },
 ];
 
 const ageList = [
-  { value: "20", htmlValue: "20대" },
-  { value: "30", htmlValue: "30대" },
-  { value: "40", htmlValue: "40대" },
-  { value: "50", htmlValue: "50대" },
-  { value: "none", htmlValue: "연령대무관" },
+  { value: "20대", htmlValue: "20대" },
+  { value: "30대", htmlValue: "30대" },
+  { value: "40대", htmlValue: "40대" },
+  { value: "50대", htmlValue: "50대" },
+  { value: "연령대무관", htmlValue: "연령대무관" },
 ];
 
 const MatchPostWrite = () => {
