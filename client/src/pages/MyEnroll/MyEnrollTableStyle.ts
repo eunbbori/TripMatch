@@ -76,7 +76,9 @@ export const Content = styled.div`
     }
 
     #last {
-      padding-top: 7px;
+      padding-top: 5px;
+      display: flex;
+      margin-left: 20px;
 
       button {
         cursor: pointer;
@@ -85,16 +87,30 @@ export const Content = styled.div`
         border-radius: 5px;
         border: none;
       }
+
       #review {
         font-family: "S-CoreDream-3Light";
         font-weight: 700;
         background-color: ${(props) => props.theme.color.lightblue};
+        margin-left: 2px;
+      }
+
+      #endText {
+        margin-left: 5px;
       }
 
       #cancel {
         font-family: "S-CoreDream-3Light";
         font-weight: 700;
         background-color: ${(props) => props.theme.color.lightpink};
+        margin-left: 8px;
+      }
+
+      #left {
+        width: 120px;
+        height: 30px;
+        margin-right: 20px;
+        margin-top: 10px;
       }
     }
 

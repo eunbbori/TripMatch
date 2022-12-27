@@ -5,12 +5,25 @@ import authAxios from "../../../axios/authAxios";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
+interface TripMatchPostType {
+  title: string;
+  content: string;
+  region: string;
+  hopeGender: string;
+  thumbnail: string;
+  contact: string;
+  duration: string[];
+  hopeAge: string[];
+  status: boolean;
+}
+
 const MyPageTable: React.FC = () => {
   const [data, setData] = useState<PostType[]>([]);
-  const [status, setStatus] = useState(true);
+  const [post, setPost] = useState<TripMatchPostType[]>([]);
+  // const [status, setStatus] = useState(true);
   // const selectRef = useRef<HTMLSelectElement>(null);
 
-  //const baseUrl = "34.64.156.80:3003";
+  //const baseUrl = "http://34.64.156.80:3003";
 
   useEffect(() => {
     const getData = async () => {
@@ -29,31 +42,28 @@ const MyPageTable: React.FC = () => {
   const handleChangeValue = async (e: React.ChangeEvent<HTMLSelectElement>) => {
     e.preventDefault();
 
+    try {
+      const postData = await axios.get(
+        `http://34.64.156.80:3003/api/main/posts/${data[0].postId}`,
+      );
+      setPost(postData.data);
+    } catch (err: unknown) {
+      console.error(err);
+    }
+
     const value = e.target.value;
     console.log(value);
     const boolean = value === "모집중" ? true : false;
     console.log(boolean);
 
-    // try {
-    //   await authAxios
-    //     .put("http://localhost:4000/postUserInfo", { status: boolean })
-    //     .then((res) => res.data);
-    // } catch (err: unknown) {
-    //   console.log(err);
-    // }
-
-    // const upDateData = {
-    //   status: value === "모집중" ? setStatus(status) : setStatus(!status),
-    // };
-
-    // const putData = async () => {
-    //   const fetchData = await axios.put("http://localhost:4000/postUserInfo", {
-    //     status: value === "모집중" ? setStatus(status) : setStatus(!status),
-    //   });
-
-    //   setData(fetchData.data[0]);
-    // };
-    // putData();
+    try {
+      await authAxios.put(`/api/main/posts/${data[0].postId}`, {
+        ...post,
+        status: boolean,
+      });
+    } catch (err: unknown) {
+      console.error(err);
+    }
   };
 
   return (

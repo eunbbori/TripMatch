@@ -1,16 +1,13 @@
-import { DateType } from "./duration";
-
-export interface PostType {
-  postId: number;
-  author: PostAuthorType;
+export interface CommentType {
+  postId: string;
+  author: CommentAuthorType;
   region: string;
   title: string;
-  duration: DateType[];
-  createdAt: Date;
+  duration: string[];
 }
 
-export interface PostAuthorType {
-  authorId: number;
+export interface CommentAuthorType {
+  email: string;
   nickname: string;
-  profileImg?: string;
+  profileImg: string;
 }

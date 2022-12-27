@@ -1,21 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { Content, Layer } from "./TableContentStyle";
-import { PostType } from "../../../type/myComments";
-import axios from "axios";
+import { CommentType } from "../../../type/myComments";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import authAxios from "../../../axios/authAxios";
 
 const MyCommentTable: React.FC = () => {
-  const [data, setData] = useState<PostType[]>([]);
-
-  // const baseUrl = "https://e14cb7f4-6c52-45e6-84b4-2e92c7458bf0.mock.pstmn.io/commentedPost";
+  const [data, setData] = useState<CommentType[]>([]);
 
   useEffect(() => {
     const postData = async () => {
-      const fetchData = await axios.get("http://localhost:4000/commentedPost");
-      setData(fetchData.data[0].posts);
+      try {
+        const fetchData = await authAxios.get("/api/main/mypage/comments");
+        setData(fetchData.data);
+      } catch (err: unknown) {
+        console.error(err);
+      }
     };
     postData();
-  }, []);
+  }, [data]);
 
   return (
     <Content>
@@ -31,22 +34,26 @@ const MyCommentTable: React.FC = () => {
           </thead>
 
           <tbody>
-            {data?.map((item) => {
-              return (
-                <tr key={item.postId}>
-                  <td id="title">
-                    <Link to={`/mypage/mycomment/${item.postId}`}>
-                      {item.title}
-                    </Link>
-                  </td>
-                  <td>{item.region}</td>
-                  <td>
-                    {item.duration[0].start} ~ {item.duration[0].end}
-                  </td>
-                  <td id="last">{item.author.nickname}</td>
-                </tr>
-              );
-            })}
+            {data &&
+              data.map((item) => {
+                return (
+                  <tr key={item.postId}>
+                    <td id="title">
+                      <Link to={`/mypage/mycomment/${item.postId}`}>
+                        {item.title}
+                      </Link>
+                    </td>
+                    <td>{item.region}</td>
+                    <td>
+                      {item.duration[0]} ~ {item.duration[1]}
+                    </td>
+                    <td id="last">{item.author.nickname}</td>
+                  </tr>
+                );
+              })}
+            <tr>
+              <td></td>
+            </tr>
           </tbody>
         </table>
       </Layer>

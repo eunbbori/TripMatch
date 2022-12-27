@@ -1,27 +1,89 @@
 import React, { useState, useEffect } from "react";
 import { Content, Layer } from "./ReceivedEnrollTableStyle";
 import axios from "axios";
+import authAxios from "../../axios/authAxios";
 
 export interface EnrolledPersonType {
-  userId: number;
-  nickname: string;
-  postTitle: string;
-  status: boolean;
+  matchId: string;
+  postId: string;
+  title: string;
+  status: string;
+  duration: string[];
+  applicant: Applicant[];
 }
+
+export interface Applicant {
+  email: string;
+  nickname: string;
+  profileImg: string;
+}
+
+// const data11 = [
+//   {
+//     matchId: "1",
+//     postId: "1",
+//     title: "title",
+//     status: "",
+//     duration: ["2022-10-24", "2022-10-25"],
+//     applicant: [
+//       {
+//         email: "111@gmail.com",
+//         nickname: "aass",
+//         profileImg: "",
+//       },
+//     ],
+//   },
+// ];
 
 const ReceivedEnrollTable: React.FC = () => {
   const [data, setData] = useState<EnrolledPersonType[]>([]);
 
-  // const baseUrl = "";
-  // https://8ada489c-50d9-464f-ae66-8e0b28048eb6.mock.pstmn.io/enrolledPerson
-
   useEffect(() => {
     const getData = async () => {
-      const fetchData = await axios.get("http://localhost:4000/enrolledPerson");
-      setData(fetchData.data);
+      try {
+        const fetchData = await authAxios.get(
+          "/api/main/mypage/receivedEnroll",
+        );
+        setData(fetchData.data);
+        // setData(data11);
+      } catch (err: unknown) {
+        console.error(err);
+      }
     };
     getData();
   }, []);
+
+  const handleApproval = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    const approvalFn = async () => {
+      try {
+        await authAxios.put(
+          `/api/main/matches/${data[0].matchId}`,
+          { status: "수락" },
+          // { headers: { matchId: data[0].matchId } },
+        );
+      } catch (err: unknown) {
+        console.error(err);
+      }
+    };
+    approvalFn();
+  };
+
+  const handleDenied = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    const deniedFn = async () => {
+      try {
+        await authAxios.put(
+          `/api/main/matches/${data[0].matchId}`,
+          { status: "거절" },
+          // { headers: { matchId: data[0].matchId } },
+        );
+      } catch (err: unknown) {
+        console.error(err);
+      }
+    };
+    deniedFn();
+  };
 
   return (
     <Content>
@@ -36,18 +98,26 @@ const ReceivedEnrollTable: React.FC = () => {
           </thead>
           {/* 수락하면 status true, 거절하면 status false */}
           <tbody>
-            {data?.map((item) => {
-              return (
-                <tr key={item.userId}>
-                  <td id="title">{item.postTitle}</td>
-                  <td>{item.nickname}</td>
-                  <td id="last">
-                    <button>수락</button>
-                    <button>거절</button>
-                  </td>
-                </tr>
-              );
-            })}
+            {data &&
+              data.map((item) => {
+                return (
+                  <tr key={item.postId}>
+                    <td id="title">{item.title}</td>
+                    <td>{item.applicant[0].nickname}</td>
+                    <td id="last">
+                      <button value="수락" onClick={handleApproval}>
+                        수락
+                      </button>
+                      <button value="거절" onClick={handleDenied}>
+                        거절
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
+            <tr>
+              <td></td>
+            </tr>
           </tbody>
         </table>
       </Layer>
