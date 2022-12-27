@@ -38,7 +38,13 @@ export const FileUploadName = styled.input`
   }
   font-family: "S-CoreDream-3Light";
 `;
+
+export const FileImage = styled.img`
+  width: 250px;
+`;
+
 export const FileUploadLabel = styled.label`
+  align-self: center;
   display: inline-block;
   padding: 10px 20px;
   color: #999;

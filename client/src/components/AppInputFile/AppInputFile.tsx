@@ -6,17 +6,22 @@ import {
   FileInput,
   FileUploadName,
   FileUploadLabel,
+  FileImage,
 } from "./AppInputFileStyle";
 
 const AppInputFile: React.FC<AppInputProps> = ({ label, refer, className }) => {
-  const [imageUploaded, setImageUploaded] = useState<File>();
+  const [imagePreview, setImagePreview] = useState<string>();
 
   const imageHandler = async (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files) {
       return;
     }
-    const file = event.target.files[0];
-    setImageUploaded(file);
+    const reader = new FileReader();
+    const file = event.target.files[event.target.files.length - 1];
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setImagePreview(String(reader.result));
+    };
   };
 
   return (
@@ -30,15 +35,17 @@ const AppInputFile: React.FC<AppInputProps> = ({ label, refer, className }) => {
         className={className}
         accept="image/jpg,image.png,image/jpeg"
       />
-      <FileUploadName
-        readOnly
-        className="uploadName"
-        placeholder="jpg,png,jpeg"
-        defaultValue={imageUploaded?.name}
-        onClick={() => {
-          document.getElementById("file")?.click();
-        }}
-      />
+      {!imagePreview && (
+        <FileUploadName
+          readOnly
+          className="uploadName"
+          placeholder="jpg,png,jpeg"
+          onClick={() => {
+            document.getElementById("file")?.click();
+          }}
+        />
+      )}
+      {imagePreview && <FileImage src={imagePreview} />}
       <FileUploadLabel htmlFor="file">업로드</FileUploadLabel>
     </Div>
   );
