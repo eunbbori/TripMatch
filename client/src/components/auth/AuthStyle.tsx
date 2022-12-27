@@ -27,7 +27,7 @@ const PinkBox = styled.div`
   }
 
   &.updatePinkBox {
-    height: 82rem;
+    height: 75rem;
   }
 `;
 

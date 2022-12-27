@@ -26,6 +26,7 @@ const joinDateFormat = (createdAt: string) => {
 
 const Admin = () => {
   const [members, setMembers] = useState<UserType[]>([]);
+  const [deletMember, setDeleteMember] = useState("");
   const searchRef = useRef<HTMLInputElement>(null);
   const { show: isShown, modalText } = useAppSelector((state) => state.modal);
   const dispatch = useAppDispatch();
@@ -36,33 +37,37 @@ const Admin = () => {
       .get(`/api/admin/users${searchKeyword}`)
       .then((res) => res.data);
     setMembers(memberList);
-    console.log(memberList);
     return;
   };
 
   const deleteMember = async (email: string) => {
-    await axios
+    await authAxios
       .delete(`/api/admin/users/${email}`)
       .then()
       .catch((err) => console.log(err));
+    getMember();
+    return;
   };
 
   const roleChange = async (email: string, role: string) => {
     let newRole = "";
     if (role === "회원") {
-      newRole = "admin";
-    } else {
       newRole = "user";
+    } else {
+      newRole = "admin";
     }
-    await axios
+
+    console.log("새 역할은?", newRole);
+
+    await authAxios
       .put(`/api/admin/users/${email}`, { role: newRole })
       .then()
       .catch((err) => console.log(err));
+    return;
   };
 
   const deleteMemberModal = (ninkname: string, email: string) => {
-    const content = `${ninkname}${email} 
-      회원을 강제 탈퇴하시겠습니까?`;
+    const content = `${ninkname}    ${email}    회원을 강제 탈퇴하시겠습니까?`;
     dispatch(
       showModal({
         title: "탈퇴",
@@ -70,6 +75,7 @@ const Admin = () => {
         rightButton: "탈퇴",
       }),
     );
+    return;
   };
 
   useEffect(() => {
@@ -88,6 +94,7 @@ const Admin = () => {
             onClick={() => {
               if (searchRef.current?.value) {
                 getMember(searchRef.current.value);
+                searchRef.current.value = "";
               }
             }}
           />
@@ -111,12 +118,14 @@ const Admin = () => {
                     className="role"
                     defaultValue={member.role === "user" ? "회원" : "관리자"}
                     onChange={(e) => {
+                      console.log("클릭", e.currentTarget.value);
                       roleChange(member.email, e.currentTarget.value);
                     }}
                   />
                   <button
                     onClick={() => {
                       deleteMemberModal(member.nickname, member.email);
+                      setDeleteMember(member.email);
                     }}
                   >
                     탈퇴
@@ -125,8 +134,11 @@ const Admin = () => {
               </div>
             );
           })}
-        {isShown && <Modal />}
+        {isShown && <Modal callBackFn={() => deleteMember(deletMember)} />}
       </MemberList>
+      <div className="showAll" onClick={() => getMember()}>
+        전체회원 보기
+      </div>
     </Container>
   );
 };

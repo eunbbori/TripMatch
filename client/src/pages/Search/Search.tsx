@@ -14,26 +14,25 @@ const Search = () => {
   const keyword = location.split("/")[2];
   const email = sessionStorage.getItem("email");
 
-  const getResult = useCallback(() => {
-    async function getSearchData() {
-      const data = await axios
-        .get(
-          `/api/main/search?keyword=${keyword}${
-            email ? `&email=${email}` : ""
-          }`,
-        )
-        .then((res) => res.data)
-        .catch((err) => alert(err));
+  const searchAxios = axios.create({
+    baseURL: "http://34.64.156.80:3003",
+  });
 
-      setSearchMatch(data.posts);
-      setSearchFree(data.communities);
-    }
-    getSearchData();
-  }, [email, keyword]);
+  // async function getSearchData() {
+  //   const data = await searchAxios
+  //     .get(
+  //       `/api/main/search?keyword=${keyword}${email ? `&email=${email}` : ""}`,
+  //     )
+  //     .then((res) => res.data)
+  //     .catch((err) => alert(err));
 
-  useEffect(() => {
-    getResult();
-  }, [getResult]);
+  //   setSearchMatch(data.posts);
+  //   setSearchFree(data.communities);
+  // }
+
+  // useEffect(() => {
+  //   getSearchData();
+  // }, [keyword, getSearchData]);
 
   return (
     <SearchStyle>
