@@ -19,8 +19,13 @@ export const Button = styled.button<{ commentForm?: boolean }>`
   background-color: ${(props) => props.theme.color.lightblue};
   color: #333;
   font-family: "S-CoreDream-3Light";
+
   + button {
     margin-left: 15px;
+  }
+
+  &:hover {
+    background-color: ${(props) => props.theme.color.blue};
   }
 
   ${(props) =>

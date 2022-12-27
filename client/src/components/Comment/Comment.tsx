@@ -46,7 +46,7 @@ const Comment: React.FC<CommentProps> = ({ comment, setDeleteCommentId }) => {
   }, [comment.author.email]);
 
   useEffect(() => {
-    setIsAdmin(sessionStorage.getItem("role") === "admin");
+    setIsAdmin(sessionStorage.getItem("roleToken") === "admin");
   }, []);
 
   const onClickUpdate = () => setIsClickUpdate(true);
@@ -71,6 +71,26 @@ const Comment: React.FC<CommentProps> = ({ comment, setDeleteCommentId }) => {
     });
   };
 
+  const getButtonsForUserType = () => {
+    if (isAuthor) {
+      return isClickUpdate ? (
+        <>
+          <Button onClick={onClickUpdateCompleted}>수정 완료</Button>
+          <Button onClick={onClickCancle}>취소</Button>
+        </>
+      ) : (
+        <>
+          <Button onClick={onClickUpdate}>수정</Button>
+          <Button onClick={onClickDelete}>삭제</Button>
+        </>
+      );
+    } else if (!isAuthor && isAdmin) {
+      return <Button onClick={onClickDelete}>삭제</Button>;
+    } else if (!isAuthor && !isAdmin) {
+      return;
+    }
+  };
+
   return (
     <Container key={comment.commentId}>
       <ProfileContainer>
@@ -85,21 +105,7 @@ const Comment: React.FC<CommentProps> = ({ comment, setDeleteCommentId }) => {
       ) : (
         <Content>{comment.content}</Content>
       )}
-      {isAuthor || isAdmin ? (
-        <ButtonContainer>
-          {isClickUpdate ? (
-            <>
-              <Button onClick={onClickUpdateCompleted}>수정 완료</Button>
-              <Button onClick={onClickCancle}>취소</Button>
-            </>
-          ) : (
-            <>
-              <Button onClick={onClickUpdate}>수정</Button>
-              <Button onClick={onClickDelete}>삭제</Button>
-            </>
-          )}
-        </ButtonContainer>
-      ) : null}
+      <ButtonContainer>{getButtonsForUserType()}</ButtonContainer>
     </Container>
   );
 };

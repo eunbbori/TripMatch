@@ -40,19 +40,6 @@ export const ThumbnailImg = styled.img`
   width: 100%;
 `;
 
-export const ThumbnailModalButton = styled.button`
-  position: absolute;
-  padding: 0;
-  right: 10px;
-  top: 10px;
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  img {
-    width: 30px;
-  }
-`;
-
 export const UserContainer = styled.div`
   display: flex;
   align-items: center;
@@ -80,6 +67,7 @@ export const PostContent = styled.article`
   padding: 40px 0;
   font-size: ${(props) => props.theme.font.M};
   line-height: 1.7;
+  font-family: "S-CoreDream-3Light";
 `;
 
 export const Date = styled.p`
@@ -92,7 +80,10 @@ export const ButtonContainer = styled.div`
   justify-content: end;
 
   a {
-    margin-right: 15px;
+    margin-left: 15px;
+  }
+  & > button {
+    margin-left: 15px;
   }
 `;
 
@@ -105,6 +96,10 @@ export const Button = styled.button`
   background-color: ${(props) => props.theme.color.lightblue};
   color: #333;
   font-family: "S-CoreDream-3Light";
+
+  &:hover {
+    background-color: ${(props) => props.theme.color.blue};
+  }
 `;
 
 export const MatchButton = styled.button<{ isApplying: boolean }>`

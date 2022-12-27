@@ -5,13 +5,11 @@ import Comment from "../../components/CommentList/CommentList";
 import pointer from "../../images/temporaryIconPointer.png";
 import {
   useDeleteFreePostMutation,
-  useGetAllFreePostQuery,
   useGetFreePostQuery,
 } from "../../slice/freePostApi";
 import { useNavigate, useParams } from "react-router-dom";
 import NotFound from "../../components/NotFound/NotFound";
-import { FreePostType } from "./../../type/freePost";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { useAppSelector } from "../../store/hooks";
 import Modal from "../../components/Modal/Modal";
 import { useDeleteCommentMutation } from "../../slice/commentApi";
 
@@ -20,14 +18,11 @@ const FreePostDetail = () => {
   const navigate = useNavigate();
 
   const postquery = useGetFreePostQuery(id);
-  const { data: post, isLoading, isError } = postquery;
-  const [onDeletePost, { isError: isErrorDeletePost }] =
-    useDeleteFreePostMutation();
-  const [onDeleteComment, { isError: isErrorDeleteComment }] =
-    useDeleteCommentMutation();
+  const { data: post, isError } = postquery;
+  const [onDeletePost] = useDeleteFreePostMutation();
+  const [onDeleteComment] = useDeleteCommentMutation();
 
   const { show: isShown, modalText } = useAppSelector((state) => state.modal);
-  const dispatch = useAppDispatch();
 
   const [deleteCommentId, setDeleteCommentId] = useState("");
 

@@ -1,10 +1,9 @@
-import React, { LegacyRef, RefObject, useRef, useState } from "react";
+import React, { LegacyRef, RefObject, useRef } from "react";
 import Editor from "../../../components/Editor/Editor";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
   Button,
   ButtonContainer,
-  Select,
   TitleContainer,
   TitleInputBox,
 } from "./FreePostFormStyle";
@@ -19,17 +18,9 @@ import { Editor as ToastEditor } from "@toast-ui/react-editor";
 const FreePostForm = () => {
   const state: FreePostType = useLocation().state;
   const navigate = useNavigate();
-  const [
-    createFreePost,
-    { isLoading: isLoadingCreate, isError: isErrorCreate },
-  ] = useCreateFreePostMutation();
+  const [createFreePost] = useCreateFreePostMutation();
 
-  const [
-    updateFreePost,
-    { isLoading: isLoadingUpdate, isError: isErrorUpdate },
-  ] = useUpdateFreePostMutation();
-
-  const [contentInput, setContentInput] = useState("");
+  const [updateFreePost] = useUpdateFreePostMutation();
 
   const regionRef: RefObject<HTMLSelectElement> = useRef(null);
   const categoryRef: RefObject<HTMLSelectElement> = useRef(null);
@@ -38,6 +29,15 @@ const FreePostForm = () => {
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (
+      !titleRef.current?.value ||
+      contentRef.current?.getInstance().getHTML() === "<p><br></p>"
+    ) {
+      alert("모든 내용을 채워주세요.");
+      return;
+    }
+
     if (
       state &&
       regionRef.current &&

@@ -16,7 +16,7 @@ const CommentList: React.FC<CommentListProps> = ({
 }) => {
   const [commentInput, setCommentInput] = useState("");
 
-  const [onCreateComment, { isError, isLoading }] = useCreateCommentMutation();
+  const [onCreateComment, { isError }] = useCreateCommentMutation();
 
   const location = useLocation();
 

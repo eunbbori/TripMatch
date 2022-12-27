@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import "@toast-ui/editor/dist/toastui-editor-viewer.css";
 import { Link, useLocation, useParams } from "react-router-dom";
 import UserProfile from "../UserProfile/UserProfile";
 import {
@@ -13,17 +14,13 @@ import {
   MatchButton,
   ButtonContainer,
   Button,
-  ThumbnailModalButton,
 } from "./PostDetailStyle";
 import type { FreePostType, AuthorType } from "./../../type/freePost";
 import type { MatchPostType } from "../../type/matchPost";
-import Modal from "../Modal/Modal";
-import { useAppSelector } from "../../store/hooks";
 import { useAppDispatch } from "./../../store/hooks";
 import { showModal } from "../../slice/modal";
-import axios from "axios";
 import { dateFormat } from "../../util/dateFormatting";
-import ProfileModal from "../ProfileModal/ProfileModal";
+import authAxios from "../../axios/authAxios";
 
 interface PostDetailProps {
   matchPost?: MatchPostType;
@@ -61,22 +58,24 @@ const PostDetail: React.FC<PostDetailProps> = ({
   useEffect(() => {
     const fetchLikePost = async () => {
       if (isLikePost && clickLikePost) {
-        await axios.post("http://34.64.156.80:3003/api/main/likes/like", {
+        await authAxios.post("http://34.64.156.80:3003/api/main/likes/like", {
           postId: id,
         });
       } else if (!isLikePost && clickLikePost) {
-        await axios.delete("http://34.64.156.80:3003/api/main/likes/like", {
+        await authAxios.delete("http://34.64.156.80:3003/api/main/likes/like", {
           params: { postId: id },
         });
       }
     };
-    fetchLikePost();
-  }, [clickLikePost, id, isLikePost]);
+    location.pathname.includes("match") && fetchLikePost();
+  }, [clickLikePost, id, isLikePost, location.pathname]);
 
   // 이미 좋아요를 누른 게시글이면 setIsLikePost(true)
   useEffect(() => {
     const getLikePost = async () => {
-      const result = await axios.get("http://34.64.156.80:3003/api/main/likes");
+      const result = await authAxios.get(
+        "http://34.64.156.80:3003/api/main/likes",
+      );
 
       if (result.data) {
         const currentLike = result.data.find(
@@ -86,18 +85,24 @@ const PostDetail: React.FC<PostDetailProps> = ({
         currentLike && setIsLikePost(true);
       }
     };
-    sessionStorage.getItem("x-access-token") && getLikePost();
-  }, [id, isLikePost]);
+    if (
+      sessionStorage.getItem("x-access-token") &&
+      !clickLikePost &&
+      location.pathname.includes("match")
+    ) {
+      getLikePost();
+    }
+  }, [clickLikePost, id, isLikePost, location.pathname]);
 
   // 로그인한 유저가 운영자나 글 작성자인지 체크함
   useEffect(() => {
     const currentPost = matchPost || freePost;
 
     setIsAuthor(sessionStorage.getItem("email") === currentPost?.author?.email);
-    setIsAdmin(sessionStorage.getItem("role") === "admin");
+    setIsAdmin(sessionStorage.getItem("roleToken") === "admin");
   }, [freePost, matchPost]);
 
-  const onToggleLikes = async () => {
+  const onToggleLikes = () => {
     setIsLikePost(!isLikePost);
     setClickLikePost(true);
   };
@@ -132,17 +137,7 @@ const PostDetail: React.FC<PostDetailProps> = ({
         );
       }
     }
-
-    // await axios.post('') 동행 신청 api 작성
   };
-
-  const getUpdatePathname = () =>
-    location.pathname.includes("match")
-      ? `/match/write/${matchPost?.postId}`
-      : `/free/write/${freePost?.communityId}`;
-
-  const getListPathname = () =>
-    location.pathname.includes("match") ? "/match" : "/free";
 
   const onClickDelete = () => {
     dispatch(
@@ -154,21 +149,41 @@ const PostDetail: React.FC<PostDetailProps> = ({
     );
   };
 
+  const getUpdatePathname = () =>
+    location.pathname.includes("match")
+      ? `/match/write/${matchPost?.postId}`
+      : `/free/write/${freePost?.communityId}`;
+
+  const getListPathname = () =>
+    location.pathname.includes("match") ? "/match" : "/free";
+
+  const getButtonsForUserType = () => {
+    if (isAuthor) {
+      return (
+        <>
+          <Link to={getUpdatePathname()} state={freePost || matchPost}>
+            <Button>글수정</Button>
+          </Link>
+          <Button onClick={onClickDelete}>글삭제</Button>
+        </>
+      );
+    } else if (!isAuthor && isAdmin) {
+      return <Button onClick={onClickDelete}>삭제</Button>;
+    } else if (!isAuthor && !isAdmin) {
+      return;
+    }
+  };
+
   return (
     <div>
       {matchPost && (
         <Thumbnail>
-          <ThumbnailImg src={matchPost.thumbnail} />
-          <ThumbnailModalButton
+          <ThumbnailImg
+            src={matchPost.thumbnail}
             onClick={() => {
               setOpenThumbnail && setOpenThumbnail(true);
             }}
-          >
-            <img
-              src="https://res.cloudinary.com/dv6tzjgu4/image/upload/v1672134240/Editing-Expand-icon_bgd0em.png"
-              alt="expand thumbnail"
-            />
-          </ThumbnailModalButton>
+          />
         </Thumbnail>
       )}
       <PostTitle>
@@ -216,7 +231,7 @@ const PostDetail: React.FC<PostDetailProps> = ({
           </p>
           <p>
             <span>희망 연령대</span>
-            {matchPost.hopeAge}
+            {matchPost.hopeAge.join(", ")}
           </p>
         </MatchContainer>
       )}
@@ -225,6 +240,7 @@ const PostDetail: React.FC<PostDetailProps> = ({
           (freePost && { __html: freePost.content }) ||
           (matchPost && { __html: matchPost.content })
         }
+        className="toastui-editor-contents"
       ></PostContent>
       {matchPost && (
         <MatchButton onClick={onClickApply} isApplying={isApplying!}>
@@ -235,14 +251,7 @@ const PostDetail: React.FC<PostDetailProps> = ({
         <Link to={getListPathname()}>
           <Button>목록</Button>
         </Link>
-        {isAuthor || isAdmin ? (
-          <>
-            <Link to={getUpdatePathname()} state={freePost || matchPost}>
-              <Button>글수정</Button>
-            </Link>
-            <Button onClick={onClickDelete}>글삭제</Button>
-          </>
-        ) : null}
+        {getButtonsForUserType()}
       </ButtonContainer>
     </div>
   );
