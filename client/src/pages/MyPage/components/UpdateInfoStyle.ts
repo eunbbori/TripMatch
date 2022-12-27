@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import Modal from "../../../styles/Modal";
+import Theme from "./../../../styles/Theme";
 
 export const Body = styled.div`
   width: 100%;
@@ -192,10 +193,13 @@ export const ProfileInput = styled.input`
   display: none;
 `;
 
-export const ProfileImage = styled.div`
+export const ProfileImage = styled.img`
   border-radius: 50%;
   width: 5rem;
   height: 5rem;
+  display: block;
+  margin-top: 1rem;
+  border: 0.2rem solid ${Theme.color.blue};
 `;
 
 export const WithdrawalText = styled.p`

@@ -1,10 +1,4 @@
-import React, {
-  ChangeEvent,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useImmer } from "use-immer";
 import {
@@ -28,12 +22,12 @@ import {
   ModalContentContainer,
   ModalTitle,
   ProfileImage,
-  ProfileInput,
   UpdateModal,
   WithdrawalText,
 } from "./UpdateInfoStyle";
 import { UpdateUserinfoTitle } from "./SideBarStyle";
 import authAxios from "../../../axios/authAxios";
+import axios from "axios";
 
 const UpdateUserInfoFrom = () => {
   type FormType =
@@ -79,7 +73,8 @@ const UpdateUserInfoFrom = () => {
   const [modalForm, setModalForm] = useState<FormType>();
   // 모달 외부 클릭 처리에 사용할 모달 엘리먼트
   const modalEl = useRef<HTMLDivElement>(null);
-  const imgInputEl = useRef<HTMLInputElement>(null);
+  // 이미지로 클릭을 대신한 이미지 업로드 input
+  const [image, setImage] = useState<File | string>("");
 
   const [userState, setUserState] = useImmer({
     email: "",
@@ -171,23 +166,44 @@ const UpdateUserInfoFrom = () => {
     validText.password,
   ]);
 
-  // 추후 이미지 api 스펙 확정 시 다시 제작
-  const checkFileSize = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      const file = e.target.files[0];
-      const fileSize = file.size;
-      const maxSize = 10 * 1024 * 1024;
-      if (fileSize > maxSize) {
-        alert("10MB 이하의 이미지만 사용가능합니다");
-        return false;
-      }
-      return true;
-    }
-  }, []);
+  // 이미지 크기 10Mb 제한 확인용
+  // const checkFileSize = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+  //   if (e.target.files) {
+  //     const file = e.target.files[0];
+  //     const fileSize = file.size;
+  //     const maxSize = 10 * 1024 * 1024;
+  //     if (fileSize > maxSize) {
+  //       alert("10MB 이하의 이미지만 사용가능합니다");
+  //       return false;
+  //     }
+  //     return true;
+  //   }
+  // }, []);
 
-  const onChangeImage = (e: ChangeEvent<HTMLInputElement>) => {
-    if (checkFileSize(e)) {
-      // 파일 크기 체크 후 클라우디너리로 업로드, url 받아서 서버로 api 보내기
+  const uploadimg = async (data: FormData) => {
+    try {
+      // 클라우디너리에 업로드 후, 받아온 url 을 상태로 저장
+      const res = await axios.post(
+        "https://api.cloudinary.com/v1_1/dk9scwone/image/upload",
+        data,
+      );
+
+      const imgRes = await authAxios.put(`/api/main/auth/update`, {
+        profileImg: res.data.url,
+      });
+      if (imgRes.status === 200) {
+        setUserState((draft) => {
+          draft.profileImg = res.data.url;
+        });
+        alert("수정 완료!");
+        console.log("이미지 url 서버로 전송 완료");
+      } else {
+        throw new Error(`에러코드 ${imgRes.status}. 수정에 실패하였습니다`);
+      }
+    } catch (error) {
+      alert("수정 실패");
+      console.error(error);
+      console.log("이미지 url 서버로 전송 실패");
     }
   };
 
@@ -481,13 +497,29 @@ const UpdateUserInfoFrom = () => {
 
         <label>프로필 사진</label>
 
-        <ProfileImage onClick={() => imgInputEl.current?.click()} />
-        <ProfileInput
-          // ref={imgInputEl}
+        <ProfileImage src={userState.profileImg} alt="프로필 사진" />
+        <input
           type="file"
           accept="image/*"
-          onChange={onChangeImage}
+          onChange={(e) => {
+            if (e.target.files) {
+              setImage(e.target.files[0]); //input에 들어온 파일을 img 변수에 저장
+            }
+          }}
         />
+        <Button
+          onClick={() => {
+            const imgData = new FormData(); //formdata 객체 생성
+            imgData.append("file", image); //객체에 파일값 넣음
+            imgData.append("upload_preset", "tripMatch"); //클라우디너리 설정값이므로 반드시 넣어주세요.
+            imgData.append("cloud_name", "dk9scwone");
+            uploadimg(imgData);
+          }}
+          className="update"
+        >
+          수정
+        </Button>
+        <ResultText>새 이미지를 선택 후 수정 버튼을 눌러주세요</ResultText>
 
         <label htmlFor="emailInput">email</label>
         <StyledInput
