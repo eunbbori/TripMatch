@@ -39,6 +39,7 @@ const App = () => {
           <Route path="/free/write" element={<FreePostWrite />} />
           <Route path="/free/write/:id" element={<FreePostWrite />} />
           <Route path="/match/write" element={<MatchPostWrite />} />
+          <Route path="/match/write/:id" element={<MatchPostWrite />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/wishlist" element={<WishListPage />} />
