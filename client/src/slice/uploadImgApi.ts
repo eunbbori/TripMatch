@@ -9,11 +9,15 @@ export const updateImgApi = createApi({
   }),
   endpoints: (builder) => ({
     updateImg: builder.mutation<object, FormData>({
-      query: (formData) => ({
-        url: "upload",
-        method: "POST",
-        data: formData,
-      }),
+      query: (formData) => {
+        formData.append("upload_preset", "tripMatch");
+        formData.append("cloud_name", "dk9scwone");
+        return {
+          url: "upload",
+          method: "POST",
+          data: formData,
+        };
+      },
     }),
   }),
 });

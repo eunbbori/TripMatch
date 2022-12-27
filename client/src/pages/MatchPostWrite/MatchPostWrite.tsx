@@ -82,8 +82,6 @@ const MatchPostWrite = () => {
     event.preventDefault();
     const imgData = new FormData();
     imgData.append("file", imageUploaded || "");
-    imgData.append("upload_preset", "tripMatch");
-    imgData.append("cloud_name", "dk9scwone");
 
     const image = await updateImg(imgData).unwrap();
     if (!image) {
