@@ -5,7 +5,15 @@ import Comment from "./../Comment/Comment";
 import { Button, CommentCount, Form, Textarea } from "./CommentListStyle";
 import { useLocation } from "react-router-dom";
 
-const CommentList: React.FC<{ comments: CommentType[] }> = ({ comments }) => {
+interface CommentListProps {
+  setDeleteCommentId: React.Dispatch<React.SetStateAction<string>>;
+  comments: CommentType[];
+}
+
+const CommentList: React.FC<CommentListProps> = ({
+  comments,
+  setDeleteCommentId,
+}) => {
   const [commentInput, setCommentInput] = useState("");
 
   const [onCreateComment, { isError, isLoading }] = useCreateCommentMutation();
@@ -22,10 +30,12 @@ const CommentList: React.FC<{ comments: CommentType[] }> = ({ comments }) => {
 
   const onSubmitComment = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const path = currentPath[0] === "free" ? "communityId" : "postId";
     onCreateComment({
       content: commentInput,
-      [currentPath[0]]: currentPath[1],
+      [path]: currentPath[1],
     });
+    window.location.reload();
   };
 
   return (
@@ -34,7 +44,11 @@ const CommentList: React.FC<{ comments: CommentType[] }> = ({ comments }) => {
         <span>{comments.length}</span>개의 답변
       </CommentCount>
       {comments.map((comment) => (
-        <Comment comment={comment} key={comment.commentId} />
+        <Comment
+          comment={comment}
+          key={comment.commentId}
+          setDeleteCommentId={setDeleteCommentId}
+        />
       ))}
       <Form onSubmit={onSubmitComment}>
         <Textarea rows={5} onChange={(e) => setCommentInput(e.target.value)} />

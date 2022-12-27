@@ -49,9 +49,9 @@ export const freePostApi = createApi({
     }),
     // id에 해당하는 게시글을 업데이트 {communityId, title, content, region, category}
     updateFreePost: builder.mutation<null, FreePostType>({
-      query: (updatedPost) => ({
-        url: `main/communities/${updatedPost.communityId}`,
-        method: "PUT",
+      query: ({ communityId, ...updatedPost }) => ({
+        url: `main/communities/${communityId}`,
+        method: "put",
         data: updatedPost,
       }),
       invalidatesTags: (result, error, arg) => [
@@ -62,7 +62,7 @@ export const freePostApi = createApi({
     createFreePost: builder.mutation<null, any>({
       query: (newPost) => ({
         url: "main/communities/community",
-        method: "POST",
+        method: "post",
         data: newPost,
       }),
       invalidatesTags: ["FreePost"],
@@ -71,7 +71,7 @@ export const freePostApi = createApi({
     deleteFreePost: builder.mutation<null, string | undefined>({
       query: (communityId) => ({
         url: `main/communities/${communityId}`,
-        method: "DELETE",
+        method: "delete",
       }),
       invalidatesTags: ["FreePost"],
     }),

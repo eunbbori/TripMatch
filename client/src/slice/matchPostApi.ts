@@ -51,7 +51,7 @@ export const matchPostApi = createApi({
     updateMatchPost: builder.mutation<MatchPostType, MatchPostType>({
       query: (updatedPost) => ({
         url: `api/main/posts/${updatedPost.postId}`,
-        method: "PUT",
+        method: "put",
         data: updatedPost,
       }),
       invalidatesTags: (result, error, arg) => [
@@ -62,7 +62,7 @@ export const matchPostApi = createApi({
     createMatchPost: builder.mutation<MatchPostType, MatchPostType>({
       query: (newPost) => ({
         url: "main/posts/post",
-        method: "POST",
+        method: "post",
         data: newPost,
       }),
       invalidatesTags: ["MatchPost"],
@@ -71,7 +71,7 @@ export const matchPostApi = createApi({
     deleteMatchPost: builder.mutation<MatchPostType, string | undefined>({
       query: (postId) => ({
         url: `main/posts/${postId}`,
-        method: "DELETE",
+        method: "delete",
       }),
       invalidatesTags: ["MatchPost"],
     }),
@@ -82,7 +82,12 @@ export const matchPostApi = createApi({
         data: { postId },
       }),
     }),
-    //cancelMatch: builder.mutation<null, string>({})
+    cancelMatch: builder.mutation<null, string>({
+      query: (matchId) => ({
+        url: `main/matches/${matchId}`,
+        method: "delete",
+      }),
+    }),
   }),
 });
 
@@ -92,4 +97,6 @@ export const {
   useCreateMatchPostMutation,
   useUpdateMatchPostMutation,
   useDeleteMatchPostMutation,
+  useApplyMatchMutation,
+  useCancelMatchMutation,
 } = matchPostApi;

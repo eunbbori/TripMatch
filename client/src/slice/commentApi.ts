@@ -6,7 +6,7 @@ export const commentApi = createApi({
   reducerPath: "commentApi",
   tagTypes: ["Comment"],
   baseQuery: axiosBaseQuery({
-    baseUrl: "http://localhost:5000/",
+    baseUrl: "http://34.64.156.80:3003/api/",
   }),
   endpoints: (builder) => ({
     // id에 해당하는 댓글을 업데이트
@@ -14,10 +14,10 @@ export const commentApi = createApi({
       CommentType,
       { commentId: string; content: string }
     >({
-      query: (updatedComment) => ({
-        url: `api/main/comment/${updatedComment.commentId}`,
-        method: "PUT",
-        body: updatedComment.content,
+      query: ({ commentId, ...content }) => ({
+        url: `main/comment/${commentId}`,
+        method: "put",
+        data: content,
       }),
       invalidatesTags: (result, error, arg) => [
         { type: "Comment", id: arg.commentId },
@@ -29,17 +29,17 @@ export const commentApi = createApi({
       { content: string; communityId?: string; postId?: string }
     >({
       query: (newComment) => ({
-        url: "api/main/comment",
-        method: "POST",
-        body: newComment, // body:{content:string,(communityId || postId):string}
+        url: "main/comment",
+        method: "post",
+        data: newComment, // body:{content:string,(communityId || postId):string}
       }),
       invalidatesTags: ["Comment"],
     }),
     // id에 해당하는 댓글 삭제
     deleteComment: builder.mutation<null, string>({
       query: (commentId) => ({
-        url: `api/main/comment/${commentId}`,
-        method: "DELETE",
+        url: `main/comment/${commentId}`,
+        method: "delete",
       }),
       invalidatesTags: ["Comment"],
     }),

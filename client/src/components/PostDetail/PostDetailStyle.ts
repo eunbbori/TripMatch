@@ -8,6 +8,11 @@ export const PostTitle = styled.h3`
   align-items: center;
   justify-content: space-between;
 
+  .heart {
+    padding: 0;
+    background-color: transparent;
+    border: none;
+  }
   img {
     width: 25px;
     cursor: pointer;

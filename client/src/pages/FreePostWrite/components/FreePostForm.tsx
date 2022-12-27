@@ -1,4 +1,4 @@
-import React, { RefObject, useRef, useState } from "react";
+import React, { LegacyRef, RefObject, useRef, useState } from "react";
 import Editor from "../../../components/Editor/Editor";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
@@ -34,33 +34,41 @@ const FreePostForm = () => {
   const regionRef: RefObject<HTMLSelectElement> = useRef(null);
   const categoryRef: RefObject<HTMLSelectElement> = useRef(null);
   const titleRef: RefObject<HTMLInputElement> = useRef(null);
-  const contentRef: RefObject<ToastEditor> = useRef(null);
+  const contentRef: LegacyRef<ToastEditor> = useRef(null);
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (state && regionRef.current && categoryRef.current && titleRef.current) {
+    if (
+      state &&
+      regionRef.current &&
+      categoryRef.current &&
+      titleRef.current &&
+      contentRef.current
+    ) {
       const newObj: FreePostType = {
+        communityId: state.communityId,
         title: titleRef.current.value,
         region: regionRef.current.value,
         category: categoryRef.current.value,
-        content: contentInput,
+        content: contentRef.current.getInstance().getHTML(),
       };
       updateFreePost(newObj);
-      //navigate(`/free/${state.communityId}`);
+      navigate(`/free/${state.communityId}`);
     } else if (
       !state &&
       regionRef.current &&
       categoryRef.current &&
-      titleRef.current
+      titleRef.current &&
+      contentRef.current
     ) {
       const newObj: FreePostType = {
         title: titleRef.current.value,
         region: regionRef.current.value,
         category: categoryRef.current.value,
-        content: contentInput,
+        content: contentRef.current.getInstance().getHTML(),
       };
       createFreePost(newObj);
-      //navigate("/free");
+      navigate("/free");
     }
   };
 

@@ -16,12 +16,14 @@ import {
 
 interface CommentProps {
   comment: CommentType;
+  setDeleteCommentId: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const Comment: React.FC<CommentProps> = ({ comment }) => {
+const Comment: React.FC<CommentProps> = ({ comment, setDeleteCommentId }) => {
   const [isClickUpdate, setIsClickUpdate] = useState<boolean>(false);
   const [commentInput, setCommentInput] = useState("");
   const [isAuthor, setIsAuthor] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   const [onUpdateComment, { isError, isSuccess }] = useUpdateCommentMutation();
 
@@ -34,6 +36,7 @@ const Comment: React.FC<CommentProps> = ({ comment }) => {
     }
     if (isSuccess) {
       setIsClickUpdate(true);
+      window.location.reload();
     }
   }, [isError, isSuccess]);
 
@@ -41,11 +44,24 @@ const Comment: React.FC<CommentProps> = ({ comment }) => {
     setIsAuthor(sessionStorage.getItem("email") === comment.author.email);
   }, [comment.author.email]);
 
+  useEffect(() => {
+    setIsAdmin(sessionStorage.getItem("role") === "admin");
+  }, []);
+
   const onClickUpdate = () => setIsClickUpdate(true);
 
   const onClickCancle = () => setIsClickUpdate(false);
 
-  const onClickDelete = () => dispatch(showModal("댓글"));
+  const onClickDelete = () => {
+    dispatch(
+      showModal({
+        title: "댓글 삭제",
+        content: "이 댓글을 삭제하시겠습니까?",
+        rightButton: "삭제",
+      }),
+    );
+    setDeleteCommentId(comment.commentId);
+  };
 
   const onClickUpdateCompleted = () => {
     onUpdateComment({
@@ -68,7 +84,7 @@ const Comment: React.FC<CommentProps> = ({ comment }) => {
       ) : (
         <Content>{comment.content}</Content>
       )}
-      {isAuthor && (
+      {isAuthor || isAdmin ? (
         <ButtonContainer>
           {isClickUpdate ? (
             <>
@@ -82,7 +98,7 @@ const Comment: React.FC<CommentProps> = ({ comment }) => {
             </>
           )}
         </ButtonContainer>
-      )}
+      ) : null}
     </Container>
   );
 };

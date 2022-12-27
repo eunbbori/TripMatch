@@ -1,25 +1,60 @@
-import React from "react";
+import React, { useState } from "react";
 import PostDetail from "../../components/PostDetail/PostDetail";
 import styled from "styled-components";
 import Comment from "../../components/CommentList/CommentList";
 import pointer from "../../images/temporaryIconPointer.png";
 import {
+  useDeleteFreePostMutation,
   useGetAllFreePostQuery,
   useGetFreePostQuery,
 } from "../../slice/freePostApi";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import NotFound from "../../components/NotFound/NotFound";
 import { FreePostType } from "./../../type/freePost";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import Modal from "../../components/Modal/Modal";
+import { useDeleteCommentMutation } from "../../slice/commentApi";
 
 const FreePostDetail = () => {
   const { id } = useParams();
-  const postquery = useGetFreePostQuery(id);
-  console.log(postquery);
+  const navigate = useNavigate();
 
+  const postquery = useGetFreePostQuery(id);
   const { data: post, isLoading, isError } = postquery;
+  const [onDeletePost, { isError: isErrorDeletePost }] =
+    useDeleteFreePostMutation();
+  const [onDeleteComment, { isError: isErrorDeleteComment }] =
+    useDeleteCommentMutation();
+
+  const { show: isShown, modalText } = useAppSelector((state) => state.modal);
+  const dispatch = useAppDispatch();
+
+  const [deleteCommentId, setDeleteCommentId] = useState("");
 
   // useGetAllFreePostQuery 예시
   // const { data, isLoading, isError } = useGetAllFreePostQuery({ page: 0, region: "서울" });
+
+  const onClickDeletePost = () => {
+    console.log("삭제");
+    onDeletePost(id);
+    navigate("/free");
+  };
+
+  const onClickDeleteComment = () => {
+    onDeleteComment(deleteCommentId);
+    window.location.reload();
+  };
+
+  const getModalCallback = () => {
+    if (modalText) {
+      switch (modalText.title) {
+        case "삭제":
+          return onClickDeletePost;
+        case "댓글 삭제":
+          return onClickDeleteComment;
+      }
+    }
+  };
 
   if (isError) {
     return <NotFound />;
@@ -27,16 +62,21 @@ const FreePostDetail = () => {
 
   return (
     <Container>
-      <>
-        <div>
-          <CategoryName>
-            <Pointer src={pointer} />
-            {post?.community.region} &gt; {post?.community.category}
-          </CategoryName>
-        </div>
-        <PostDetail user={post?.community.author} freePost={post?.community} />
-        {post?.comments && <Comment comments={post?.comments} />}
-      </>
+      <div>
+        <CategoryName>
+          <Pointer src={pointer} />
+          {post?.community.region} &gt; {post?.community.category}
+        </CategoryName>
+      </div>
+      <PostDetail user={post?.community.author} freePost={post?.community} />
+      {post?.comments && (
+        <Comment
+          comments={post?.comments}
+          setDeleteCommentId={setDeleteCommentId}
+        />
+      )}
+
+      {isShown && <Modal callBackFn={getModalCallback()} />}
     </Container>
   );
 };
