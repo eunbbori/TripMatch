@@ -24,14 +24,12 @@ const ProfileModal: React.FC<TProfileModal> = ({ email }) => {
     introduce: "",
     profileImg: "",
     matchCount: 0,
-    matchPoint: 0,
+    matchPoint: "",
   });
   useEffect(() => {
     const callProfile = async () => {
       try {
-        const res = await axios.get(
-          `${baseUrl}/api/main/auth/${userData.email}`,
-        );
+        const res = await axios.get(`${baseUrl}/api/main/auth/${email}`);
         if (res.status === 200) {
           setUserData((draft) => {
             draft.email = res.data.email;
@@ -110,7 +108,7 @@ const ProfileModal: React.FC<TProfileModal> = ({ email }) => {
                     </span>
                     <span className="etc">
                       동행점수&#x2001;{" "}
-                      {userData.matchPoint === 0 ? "-10" : userData.matchPoint}{" "}
+                      {userData.matchPoint === "" ? "-10" : userData.matchPoint}{" "}
                       / 5
                     </span>
                     <div className="etcWrapper"></div>
