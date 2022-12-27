@@ -59,8 +59,8 @@ const MatchPostWrite = () => {
   const endDateRef = useRef<HTMLInputElement>(null);
   const contentRef: LegacyRef<ToastEditor> = useRef(null);
 
-  const [gender, setGender] = useState<string>(state.hopeGender);
-  const [ages, setAges] = useState<string[]>(state.hopeAge);
+  const [gender, setGender] = useState<string>(state ? state.hopeGender : "");
+  const [ages, setAges] = useState<string[]>(state ? state.hopeAge : []);
 
   const [updateImg] = useUpdateImgMutation();
 
