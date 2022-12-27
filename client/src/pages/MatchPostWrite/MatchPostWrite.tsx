@@ -50,23 +50,15 @@ const MatchPostWrite = () => {
   const titleRef = useRef<HTMLInputElement>(null);
   const peopleCntRef = useRef<HTMLInputElement>(null);
   const contactRef = useRef<HTMLInputElement>(null);
+  const fileRef = useRef<HTMLInputElement>(null);
   const contentRef: LegacyRef<ToastEditor> = useRef(null);
 
   const [gender, setGender] = useState<string>("남성");
   const [ages, setAges] = useState<string[]>([]);
-  const [imageUploaded, setImageUploaded] = useState<File>();
   const [startDate, setStartDate] = useState<string>("");
   const [endDate, setEndDate] = useState<string>("");
 
   const [updateImg] = useUpdateImgMutation();
-
-  const imageHandler = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (!event.target.files) {
-      return;
-    }
-    const file = event.target.files[0];
-    setImageUploaded(file);
-  };
 
   const handleAges = (event: ChangeEvent<HTMLInputElement>) => {
     let updatedList = [...ages];
@@ -80,19 +72,29 @@ const MatchPostWrite = () => {
 
   const submitHandler = async (event: React.FormEvent) => {
     event.preventDefault();
-    const imgData = new FormData();
-    imgData.append("file", imageUploaded || "");
-
-    const image = await updateImg(imgData).unwrap();
-    if (!image) {
-      alert("에러가 발생하였습니다. 관리자에게 문의해주세요.");
+    let fileUrl = "";
+    if (fileRef.current?.files && fileRef.current.files.length !== 0) {
+      const imgData = new FormData();
+      imgData.append("file", fileRef.current?.files[0]);
+      fileUrl = await updateImg(imgData)
+        .unwrap()
+        .then((result) => {
+          return result.url;
+        })
+        .catch(() => {
+          return "error";
+        });
     }
+    if (fileUrl === "error") {
+      alert("이미지 업로드에 실패하였습니다.");
+      return;
+    }
+
     const region = regionRef.current!.value;
     const title = titleRef.current!.value;
     const peopleCnt = Number(peopleCntRef.current!.value);
     const contact = contactRef.current!.value;
     const content = contentRef.current?.getInstance().getHTML() || "";
-
     const matchPost: MatchPostType = {
       title: title,
       region: region,
@@ -100,7 +102,7 @@ const MatchPostWrite = () => {
       duration: [startDate, endDate],
       hopeGender: gender,
       hopeAge: ages,
-      thumbnail: Object.values(image)[15],
+      thumbnail: fileUrl,
       contact: contact,
       content: content,
     };
@@ -174,9 +176,8 @@ const MatchPostWrite = () => {
           className={"age"}
         />
         <AppInputFile
+          refer={fileRef}
           type={"file"}
-          defaultValue={imageUploaded?.name}
-          onChange={(e) => imageHandler(e)}
           label={"사진 첨부"}
           className={"file"}
         />

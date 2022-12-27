@@ -22,6 +22,7 @@ export const FileInput = styled.input`
 `;
 
 export const FileUploadName = styled.input`
+  cursor: pointer;
   display: inline-block;
   height: 35px;
   font-size: 18px;
