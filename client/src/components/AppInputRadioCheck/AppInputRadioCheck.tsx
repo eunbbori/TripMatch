@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ChangeEvent, useState } from "react";
 import { AppInputProps } from "../../type/input";
 import {
   Div,

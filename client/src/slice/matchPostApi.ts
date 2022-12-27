@@ -50,7 +50,7 @@ export const matchPostApi = createApi({
     // id에 해당하는 게시글을 업데이트
     updateMatchPost: builder.mutation<MatchPostType, MatchPostType>({
       query: (updatedPost) => ({
-        url: `api/main/posts/${updatedPost.postId}`,
+        url: `main/posts/${updatedPost.postId}`,
         method: "put",
         data: updatedPost,
       }),
