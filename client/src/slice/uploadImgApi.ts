@@ -3,7 +3,7 @@ import { axiosBaseQuery } from "./axiosBaseQuery";
 
 export const updateImgApi = createApi({
   reducerPath: "updateImgApi",
-  tagTypes: ["Img"],
+  tagTypes: ["updateImgApi"],
   baseQuery: axiosBaseQuery({
     baseUrl: "https://api.cloudinary.com/v1_1/dk9scwone/image/",
   }),
@@ -12,7 +12,7 @@ export const updateImgApi = createApi({
       query: (formData) => ({
         url: "upload",
         method: "POST",
-        body: formData,
+        data: formData,
       }),
     }),
   }),
