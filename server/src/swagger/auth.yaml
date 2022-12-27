@@ -160,8 +160,8 @@
                   type: number
                   description: 동행 횟수
                 matchPoint:
-                  type: number
-                  description: 내 점수
+                  type: string
+                  description: 동행 점수
       "204":
         description: 데이터가 없음. 탈퇴 유저?
 /auth/delete:

@@ -41,8 +41,8 @@
                   type: number
                   description: 동행 횟수
                 matchPoint:
-                  type: number
-                  description: 내 점수
+                  type: string
+                  description: 동행 점수
       "204":
         description: 데이터가 없음
 /mypage/comments:
@@ -118,7 +118,7 @@
                     type: string
                   title:
                     type: string
-                  status:
+                  matchStatus:
                     type: string
                   contact:
                     type: string
@@ -165,6 +165,8 @@
                   postId:
                     type: string
                   title:
+                    type: string
+                  matchStatus:
                     type: string
                   status:
                     type: boolean

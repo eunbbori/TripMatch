@@ -92,7 +92,7 @@ class PostService {
   }
   async getMyEnroll(matches: []) {
     const posts = [];
-    for (const { matchId, postId, author, status } of matches) {
+    for (const { matchId, postId, author, matchStatus } of matches) {
       const post = await this.postModel.findOne(postId, {
         _id: 0,
         title: 1,
@@ -103,7 +103,7 @@ class PostService {
         matchId,
         postId,
         author,
-        status,
+        matchStatus,
         title: post?.title,
         duration: post?.duration,
         contact: post?.contact,
@@ -114,7 +114,7 @@ class PostService {
   }
   async getRecvdEnroll(matches: []) {
     const posts = [];
-    for (const { matchId, postId, applicant } of matches) {
+    for (const { matchId, postId, applicant, matchStatus } of matches) {
       const post = await this.postModel.findOne(postId, {
         _id: 0,
         title: 1,
@@ -125,6 +125,7 @@ class PostService {
         matchId,
         postId,
         applicant,
+        matchStatus,
         title: post?.title,
         duration: post?.duration,
         status: post?.status,

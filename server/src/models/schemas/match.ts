@@ -23,12 +23,14 @@ const matchSchema = new Schema<Match>(
       required: true,
       _id: false,
     },
-    status: {
+    matchStatus: {
       type: String,
       required: true,
       default: "대기중",
       enum: ["대기중", "수락", "거절"],
     },
+    scoredByAuthor: { type: Boolean, required: true, default: false },
+    scoredByApplicant: { type: Boolean, required: true, default: false },
   },
   {
     collection: "matches",

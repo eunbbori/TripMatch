@@ -25,16 +25,16 @@ class MatchService {
   }
   async getByApplicant(email: string) {
     const matches = await this.matchModel.findMany(
-      { "applicant.email": email },
-      { _id: 0, matchId: 1, postId: 1, author: 1, status: 1 }
+      { "applicant.email": email, scoredByApplicant: false },
+      { _id: 0, matchId: 1, postId: 1, author: 1, matchStatus: 1 }
     );
     if (matches.length === 0) throw new Error("204");
     return matches;
   }
   async getByAuthor(email: string) {
     const matches = await this.matchModel.findMany(
-      { "author.email": email, status: "대기중" },
-      { _id: 0, matchId: 1, postId: 1, applicant: 1 }
+      { "author.email": email, scoredByAuthor: false },
+      { _id: 0, matchId: 1, postId: 1, applicant: 1, matchStatus: 1 }
     );
     if (matches.length === 0) throw new Error("204");
     return matches;

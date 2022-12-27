@@ -50,7 +50,7 @@
           schema:
             type: object
             properties:
-              status:
+              matchStatus:
                 type: string
                 description: 수락 or 거절
     responses:
@@ -80,3 +80,44 @@
         description: 성공
       "403":
         description: 신청자 아님
+/matches/{matchId}/score:
+  put:
+    tags:
+      - /matches
+    summary: 동행 점수 평가
+    consumes:
+      - application/json
+    parameters:
+      - in: path
+        name: matchId
+        schema:
+          type: string
+        required: true
+      - in: header
+        name: x-access-token
+        schema:
+          type: string
+        required: true
+      - in: query
+        name: authorEmail
+        schema:
+          type: string
+      - in: query
+        name: applicantEmail
+        schema:
+          type: string
+    requestBody:
+      x-name: body
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              matchPoint:
+                type: number
+    responses:
+      "200":
+        description: 성공
+      "403":
+        description: 작성자 또는 신청자 아님

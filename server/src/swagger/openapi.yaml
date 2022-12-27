@@ -42,6 +42,8 @@ paths:
     $ref: "./matches.yaml#/~1matches~1match"
   /api/main/matches/{matchId}:
     $ref: "./matches.yaml#/~1matches~1{matchId}"
+  /api/main/matches/{matchId}/score:
+    $ref: "./matches.yaml#/~1matches~1{matchId}~1score"
   /api/main/mypage:
     $ref: "./mypage.yaml#/~1mypage"
   /api/main/mypage/comments:
@@ -283,12 +285,9 @@ components:
         profileImg:
           type: string
           description: 프로필 사진
-        matchCount:
-          type: number
-          description: 동행 횟수
-        matchPoint:
-          type: number
-          description: 동행 점수
+        matchPoints:
+          type: [number]
+          description: 평가받은 동행 점수들
         role:
           type: string
           description: 권한(user 또는 admin)

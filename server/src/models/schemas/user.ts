@@ -15,8 +15,7 @@ const userSchema = new Schema<User>(
       default:
         "https://res.cloudinary.com/dv6tzjgu4/image/upload/v1671081256/elice/default-user_bvvgsf.png",
     },
-    matchCount: { type: Number, required: true, default: 0 },
-    matchPoint: { type: Number, required: true, default: 0 },
+    matchPoints: { type: [Number], required: true, default: [] },
     role: {
       type: String,
       required: true,

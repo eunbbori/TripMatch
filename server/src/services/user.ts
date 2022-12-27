@@ -64,17 +64,27 @@ class UserService {
   async getUser(email: string) {
     const user = await this.userModel.findByEmail(email, {
       _id: 0,
-      email: 1,
       nickname: 1,
       gender: 1,
       age: 1,
       introduce: 1,
       profileImg: 1,
-      matchCount: 1,
-      matchPoint: 1,
+      matchPoints: 1,
     });
     if (!user) throw new Error("204");
-    return user;
+    const { nickname, gender, age, introduce, profileImg, matchPoints } = user;
+    return {
+      email,
+      nickname,
+      gender,
+      age,
+      introduce,
+      profileImg,
+      matchCount: matchPoints.length,
+      matchPoint: (
+        matchPoints.reduce((acc, val) => acc + val, 0) / matchPoints.length
+      ).toFixed(1),
+    };
   }
   async delete(email: string) {
     await this.userModel.deleteOne(email);

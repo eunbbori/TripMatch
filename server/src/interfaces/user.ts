@@ -6,7 +6,6 @@ export default interface User {
   age: string;
   introduce: string;
   profileImg: string;
-  matchCount: number;
-  matchPoint: number;
+  matchPoints: [number];
   role: string;
 }
