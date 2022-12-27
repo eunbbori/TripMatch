@@ -35,11 +35,11 @@ const authAxios = axios.create({
  두번째 인자 error 는 실패시 데이터를 가진 객체이다. 실패시 반환하여 인터셉터.response의 두번째 인자에서 처리하게 한다 */
 authAxios.interceptors.request.use(
   async (config) => {
-    const accessToken = sessionStorage.getItem("x-access-token");
-    // 엑세스 토큰이 없다면 리프레시토큰으로 갱신해준다
-    if (!accessToken) {
-      await refreshAccessToken();
-    }
+    // const accessToken = sessionStorage.getItem("x-access-token");
+    /*엑세스 토큰이 없다면 리프레시토큰으로 갱신해준다 -22.12.27 비로그인 유저의 경우 엑세트 토큰 유무 검증 없어도 서버에서 에러를 띠우거나 인터셉터로 커스텀된 axios 가 아닌 기본 axios 를 사용할 수 있으므로, 굳이 엑세스 토큰 유무를 물어서 refreshAcessToken 함수내의 axios 를 실행시켜 작업이 길어질 수 있으니, 아래 코드는 생략해도 좋을 듯 하다 */
+    // if (!accessToken) {
+    //   await refreshAccessToken();
+    // }
     // 요청 객체 헤더에 Authorizaion 은 null 이 아니므로 non-null 연산자 (!.) 를 사용하여 lint 에러를 해결하고 bearer 로 세션에서 가져온 엑세스 토큰을 넣어주자
     console.log("header 가 없나?");
     config.headers!["x-access-token"] = `Bearer ${sessionStorage.getItem(
