@@ -9,8 +9,13 @@ import {
   FileImage,
 } from "./AppInputFileStyle";
 
-const AppInputFile: React.FC<AppInputProps> = ({ label, refer, className }) => {
-  const [imagePreview, setImagePreview] = useState<string>();
+const AppInputFile: React.FC<AppInputProps> = ({
+  defaultValue = "",
+  label,
+  refer,
+  className,
+}) => {
+  const [imagePreview, setImagePreview] = useState<string>(defaultValue);
 
   const imageHandler = async (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files) {

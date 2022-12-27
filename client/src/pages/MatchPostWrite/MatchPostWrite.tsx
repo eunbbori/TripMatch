@@ -75,7 +75,10 @@ const MatchPostWrite = () => {
     let fileUrl = "";
     if (fileRef.current?.files && fileRef.current.files.length !== 0) {
       const imgData = new FormData();
-      imgData.append("file", fileRef.current?.files[0]);
+      imgData.append(
+        "file",
+        fileRef.current?.files[fileRef.current.files.length - 1],
+      );
       fileUrl = await updateImg(imgData)
         .unwrap()
         .then((result) => {
@@ -177,6 +180,7 @@ const MatchPostWrite = () => {
         />
         <AppInputFile
           refer={fileRef}
+          defaultValue={state && state.thumbnail}
           type={"file"}
           label={"사진 첨부"}
           className={"file"}
