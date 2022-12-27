@@ -24,6 +24,8 @@
     responses:
       "201":
         description: 성공
+      "403":
+        description: 본인 글엔 신청 못 함
 /matches/{matchId}:
   put:
     tags:

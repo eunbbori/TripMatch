@@ -73,6 +73,10 @@ class UserService {
     });
     if (!user) throw new Error("204");
     const { nickname, gender, age, introduce, profileImg, matchPoints } = user;
+    const matchCount = matchPoints.length;
+    const matchPoint = matchCount
+      ? (matchPoints.reduce((acc, val) => acc + val, 0) / matchCount).toFixed(1)
+      : "0";
     return {
       email,
       nickname,
@@ -80,10 +84,8 @@ class UserService {
       age,
       introduce,
       profileImg,
-      matchCount: matchPoints.length,
-      matchPoint: (
-        matchPoints.reduce((acc, val) => acc + val, 0) / matchPoints.length
-      ).toFixed(1),
+      matchCount,
+      matchPoint,
     };
   }
   async delete(email: string) {

@@ -66,6 +66,8 @@ paths:
     $ref: "./posts.yaml#/~1posts~1post"
   /api/main/search:
     $ref: "./search.yaml#/~1search"
+  /api/main/infoes/festival:
+    $ref: "./infoes.yaml#/~1infoes~1festival"
   /api/admin/notices/{noticeId}:
     $ref: "./admin.yaml#/~1notices~1{noticeId}"
   /api/admin/notices/notice:
@@ -163,6 +165,26 @@ components:
         commentCount:
           type: string
           description: 댓글 수
+    festival:
+      properties:
+        addr1:
+          type: string;
+          description: 주소
+        eventstartdate:
+          type: string;
+          description: 시작일
+        eventenddate:
+          type: string;
+          description: 종료일
+        firstimage:
+          type: string;
+          description: 대표 이미지
+        tel:
+          type: string;
+          description: 연락처
+        title:
+          type: string;
+          description: 축제명
     like:
       properties:
         email:

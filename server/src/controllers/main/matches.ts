@@ -7,6 +7,7 @@ matchesController.post("/match", async (req, res, next) => {
   const { postId } = req.body;
   try {
     const author = await postService.getAuthor(postId);
+    if (author?.author.email === req.email) return next(new Error("403"));
     const applicant = await userService.getAuthor(req.email);
     await matchService.create({ postId, author: author?.author, applicant });
     res.status(201).end();

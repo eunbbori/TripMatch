@@ -13,9 +13,11 @@ likesController.get("/", async (req, res, next) => {
   }
 });
 likesController.post("/like", async (req, res, next) => {
+  const email = req.email;
   const { postId } = req.body;
   try {
-    await likeService.create({ email: req.email, postId });
+    await likeService.checkDuplicated({ email, postId });
+    await likeService.create({ email, postId });
     res.status(201).end();
   } catch (err) {
     next(err);

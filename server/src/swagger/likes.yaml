@@ -57,6 +57,8 @@
     responses:
       "201":
         description: 성공
+      "409":
+        description: 이미 좋아요 누름
   delete:
     tags:
       - /likes

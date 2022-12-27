@@ -5,6 +5,7 @@ import postSchema from "./post";
 import likeSchema from "./like";
 import matchSchema from "./match";
 import noticeSchema from "./notice";
+import festivalSchema from "./festival";
 
 export {
   userSchema,
@@ -14,4 +15,5 @@ export {
   likeSchema,
   matchSchema,
   noticeSchema,
+  festivalSchema,
 };

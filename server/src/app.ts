@@ -15,6 +15,8 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+app.get("/", (req, res) => res.send("Welcome to Trip Match's server"));
+
 app.use("/api", controller);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerYaml));
 app.use((req, res, next) => next(new Error("404")));

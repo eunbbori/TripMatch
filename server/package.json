@@ -7,7 +7,8 @@
     "build": "tsc && node dist",
     "api-docs": "swagger-cli bundle ./src/swagger/openapi.yaml --outfile ./src/swagger/swagger.yaml --type yaml",
     "predev": "npm run api-docs",
-    "dev": "nodemon --watch \"*.ts\" --exec \"ts-node\" index.ts"
+    "dev": "nodemon --watch \"*.ts\" --exec \"ts-node\" index.ts",
+    "start": "ts-node index.ts"
   },
   "keywords": [],
   "author": "KJ",
@@ -23,6 +24,7 @@
     "nanoid": "^3.3.4",
     "nodemailer": "^6.8.0",
     "redis": "^4.5.1",
+    "request": "^2.88.2",
     "swagger-cli": "^4.0.4",
     "swagger-ui-express": "^4.6.0",
     "typescript": "^4.9.4",
@@ -35,6 +37,7 @@
     "@types/express": "^4.17.15",
     "@types/jsonwebtoken": "^8.5.9",
     "@types/nodemailer": "^6.4.6",
+    "@types/request": "^2.48.8",
     "@types/swagger-ui-express": "^4.1.3",
     "@types/yamljs": "^0.2.31",
     "nodemon": "^2.0.20",

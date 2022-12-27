@@ -5,5 +5,6 @@ import Post from "./post";
 import Like from "./like";
 import Match from "./match";
 import Notice from "./notice";
+import Festival from "./festival";
 
-export { User, Community, Comment, Post, Like, Match, Notice };
+export { User, Community, Comment, Post, Like, Match, Notice, Festival };

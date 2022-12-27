@@ -9,6 +9,7 @@ import noticesController from "./notices";
 import matchesController from "./matches";
 import mypageController from "./mypage";
 import { loginCheck } from "../../middlewares";
+import infoesController from "./infoes";
 
 const mainController = Router();
 
@@ -21,5 +22,6 @@ mainController.use("/search", searchController);
 mainController.use("/notices", noticesController);
 mainController.use("/matches", loginCheck, matchesController);
 mainController.use("/mypage", loginCheck, mypageController);
+mainController.use("/infoes", infoesController);
 
 export default mainController;

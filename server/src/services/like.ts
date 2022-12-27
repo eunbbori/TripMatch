@@ -28,6 +28,10 @@ class LikeService {
     }
     return postsWithLike;
   }
+  async checkDuplicated(condition: object) {
+    const like = await this.likeModel.findOne(condition);
+    if (like) throw new Error("409");
+  }
 }
 
 const likeService = new LikeService();
