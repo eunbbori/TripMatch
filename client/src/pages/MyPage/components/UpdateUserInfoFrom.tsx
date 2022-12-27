@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, {
   ChangeEvent,
   useCallback,
@@ -34,12 +33,11 @@ import {
   WithdrawalText,
 } from "./UpdateInfoStyle";
 import { UpdateUserinfoTitle } from "./SideBarStyle";
-
-const baseUrl = "http://localhost:5000";
+import authAxios from "../../../axios/authAxios";
 
 const UpdateUserInfoFrom = () => {
   type FormType =
-    | "nickName"
+    | "nickname"
     | "password"
     | "age"
     | "introduce"
@@ -47,7 +45,7 @@ const UpdateUserInfoFrom = () => {
     | "withdrawal";
 
   type EncodingType = {
-    nickName: "닉네임";
+    nickname: "닉네임";
     password: "비밀번호";
     age: "나이";
     introduce: "자기소개";
@@ -56,7 +54,7 @@ const UpdateUserInfoFrom = () => {
     withdrawal: "회원탈퇴";
   };
 
-  type ActiveDataType = "nickName" | "password" | "age" | "introduce";
+  type ActiveDataType = "nickname" | "password" | "age" | "introduce";
 
   const AgeOption = [
     { value: "default", name: "선택" },
@@ -85,7 +83,7 @@ const UpdateUserInfoFrom = () => {
 
   const [userState, setUserState] = useImmer({
     email: "",
-    nickName: "",
+    nickname: "",
     password: "",
     confirmPassword: "",
     gender: "",
@@ -95,7 +93,7 @@ const UpdateUserInfoFrom = () => {
   });
 
   const krEncoding: EncodingType = {
-    nickName: "닉네임",
+    nickname: "닉네임",
     password: "비밀번호",
     age: "나이",
     introduce: "자기소개",
@@ -105,7 +103,7 @@ const UpdateUserInfoFrom = () => {
   };
 
   const checkTable = {
-    nickName: "사용가능한 닉네임 입니다",
+    nickname: "사용가능한 닉네임 입니다",
     confirmPassword: "비밀번호 확인이 완료되었습니다",
     introduce:
       "SNS 계정을 적어주시면 상대방의 동행 수락 가능성이 높아집니다 :)",
@@ -113,7 +111,7 @@ const UpdateUserInfoFrom = () => {
 
   const [validText, setValidText] = useImmer({
     password: "8~20자, 영문, 숫자, 특수문자 모두 사용",
-    nickName: "새 닉네임을 적어주세요",
+    nickname: "새 닉네임을 적어주세요",
     confirmPassword: "비밀번호를 다시 한 번 입력해주세요",
     introduce:
       "SNS 계정을 적어주시면 상대방의 동행 수락 가능성이 높아집니다 :)",
@@ -124,8 +122,7 @@ const UpdateUserInfoFrom = () => {
     const loadUserInfo = async () => {
       // 응답 api url 추후 변경 예정
       try {
-        const res = await axios.get(`${baseUrl}/api/main/myPage`);
-        // const res = await axios.get("http://localhost:4000/userInfo"); // 테스트용 json서버
+        const res = await authAxios.get(`/api/main/mypage`);
         // 응답 코드 추후 변경 예정
         if (res.status === 200) {
           return res.data;
@@ -149,7 +146,7 @@ const UpdateUserInfoFrom = () => {
       setUserState((draft) => {
         draft.profileImg = res.profileImg;
         draft.email = res.email;
-        draft.nickName = res.nickName;
+        draft.nickname = res.nickname;
         draft.gender = res.gender;
         draft.age = res.age;
         draft.introduce = res.introduce;
@@ -194,15 +191,15 @@ const UpdateUserInfoFrom = () => {
     }
   };
 
-  const onChangeNickName = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeNickname = (e: React.ChangeEvent<HTMLInputElement>) => {
     // 폐기 예정
     setUserState((draft) => {
-      draft.nickName = e.target.value;
+      draft.nickname = e.target.value;
     });
     setValidText((draft) => {
-      draft.nickName = checkNickname(e.target.value);
+      draft.nickname = checkNickname(e.target.value);
     });
-    if (checkNickname(e.target.value) === checkTable.nickName) {
+    if (checkNickname(e.target.value) === checkTable.nickname) {
       setValid(true);
     } else {
       setValid(false);
@@ -291,9 +288,9 @@ const UpdateUserInfoFrom = () => {
       });
     }
     if (originData.current !== null) {
-      if (activeData.current === "nickName") {
+      if (activeData.current === "nickname") {
         setUserState((draft) => {
-          draft.nickName = originData.current as string;
+          draft.nickname = originData.current as string;
         });
       } else if (activeData.current === "age") {
         setUserState((draft) => {
@@ -317,10 +314,7 @@ const UpdateUserInfoFrom = () => {
         console.log("수정 요청 api 실행됨!", sendOj);
         // api 완성 시, 주석 해제
         try {
-          const res = await axios.put(
-            `${baseUrl}/api/main/auth/update`,
-            sendOj,
-          );
+          const res = await authAxios.put(`/api/main/auth/update`, sendOj);
           if (res.status === 200) {
             alert("수정 완료!");
           } else {
@@ -354,9 +348,10 @@ const UpdateUserInfoFrom = () => {
   // api 구현 시 주석 해제 예정
   const onClickWithdrawal = async () => {
     try {
-      const res = await axios.delete(`${baseUrl}/api/main/auth/delete`);
+      const res = await authAxios.delete(`/api/main/auth/delete`);
       if (res.status === 200) {
         alert("회원탈퇴가 완료되었습니다");
+        navigate("/");
       } else {
         throw new Error(`에러코드 ${res.status}. 수정에 실패하였습니다`);
       }
@@ -364,6 +359,7 @@ const UpdateUserInfoFrom = () => {
       alert("회원탈퇴에 실패하였습니다");
       console.error(error);
     }
+    setModal(false);
   };
 
   const onClickCancelBtn = () => {
@@ -378,15 +374,15 @@ const UpdateUserInfoFrom = () => {
           <div className="updateModalForm" ref={modalEl}>
             <ModalTitle>{modalForm && krEncoding[modalForm]}</ModalTitle>
             <ModalContentContainer>
-              {modalForm === "nickName" && (
+              {modalForm === "nickname" && (
                 <>
                   <StyledInput
                     id="nicknameInput"
                     name="nickname"
-                    value={userState.nickName}
-                    onChange={onChangeNickName}
+                    value={userState.nickname}
+                    onChange={onChangeNickname}
                   />
-                  <ResultText>{validText.nickName}</ResultText>
+                  <ResultText>{validText.nickname}</ResultText>
                 </>
               )}
               {modalForm === "password" && (
@@ -506,12 +502,12 @@ const UpdateUserInfoFrom = () => {
           닉네임
         </label>
         <Button
-          data-name="nickName"
+          data-name="nickname"
           className="update"
           onClick={() => {
-            originData.current = userState.nickName;
-            activeModal("nickName");
-            activeData.current = "nickName";
+            originData.current = userState.nickname;
+            activeModal("nickname");
+            activeData.current = "nickname";
           }}
         >
           수정
@@ -519,8 +515,8 @@ const UpdateUserInfoFrom = () => {
         <StyledInput
           id="nicknameInput"
           name="nickname"
-          value={userState.nickName}
-          onChange={onChangeNickName}
+          value={userState.nickname}
+          onChange={onChangeNickname}
           readOnly
         />
 

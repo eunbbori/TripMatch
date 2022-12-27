@@ -16,11 +16,11 @@ const checkAuthNumber = (
   }
 };
 
-const checkNickname = (nickName: string) => {
-  const space = nickName.search(/\s/);
-  const special = nickName.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
+const checkNickname = (nickname: string) => {
+  const space = nickname.search(/\s/);
+  const special = nickname.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
 
-  if (nickName.length < 2 || nickName.length > 8) {
+  if (nickname.length < 2 || nickname.length > 8) {
     return "2자 이상, 8자 이하로 입력해주세요";
   } else if (space !== -1) {
     return "닉네임은 공백을 사용할 수 없습니다";

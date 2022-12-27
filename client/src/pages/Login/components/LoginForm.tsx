@@ -54,11 +54,11 @@ const LoginForm = () => {
         sessionStorage.setItem("email", email);
         navigate("/");
       } else {
-        console.log("아이디랑 비번이 틀렸을껄?");
-        alert("아이디와 비밀번호를 확인해주세요");
         throw new Error(`에러코드 ${res.status}. 회원가입에 실패하였습니다`);
       }
     } catch (error) {
+      console.log("아이디랑 비번이 틀렸을껄?");
+      alert("아이디와 비밀번호를 확인해주세요");
       console.error(error);
     }
     // 성공하건 실패하건 비밀번호는 지워줘야함
