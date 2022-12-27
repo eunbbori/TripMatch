@@ -11,15 +11,27 @@ import {
 export interface RadioAndCheckBox {
   value: string;
   htmlValue: string;
+  checked?: boolean;
 }
 
 const AppInputRadioCheck: React.FC<AppInputProps> = ({
   label,
   type,
   onChange,
+  defaultValue,
+  defaultValues,
   radioAndCheckBoxList,
   className,
 }) => {
+  radioAndCheckBoxList?.map((object) => {
+    if (defaultValue && object.value === defaultValue) {
+      object.checked = true;
+    }
+    if (defaultValues && defaultValues.includes(object.value)) {
+      object.checked = true;
+    }
+    return object;
+  });
   return (
     <Div>
       {<Label htmlFor={className}>{label}</Label>}
@@ -31,6 +43,7 @@ const AppInputRadioCheck: React.FC<AppInputProps> = ({
             value={object.value}
             id={object.value}
             name={className}
+            checked={object.checked}
           />
           <RadioAndCheckBoxLabel htmlFor={object.value}>
             {object.htmlValue}

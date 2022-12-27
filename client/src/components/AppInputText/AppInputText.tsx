@@ -5,6 +5,7 @@ import { Div, Label, Input } from "./AppInputTextStyle";
 const AppInputText: React.FC<AppInputProps> = ({
   label,
   type,
+  defaultValue,
   inputWidth,
   className,
   placeholder,
@@ -17,6 +18,7 @@ const AppInputText: React.FC<AppInputProps> = ({
       <Input
         ref={refer}
         type={type}
+        defaultValue={defaultValue}
         width={inputWidth}
         placeholder={placeholder}
         className={className}

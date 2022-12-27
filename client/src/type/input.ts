@@ -3,6 +3,7 @@ import { RadioAndCheckBox } from "../components/AppInputRadioCheck/AppInputRadio
 
 export interface AppInputProps {
   defaultValue?: string;
+  defaultValues?: string[];
   label?: string;
   type: string;
   inputWidth?: string;
