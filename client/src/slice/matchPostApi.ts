@@ -88,6 +88,23 @@ export const matchPostApi = createApi({
         method: "delete",
       }),
     }),
+    addLike: builder.mutation<string, string>({
+      query: (postId) => ({
+        url: `main/likes/like`,
+        method: "post",
+        data: {
+          postId: postId,
+        },
+      }),
+      invalidatesTags: ["MatchPost"],
+    }),
+    deleteLike: builder.mutation<string, string>({
+      query: (postId) => ({
+        url: `main/likes/like?postId=${postId}`,
+        method: "delete",
+      }),
+      invalidatesTags: ["MatchPost"],
+    }),
   }),
 });
 
@@ -99,4 +116,6 @@ export const {
   useDeleteMatchPostMutation,
   useApplyMatchMutation,
   useCancelMatchMutation,
+  useAddLikeMutation,
+  useDeleteLikeMutation,
 } = matchPostApi;

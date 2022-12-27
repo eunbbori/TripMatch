@@ -5,8 +5,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../../store/hooks";
 import { showModal } from "../../slice/modal";
 import Modal from "../Modal/Modal";
-import authAxios from "./../../axios/authAxios";
-import { match } from "assert";
+import {
+  useAddLikeMutation,
+  useDeleteLikeMutation,
+} from "../../slice/matchPostApi";
 
 interface DataProps {
   data: MatchPostType[];
@@ -29,12 +31,10 @@ const MakeMatchPostList: React.FC<DataProps> = ({ data }) => {
   }, [data]);
 
   const { show: isShown, modalText } = useAppSelector((state) => state.modal);
+  const [onDeleteLike] = useDeleteLikeMutation();
+  const [onAddLike] = useAddLikeMutation();
 
-  const toggleLikes = async (
-    idx: number,
-    element: React.MouseEvent<HTMLImageElement, MouseEvent>,
-  ) => {
-    const target = element.currentTarget;
+  const toggleLikes = async (item: MatchPostType) => {
     if (!sessionStorage.getItem("email")) {
       dispatch(
         showModal({
@@ -46,43 +46,10 @@ const MakeMatchPostList: React.FC<DataProps> = ({ data }) => {
       );
       return;
     } else {
-      const item = matchPosts[idx];
       if (item.like) {
-        authAxios
-          .delete(
-            `http://34.64.156.80:3003/api/main/likes/like?postId=${item.postId}`,
-          )
-          .then(() => {
-            target.setAttribute("src", emptyHeart);
-            setMatchPosts(
-              matchPosts.map((matchPost) => {
-                if (item.postId === matchPost.postId) {
-                  const copyPost = { ...matchPost };
-                  copyPost.like = false;
-                  return copyPost;
-                }
-                return matchPost;
-              }),
-            );
-          });
+        onDeleteLike(item.postId || "");
       } else {
-        authAxios
-          .post("http://34.64.156.80:3003/api/main/likes/like", {
-            postId: item.postId,
-          })
-          .then(() => {
-            target.setAttribute("src", fullHeart);
-            setMatchPosts(
-              matchPosts.map((matchPost) => {
-                if (item.postId === matchPost.postId) {
-                  const copyPost = { ...matchPost };
-                  copyPost.like = true;
-                  return copyPost;
-                }
-                return matchPost;
-              }),
-            );
-          });
+        onAddLike(item.postId || "");
       }
     }
   };
@@ -90,15 +57,15 @@ const MakeMatchPostList: React.FC<DataProps> = ({ data }) => {
   return (
     <Container>
       <MatchPosList>
-        {matchPosts.map((item, idx) => {
+        {matchPosts.map((item) => {
           const url = `/match/${item.postId}`;
           return (
             <div className="item" key={item.postId}>
               <img
                 src={item.like ? fullHeart : emptyHeart}
                 className="heart"
-                onClick={(element) => {
-                  toggleLikes(idx, element);
+                onClick={() => {
+                  toggleLikes(item);
                 }}
               />
               <Link to={url}>
