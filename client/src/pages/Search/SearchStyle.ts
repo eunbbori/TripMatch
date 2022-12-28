@@ -8,7 +8,8 @@ const Keyword = styled.div`
 
 const Content = styled.div`
   width: 62vw;
-  height: 70vh;
+  min-height: 30vh;
+  max-height: 70vh;
   margin: 0 auto;
   overflow: auto;
 `;

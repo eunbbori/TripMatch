@@ -84,6 +84,11 @@ const MyHeader = () => {
           type="text"
           ref={searchRef}
           placeholder="지역명으로 검색해 보세요."
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              onSearch();
+            }
+          }}
         ></input>
         <img
           src="https://res.cloudinary.com/dk9scwone/image/upload/v1671095050/freeIconMagnifyingglass_p7owop.png"

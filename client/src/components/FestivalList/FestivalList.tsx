@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Container, ModalCard, TripInfo } from "./FestivalListStyle";
 import axios from "axios";
 import TitleStyle from "../Title/TitleStyle";
@@ -22,7 +22,6 @@ const FestivalList: React.FC<LocationProps> = ({ location }) => {
   const [itemInfo, setItemInfo] = useState<Item>({});
   const [modalOn, setModalOn] = useState(false);
   const [toggleOn, setToggleOn] = useState(true);
-  const navigate = useNavigate();
 
   const getInfo = async (infoType: string, location: string) => {
     const infoList = await axios

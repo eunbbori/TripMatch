@@ -120,7 +120,7 @@ const ProfileModal: React.FC<TProfileModal> = ({ email }) => {
               </textarea>
               <img
                 className="close"
-                src={iconX}
+                src="https://res.cloudinary.com/dk9scwone/image/upload/v1671625307/free-icon-cancel-8532370_kuiqk1.png"
                 alt="close"
                 onClick={toggleModal}
               />

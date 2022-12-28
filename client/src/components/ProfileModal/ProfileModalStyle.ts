@@ -32,8 +32,9 @@ export const Modal = styled.div`
     position: absolute;
     top: 0.5rem;
     right: 0.5rem;
-    width: 2rem;
-    height: 2rem;
+    width: 1rem;
+    height: 1rem;
+    cursor: pointer;
   }
 
   .contentWrapper {
