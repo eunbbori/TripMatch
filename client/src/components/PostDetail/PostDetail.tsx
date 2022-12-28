@@ -10,7 +10,6 @@ import {
   UserContainer,
   Date,
   MatchContainer,
-  PostContent,
   MatchButton,
   ButtonContainer,
   Button,
@@ -21,6 +20,7 @@ import { useAppDispatch } from "./../../store/hooks";
 import { showModal } from "../../slice/modal";
 import { dateFormat } from "../../util/dateFormatting";
 import authAxios from "../../axios/authAxios";
+import MarkdownView from "../MarkdownView/MarkdownView";
 
 interface PostDetailProps {
   matchPost?: MatchPostType;
@@ -235,13 +235,14 @@ const PostDetail: React.FC<PostDetailProps> = ({
           </p>
         </MatchContainer>
       )}
-      <PostContent
+      {/* <PostContent
         dangerouslySetInnerHTML={
           (freePost && { __html: freePost.content }) ||
           (matchPost && { __html: matchPost.content })
         }
         className="toastui-editor-contents"
-      ></PostContent>
+      ></PostContent> */}
+      <MarkdownView content={freePost?.content || matchPost?.content} />
       {matchPost && (
         <MatchButton
           onClick={onClickApply}

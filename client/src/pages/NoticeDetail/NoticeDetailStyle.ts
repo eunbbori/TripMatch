@@ -30,14 +30,6 @@ export const UserContainer = styled.div`
   justify-content: space-between;
 `;
 
-export const PostContent = styled.article`
-  min-height: 300px;
-  padding: 40px 0;
-  font-size: ${(props) => props.theme.font.M};
-  line-height: 1.7;
-  font-family: "S-CoreDream-3Light";
-`;
-
 export const Date = styled.p`
   font-size: ${(props) => props.theme.font.S};
   color: #747474;

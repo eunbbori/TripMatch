@@ -5,7 +5,6 @@ import {
   PostTitle,
   UserContainer,
   Date,
-  PostContent,
   ButtonContainer,
   Button,
   Container,
@@ -20,6 +19,7 @@ import {
   useGetNoticeQuery,
 } from "../../slice/noticeApi";
 import Modal from "../../components/Modal/Modal";
+import MarkdownView from "../../components/MarkdownView/MarkdownView";
 
 interface PostDetailProps {
   matchPost?: MatchPostType;
@@ -76,10 +76,7 @@ const NoticeDetail: React.FC<PostDetailProps> = () => {
       <UserContainer>
         <Date>{notice?.createdAt && dateFormat(notice.createdAt)}</Date>
       </UserContainer>
-      <PostContent
-        dangerouslySetInnerHTML={notice && { __html: notice.content }}
-        className="toastui-editor-contents"
-      ></PostContent>
+      <MarkdownView content={notice?.content} />
       <ButtonContainer>
         <Link to="/notice">
           <Button>목록</Button>
