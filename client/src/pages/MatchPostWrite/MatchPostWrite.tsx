@@ -180,6 +180,7 @@ const MatchPostWrite = () => {
         />
         <AppInputText
           refer={titleRef}
+          required={true}
           defaultValue={state && state.title}
           inputWidth="100%"
           type={"text"}
@@ -189,6 +190,7 @@ const MatchPostWrite = () => {
         />
         <AppInputText
           refer={peopleCntRef}
+          required={true}
           defaultValue={state && state.userCount.toString()}
           inputWidth="5%"
           type={"number"}
@@ -198,6 +200,7 @@ const MatchPostWrite = () => {
         <DateRange>
           <AppInputText
             type={"date"}
+            required={true}
             defaultValue={startDate}
             refer={startDateRef}
             label={"여행 기간"}
@@ -207,6 +210,7 @@ const MatchPostWrite = () => {
           <p>~</p>
           <AppInputText
             type={"date"}
+            required={true}
             defaultValue={endDate}
             refer={endDateRef}
             className={"endDatePicker"}
@@ -258,6 +262,7 @@ const MatchPostWrite = () => {
         />
         <AppInputText
           refer={contactRef}
+          required={true}
           defaultValue={state && state.contact}
           inputWidth="20%"
           type={"text"}
