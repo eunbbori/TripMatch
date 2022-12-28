@@ -5,6 +5,7 @@ import {
   Footer,
   StyledInput,
   Button,
+  ResultText,
 } from "../../../components/Auth/AuthStyle";
 import axios from "axios";
 
@@ -12,6 +13,9 @@ const FindPasswordForm = () => {
   const baseUrl = "http://34.64.156.80:3003";
   // const loginUrl = `${baseUrl}/main/auth/login`;
   const [email, setEmail] = useState("");
+  const [validText, setValidText] = useState(
+    "새 비밀번호를 받을 이메일 주소를 입력해주세요",
+  );
   const navigate = useNavigate();
 
   const onChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -21,24 +25,42 @@ const FindPasswordForm = () => {
   const onSubmitEmail = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("버튼은 눌려졌을걸?");
+
+    const checkEmail = (email: string) => {
+      const RegExp =
+        /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+
+      if (email === "") {
+        return "이메일 주소를 입력해주세요";
+      } else if (RegExp.test(email)) {
+        return "올바른 형식의 이메일 주소입니다";
+      } else {
+        return "잘못된 이메일 주소입니다";
+      }
+    };
+
+    const checkResult = checkEmail(email);
+    setValidText(checkResult);
     try {
       const sendOj = { email: email };
       console.log(sendOj);
-      const res = await axios.post(`${baseUrl}/api/main/auth/find`, sendOj);
+      const res = await axios.post(`${baseUrl}/api/main/auth/password`, sendOj);
       console.log("axios 전송은 됐을걸");
-      if (res.status === 201) {
+      if (res.status === 200) {
         console.log("요청은 성공했을걸?");
         alert(
           "입력하신 이메일로 비밀번호가 전송되었습니다. 이메일을 확인해주세요",
         );
-        navigate("/login");
+        navigate("/auth/login");
+      } else if (res.status === 400) {
+        alert("가입되지 않은 이메일입니다");
       } else {
         throw new Error(
           `에러코드 ${res.status}. 새 비밀번호 전송에 실패하였습니다`,
         );
       }
     } catch (error) {
-      alert("이메일을 확인해주세요");
+      alert("새 비밀번호 전송에 실패하였습니다");
       console.error(error);
     }
   };
@@ -58,9 +80,7 @@ const FindPasswordForm = () => {
             value={email}
             required
           />
-          <p className="detailText">
-            새 비밀번호를 받으실 이메일을 입력해주세요
-          </p>
+          <ResultText>{validText}</ResultText>
         </div>
         <Button className="formSubmit" type="submit">
           비밀번호 찾기
