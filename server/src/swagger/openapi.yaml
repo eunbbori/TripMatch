@@ -226,9 +226,18 @@ components:
               type: string
             profileImg:
               type: String
-        status:
+        matchStatus:
           type: string
           description: 대기중/수락/거절
+        scoredByAuthor:
+          type: boolean
+          description: 신청 받은 유저의 동행 점수 평가 여부
+        scoredByApplicant:
+          type: boolean
+          description: 신청한 유저의 동행 점수 평가 여부
+        endDate:
+          type: string
+          description: 동행 종료일
     notice:
       properties:
         noticeId:
@@ -289,6 +298,23 @@ components:
         status:
           type: boolean
           description: 모집상태
+    stay:
+      properties:
+        addr1:
+          type: string;
+          description: 주소
+        firstimage:
+          type: string;
+          description: 대표 이미지
+        goodstay:
+          type: string;
+          description: 굿스테이 여부
+        tel:
+          type: string;
+          description: 연락처
+        title:
+          type: string;
+          description: 축제명
     user:
       properties:
         email:
