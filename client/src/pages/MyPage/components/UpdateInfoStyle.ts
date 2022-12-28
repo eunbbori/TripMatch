@@ -198,8 +198,9 @@ export const ProfileImage = styled.img`
   border-radius: 50%;
   width: 5rem;
   height: 5rem;
-  display: block;
-  margin-top: 1rem;
+  display: inline-block;
+  /* margin-right: 2rem;
+  margin-top: 1rem; */
   border: 0.2rem solid ${Theme.color.blue};
 `;
 

@@ -73,6 +73,21 @@ const AuthFormBlock = styled.div`
     font-size: 0.5rem;
     margin-bottom: 2rem;
   }
+
+  .profileImageWrapper {
+    display: inline-block;
+    position: relative;
+    margin-right: 1.5rem;
+    padding: 1rem;
+
+    .changeImage {
+      position: absolute;
+      right: 0.5rem;
+      bottom: 1rem;
+      opacity: 0.7;
+      width: 2rem;
+    }
+  }
 `;
 
 const StyledInput = styled.input`

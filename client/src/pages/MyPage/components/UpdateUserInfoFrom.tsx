@@ -28,6 +28,7 @@ import {
 import { UpdateUserinfoTitle } from "./SideBarStyle";
 import authAxios from "../../../axios/authAxios";
 import axios from "axios";
+import profileIcon from "../../../images/icon-modifyImage.png";
 
 const UpdateUserInfoFrom = () => {
   type FormType =
@@ -74,7 +75,8 @@ const UpdateUserInfoFrom = () => {
   // 모달 외부 클릭 처리에 사용할 모달 엘리먼트
   const modalEl = useRef<HTMLDivElement>(null);
   // 이미지로 클릭을 대신한 이미지 업로드 input
-  const [image, setImage] = useState<File | string>("");
+  const fileInput = useRef<HTMLInputElement>(null);
+  const [imagefile, setImageFile] = useState<File | string>("");
 
   const [userState, setUserState] = useImmer({
     email: "",
@@ -177,6 +179,16 @@ const UpdateUserInfoFrom = () => {
   //     return true;
   //   }
   // }, []);
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setImageFile(e.target.files[0]);
+      setUserState((draft) => {
+        if (e.target.files) {
+          draft.profileImg = URL.createObjectURL(e.target.files[0]);
+        }
+      });
+    }
+  };
 
   const uploadimg = async (data: FormData) => {
     try {
@@ -194,14 +206,12 @@ const UpdateUserInfoFrom = () => {
           draft.profileImg = res.data.url;
         });
         alert("수정 완료!");
-        console.log("이미지 url 서버로 전송 완료");
       } else {
         throw new Error(`에러코드 ${imgRes.status}. 수정에 실패하였습니다`);
       }
     } catch (error) {
       alert("수정 실패");
       console.error(error);
-      console.log("이미지 url 서버로 전송 실패");
     }
   };
 
@@ -494,24 +504,38 @@ const UpdateUserInfoFrom = () => {
         <UpdateUserinfoTitle>회원 정보 수정</UpdateUserinfoTitle>
 
         <label>프로필 사진</label>
-
-        <ProfileImage src={userState.profileImg} alt="프로필 사진" />
+        <div className="profileImageWrapper">
+          <ProfileImage
+            src={userState.profileImg}
+            onClick={() => fileInput.current?.click()}
+            alt="프로필 사진"
+          />
+          <img
+            className="changeImage"
+            src={profileIcon}
+            alt="프로필 이미지 변경"
+            onClick={() => fileInput.current?.click()}
+          />
+        </div>
         <input
+          ref={fileInput}
           type="file"
           accept="image/*"
-          onChange={(e) => {
-            if (e.target.files) {
-              setImage(e.target.files[0]); //input에 들어온 파일을 img 변수에 저장
-            }
-          }}
+          onChange={handleFileChange}
+          style={{ display: "none" }}
         />
         <Button
           onClick={() => {
             const imgData = new FormData(); //formdata 객체 생성
-            imgData.append("file", image); //객체에 파일값 넣음
+            imgData.append("file", imagefile); //객체에 파일값 넣음
             imgData.append("upload_preset", "tripMatch"); //클라우디너리 설정값이므로 반드시 넣어주세요.
             imgData.append("cloud_name", "dk9scwone");
-            uploadimg(imgData);
+            console.log("폼데이터 : ", imagefile);
+            if (imagefile) {
+              uploadimg(imgData);
+            } else {
+              alert("수정하실 이미지를 새로 선택해주세요");
+            }
           }}
           className="update"
         >
