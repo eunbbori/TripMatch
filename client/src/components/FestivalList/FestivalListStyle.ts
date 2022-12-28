@@ -29,7 +29,7 @@ const Container = styled.div`
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-end;
-    margin: 10px 0;
+    margin: 10px 15px;
 
     div {
       width: 100%;

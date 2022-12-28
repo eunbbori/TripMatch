@@ -4,11 +4,13 @@ import { useNavigate } from "react-router-dom";
 import WishListContents from "./components/WishListContents";
 import WishTab from "./components/WishTab";
 import authAxios from "../../axios/authAxios";
+import NotFound from "../../components/NotFound/NotFound";
 
 // const baseUrl = "http://localhost:3003";
 
 const WishList = () => {
   const [dataList, setDataList] = useState();
+  const [errorList, serErrorList] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -18,7 +20,7 @@ const WishList = () => {
         if (res.status === 200) {
           setDataList(res.data);
         } else if (res.status === 204) {
-          alert("좋아요를 누른 동행게시글이 없습니다");
+          serErrorList(false);
         } else {
           throw new Error(
             `에러코드 ${res.status}. 페이지 요청에 실패하였습니다`,
@@ -35,7 +37,11 @@ const WishList = () => {
   return (
     <div>
       <WishTab data={dataList} />
-      <WishListContents data={dataList} likes={dataList} />
+      {errorList ? (
+        <WishListContents data={dataList} likes={dataList} />
+      ) : (
+        <NotFound />
+      )}
     </div>
   );
 };

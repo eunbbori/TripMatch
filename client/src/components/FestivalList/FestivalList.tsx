@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Container, ModalCard, TripInfo } from "./FestivalListStyle";
 import axios from "axios";
 import TitleStyle from "../Title/TitleStyle";
@@ -11,6 +11,7 @@ interface Item {
 
 interface ItemObj {
   item: Item;
+  stateFn: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 interface LocationProps {
@@ -22,6 +23,7 @@ const FestivalList: React.FC<LocationProps> = ({ location }) => {
   const [itemInfo, setItemInfo] = useState<Item>({});
   const [modalOn, setModalOn] = useState(false);
   const [toggleOn, setToggleOn] = useState(true);
+  const navigate = useNavigate();
 
   const getInfo = async (infoType: string, location: string) => {
     const infoList = await axios
@@ -45,9 +47,14 @@ const FestivalList: React.FC<LocationProps> = ({ location }) => {
     return date.slice(0, 4) + "." + date.slice(4, 6) + "." + date.slice(6, 8);
   };
 
-  const InfoModal: React.FC<ItemObj> = ({ item }) => {
+  const InfoModal: React.FC<ItemObj> = ({ item, stateFn }) => {
     return (
-      <ModalCard>
+      <ModalCard
+        onClick={(e) => {
+          e.stopPropagation();
+          stateFn(false);
+        }}
+      >
         <div className="modalCard">
           <img
             className="closeModal"
@@ -143,14 +150,22 @@ const FestivalList: React.FC<LocationProps> = ({ location }) => {
                 </div>
               );
             })}
-          {modalOn && <InfoModal item={itemInfo} />}
+          {modalOn && <InfoModal item={itemInfo} stateFn={setModalOn} />}
         </TripInfo>
         {location !== "/" ? (
           <div className="shortCutBtn">
             <div>혼자 가기 외로울 땐?</div>
-            <Link to="/match/write">
-              <button>동행 신청 바로가기</button>
-            </Link>
+            <button
+              onClick={() => {
+                if (sessionStorage.getItem("email")) {
+                  navigate("/match/write");
+                } else {
+                  navigate("/auth/login");
+                }
+              }}
+            >
+              동행 신청 바로가기
+            </button>
           </div>
         ) : (
           false
