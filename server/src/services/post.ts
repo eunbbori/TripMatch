@@ -3,12 +3,12 @@ import { PostModel } from "../models";
 class PostService {
   private postModel = new PostModel();
 
-  async getTotalPage(region: string, status: string) {
+  async getTotalCount(region: string, status: string) {
     const condition: { region?: string; status?: boolean } = {};
     if (region) condition.region = region;
     if (status) condition.status = true;
-    const totalPage = await this.postModel.countPages(condition);
-    return totalPage;
+    const totalCount = await this.postModel.countPosts(condition);
+    return totalCount;
   }
   async getEightPosts(page: number, region: string, status: string) {
     const condition: { region?: string; status?: boolean } = {};

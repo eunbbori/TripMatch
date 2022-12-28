@@ -32,6 +32,9 @@ class LikeService {
     const like = await this.likeModel.findOne(condition);
     if (like) throw new Error("409");
   }
+  async banish(postId: string) {
+    await this.likeModel.deleteMany(postId);
+  }
 }
 
 const likeService = new LikeService();

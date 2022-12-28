@@ -4,9 +4,9 @@ import { postSchema } from "./schemas";
 class PostModel {
   private postDB = mongoose.model("posts", postSchema);
 
-  async countPages(condition: object) {
+  async countPosts(condition: object) {
     const total = await this.postDB.countDocuments(condition);
-    return total / 10;
+    return total;
   }
   async findEight(page: number, condition: object) {
     const communities = await this.postDB

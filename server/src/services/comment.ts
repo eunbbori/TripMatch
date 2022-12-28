@@ -38,6 +38,9 @@ class CommentService {
     const comment = await this.commentModel.findOne(commentId);
     return comment?.communityId || "";
   }
+  async banish(condition: object) {
+    await this.commentModel.deleteMany(condition);
+  }
 }
 
 const commentService = new CommentService();

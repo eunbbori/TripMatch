@@ -12,7 +12,7 @@ const postsController = Router();
 postsController.get("/", async (req, res, next) => {
   const { page, region, status, email } = req.query;
   try {
-    const totalPage = await postService.getTotalPage(
+    const totalCount = await postService.getTotalCount(
       region as string,
       status as string
     );
@@ -26,8 +26,8 @@ postsController.get("/", async (req, res, next) => {
         posts as [],
         email as string
       );
-      res.status(200).json({ totalPage, posts: postsWithLike });
-    } else res.status(200).json({ totalPage, posts });
+      res.status(200).json({ totalCount, posts: postsWithLike });
+    } else res.status(200).json({ totalCount, posts });
   } catch (err) {
     next(err);
   }
@@ -59,6 +59,8 @@ postsController.delete("/:postId", loginCheck, async (req, res, next) => {
     const post = await postService.getAuthor(postId);
     if (post?.author.email !== req.email) return next(new Error("403"));
     await postService.delete(postId);
+    await likeService.banish(postId);
+    await commentService.banish({ postId });
     res.status(200).end();
   } catch (err) {
     next(err);

@@ -22,9 +22,9 @@
             schema:
               type: object
               properties:
-                totalPage:
+                totalCount:
                   type: number
-                  description: 총 페이지 수
+                  description: 총 게시글 수
                 communities:
                   type: array
                   description: 자유게시글 리스트

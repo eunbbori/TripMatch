@@ -3,11 +3,11 @@ import { CommunityModel } from "../models";
 class CommunityService {
   private communityModel = new CommunityModel();
 
-  async getTotalPage(region: string) {
+  async getTotalCount(region: string) {
     const condition: { region?: string } = {};
     if (region) condition.region = region;
-    const totalPage = await this.communityModel.countPages(condition);
-    return totalPage;
+    const totalCount = await this.communityModel.countPosts(condition);
+    return totalCount;
   }
   async getTenCommus(page: number, region: string) {
     const condition: { region?: string } = {};

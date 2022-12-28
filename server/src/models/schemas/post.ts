@@ -33,7 +33,12 @@ const postSchema = new Schema<Post>(
         "기타",
       ],
     },
-    thumbnail: { type: String, required: true },
+    thumbnail: {
+      type: String,
+      required: true,
+      default:
+        "https://res.cloudinary.com/dk9scwone/image/upload/v1672218061/ol2fdtqqw63jwd3anp8t.jpg",
+    },
     duration: { type: [String], required: true },
     hopeGender: { type: String, required: true },
     hopeAge: { type: [String], required: true },

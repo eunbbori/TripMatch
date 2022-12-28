@@ -150,7 +150,7 @@
                 age:
                   type: string
                   description: 나이
-                inroduce:
+                introduce:
                   type: string
                   description: 자기소개
                 profileImg:

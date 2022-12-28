@@ -4,9 +4,9 @@ import { communitySchema } from "./schemas";
 class CommunityModel {
   private communityDB = mongoose.model("communities", communitySchema);
 
-  async countPages(condition: object) {
+  async countPosts(condition: object) {
     const total = await this.communityDB.countDocuments(condition);
-    return total / 10;
+    return total;
   }
   async findTen(page: number, condition: object) {
     const communities = await this.communityDB

@@ -21,6 +21,9 @@ class CommentModel {
     const comments = await this.commentDB.find(condition, projection);
     return comments;
   }
+  async deleteMany(condition: object) {
+    await this.commentDB.deleteMany(condition);
+  }
 }
 
 export default CommentModel;

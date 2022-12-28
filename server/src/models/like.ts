@@ -18,6 +18,9 @@ class LikeModel {
     const like = await this.likeDB.findOne(condition);
     return like;
   }
+  async deleteMany(postId: string) {
+    await this.likeDB.deleteMany({ postId });
+  }
 }
 
 export default LikeModel;
