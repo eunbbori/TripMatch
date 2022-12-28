@@ -17,6 +17,8 @@ const WishList = () => {
         const res = await authAxios.get(`/api/main/likes`);
         if (res.status === 200) {
           setDataList(res.data);
+        } else if (res.status === 204) {
+          alert("좋아요를 누른 동행게시글이 없습니다");
         } else {
           throw new Error(
             `에러코드 ${res.status}. 페이지 요청에 실패하였습니다`,
@@ -24,7 +26,7 @@ const WishList = () => {
         }
       } catch (error) {
         console.error(error);
-        navigate("/login");
+        navigate("/auth/login");
       }
     };
     getLikedDataList();
