@@ -305,7 +305,7 @@ const RegisterForm = () => {
       const res = await axios.post(`${baseUrl}/api/main/auth/join`, userData);
       if (res.status === 201) {
         console.log("회원가입이 완료되었습니다!");
-        navigate("/login");
+        navigate("/auth/login");
       } else if (res.status === 403) {
         alert("이메일 인증 후에 회원가입 해주세요");
       } else {
@@ -447,7 +447,7 @@ const RegisterForm = () => {
         </Button>
       </form>
       <Footer>
-        <Link to="/login">로그인</Link>
+        <Link to="/auth/login">로그인</Link>
       </Footer>
     </AuthFormBlock>
   );

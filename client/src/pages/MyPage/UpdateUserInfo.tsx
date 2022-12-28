@@ -10,7 +10,7 @@ import {
 import UpdateUserInfoFrom from "./components/UpdateUserInfoFrom";
 import { PinkBox } from "../../components/Auth/AuthStyle";
 
-const UpdateUserInfoPage = () => {
+const UpdateUserInfo = () => {
   return (
     <>
       <Body>
@@ -30,4 +30,4 @@ const UpdateUserInfoPage = () => {
   );
 };
 
-export default UpdateUserInfoPage;
+export default UpdateUserInfo;

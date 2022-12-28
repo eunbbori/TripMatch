@@ -122,22 +122,20 @@ const UpdateUserInfoFrom = () => {
         if (res.status === 200) {
           return res.data;
           // 비로그인으로 접근 시, 실패 코드
-        } else if (res.status === 401) {
-          alert("로그인 후 사용가능한 페이지입니다");
-          navigate("/login");
         } else {
           throw new Error(`에러코드 ${res.status}. 수정에 실패하였습니다`);
         }
       } catch (error) {
-        alert("회원 정보 로딩에 실패했습니다");
+        alert(
+          "회원 정보 로딩에 실패했습니다. 로그인 후 사용가능한 페이지입니다",
+        );
         console.error(error);
-        navigate("/login");
+        navigate("/auth/login");
       }
     };
 
     const loadData = loadUserInfo();
     loadData.then((res) => {
-      console.log(res);
       setUserState((draft) => {
         draft.profileImg = res.profileImg;
         draft.email = res.email;

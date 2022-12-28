@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Theme from "./../../styles/Theme";
 
 // 화면 전체 배경색 채우기
 const AuthTemplateBlock = styled.div`
@@ -47,6 +48,16 @@ const AuthFormBlock = styled.div`
       display: block;
       margin: 1rem 2rem 1rem 0;
     }
+  }
+
+  .pageTitle {
+    font-size: ${Theme.font.L};
+    font-weight: 600;
+  }
+
+  .detailText {
+    font-size: ${Theme.font.S};
+    margin-bottom: 2rem;
   }
 
   .updateLabel {
@@ -154,7 +165,8 @@ const GenderWrapper = styled.div`
 const Footer = styled.span`
   font-size: 1.2rem;
   font-weight: 600;
-  display: block;
+  display: flex;
+  justify-content: space-between;
   padding: 1rem;
   text-align: right;
   color: gray;

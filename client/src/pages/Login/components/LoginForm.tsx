@@ -57,8 +57,7 @@ const LoginForm = () => {
         throw new Error(`에러코드 ${res.status}. 회원가입에 실패하였습니다`);
       }
     } catch (error) {
-      console.log("아이디랑 비번이 틀렸을껄?");
-      alert("아이디와 비밀번호를 확인해주세요");
+      alert("이메일과 비밀번호를 확인해주세요");
       console.error(error);
     }
     // 성공하건 실패하건 비밀번호는 지워줘야함
@@ -102,7 +101,8 @@ const LoginForm = () => {
         </div>
       </form>
       <Footer>
-        <Link to="/register">회원가입</Link>
+        <Link to="/auth/findpassword">비밀번호 찾기</Link>
+        <Link to="/auth/register">회원가입</Link>
       </Footer>
     </AuthFormBlock>
   );
