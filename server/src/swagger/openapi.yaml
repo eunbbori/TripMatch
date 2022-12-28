@@ -68,6 +68,8 @@ paths:
     $ref: "./search.yaml#/~1search"
   /api/main/infoes/festival:
     $ref: "./infoes.yaml#/~1infoes~1festival"
+  /api/main/infoes/stay:
+    $ref: "./infoes.yaml#/~1infoes~1stay"
   /api/admin/notices/{noticeId}:
     $ref: "./admin.yaml#/~1notices~1{noticeId}"
   /api/admin/notices/notice:

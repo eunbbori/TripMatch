@@ -8,6 +8,7 @@
     "api-docs": "swagger-cli bundle ./src/swagger/openapi.yaml --outfile ./src/swagger/swagger.yaml --type yaml",
     "predev": "npm run api-docs",
     "dev": "nodemon --watch \"*.ts\" --exec \"ts-node\" index.ts",
+    "prestart": "npm run api-docs",
     "start": "ts-node index.ts"
   },
   "keywords": [],

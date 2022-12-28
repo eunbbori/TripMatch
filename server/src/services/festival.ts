@@ -1,5 +1,5 @@
 import { FestivalModel } from "../models";
-import { getFestivals } from "../utils";
+import { openAPI } from "../utils";
 
 class FestivalService {
   private festivalModel = new FestivalModel();
@@ -12,7 +12,7 @@ class FestivalService {
       festival?.createdAt.toLocaleDateString("ko-kr").replace(/[. ]/g, "")
     )
       return;
-    const festivalInfoes = await getFestivals(today);
+    const festivalInfoes = await openAPI(today);
     await this.festivalModel.deleteMany();
     await this.festivalModel.create(festivalInfoes);
   }

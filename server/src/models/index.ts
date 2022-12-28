@@ -6,6 +6,7 @@ import LikeModel from "./like";
 import MatchModel from "./match";
 import NoticeModel from "./notice";
 import FestivalModel from "./festivals";
+import StayModel from "./stay";
 
 export {
   UserModel,
@@ -16,4 +17,5 @@ export {
   MatchModel,
   NoticeModel,
   FestivalModel,
+  StayModel,
 };

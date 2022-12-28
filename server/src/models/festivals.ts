@@ -21,7 +21,6 @@ class FestivalModel {
     const festivals = await this.festivalDB.find(
       {},
       {
-        _id: 0,
         addr1: 1,
         eventstartdate: 1,
         eventenddate: 1,

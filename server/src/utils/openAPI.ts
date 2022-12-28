@@ -1,11 +1,18 @@
 import request from "request";
 import "dotenv/config";
+import { Festival, Stay } from "../interfaces";
 
-export default function getFestivals(eventStartDate: string): Promise<[]> {
+export default function openAPI(eventStartDate?: string): Promise<[]> {
   return new Promise((res, rej) => {
     request(
       {
-        uri: `http://apis.data.go.kr/B551011/KorService/searchFestival?numOfRows=20&MobileOS=ETC&MobileApp=AppTest&serviceKey=${process.env.SERVICE_KEY}&_type=json&arrange=C&eventStartDate=${eventStartDate}`,
+        uri: `http://apis.data.go.kr/B551011/KorService/${
+          eventStartDate ? "searchFestival" : "searchStay"
+        }?numOfRows=20&MobileOS=ETC&MobileApp=AppTest&serviceKey=${
+          process.env.SERVICE_KEY
+        }&_type=json&arrange=${
+          eventStartDate ? "C&eventStartDate=" + eventStartDate : "R"
+        }`,
         method: "GET",
         json: true,
       },
@@ -14,28 +21,22 @@ export default function getFestivals(eventStartDate: string): Promise<[]> {
         else
           res(
             response.body.response.body.items.item.map(
-              ({
-                addr1,
-                eventstartdate,
-                eventenddate,
-                firstimage,
-                tel,
-                title,
-              }: {
-                addr1: string;
-                eventstartdate: string;
-                eventenddate: string;
-                firstimage: string;
-                tel: string;
-                title: string;
-              }) => ({
-                addr1,
-                eventstartdate,
-                eventenddate,
-                firstimage,
-                tel,
-                title,
-              })
+              eventStartDate
+                ? (obj: Festival) => ({
+                    addr1: obj.addr1,
+                    eventstartdate: obj.eventstartdate,
+                    eventenddate: obj.eventenddate,
+                    firstimage: obj.firstimage,
+                    tel: obj.tel,
+                    title: obj.title,
+                  })
+                : (obj: Stay) => ({
+                    addr1: obj.addr1,
+                    firstimage: obj.firstimage,
+                    goodstay: obj.goodstay,
+                    tel: obj.tel,
+                    title: obj.title,
+                  })
             )
           );
       }

@@ -6,6 +6,7 @@ import likeSchema from "./like";
 import matchSchema from "./match";
 import noticeSchema from "./notice";
 import festivalSchema from "./festival";
+import staySchema from "./stay";
 
 export {
   userSchema,
@@ -16,4 +17,5 @@ export {
   matchSchema,
   noticeSchema,
   festivalSchema,
+  staySchema,
 };
