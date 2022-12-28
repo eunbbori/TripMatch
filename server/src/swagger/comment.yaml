@@ -1,0 +1,85 @@
+/comment:
+  post:
+    tags:
+      - /comment
+    summary: 댓글 작성
+    consumes:
+      - application/json
+    parameters:
+      - in: header
+        name: x-access-token
+        schema:
+          type: string
+        required: true
+    requestBody:
+      x-name: body
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              content:
+                type: string
+              communityId:
+                type: string
+              postId:
+                type: string
+    responses:
+      "201":
+        description: 성공
+/comment/{commentId}:
+  put:
+    tags:
+      - /comment
+    summary: 댓글 수정
+    consumes:
+      - application/json
+    parameters:
+      - in: path
+        name: commentId
+        schema:
+          type: string
+        required: true
+      - in: header
+        name: x-access-token
+        schema:
+          type: string
+        required: true
+    requestBody:
+      x-name: body
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              content:
+                type: string
+    responses:
+      "200":
+        description: 성공
+      "403":
+        description: 작성자 아님
+  delete:
+    tags:
+      - /comment
+    summary: 댓글 삭제
+    consumes:
+      - application/json
+    parameters:
+      - in: path
+        name: commentId
+        schema:
+          type: string
+        required: true
+      - in: header
+        name: x-access-token
+        schema:
+          type: string
+        required: true
+    responses:
+      "200":
+        description: 성공
+      "403":
+        description: 작성자 아님

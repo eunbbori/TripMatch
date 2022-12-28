@@ -1,0 +1,80 @@
+/likes:
+  get:
+    tags:
+      - /likes
+    summary: 위시리스트 리스트
+    consumes:
+      - application/json
+    parameters:
+      - in: header
+        name: x-access-token
+        schema:
+          type: string
+        required: true
+    responses:
+      "200":
+        description: 성공
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  postId:
+                    type: string
+                  title:
+                    type: string
+                  region:
+                    type: string
+                  thumbnail:
+                    type: string
+      "204":
+        description: 데이터 없음
+/likes/like:
+  post:
+    tags:
+      - /likes
+    summary: 위시리스트 등록
+    consumes:
+      - application/json
+    parameters:
+      - in: header
+        name: x-access-token
+        schema:
+          type: string
+        required: true
+    requestBody:
+      x-name: body
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              postId:
+                type: string
+    responses:
+      "201":
+        description: 성공
+      "409":
+        description: 이미 좋아요 누름
+  delete:
+    tags:
+      - /likes
+    summary: 위시리스트 제거
+    consumes:
+      - application/json
+    parameters:
+      - in: header
+        name: x-access-token
+        schema:
+          type: string
+        required: true
+      - in: query
+        name: postId
+        schema:
+          type: string
+    responses:
+      "200":
+        description: 성공

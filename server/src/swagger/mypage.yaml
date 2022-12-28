@@ -1,0 +1,224 @@
+/mypage:
+  get:
+    tags:
+      - /mypage
+    summary: 마이페이지 - 정보 수정
+    consumes:
+      - application/json
+    parameters:
+      - in: header
+        name: x-access-token
+        schema:
+          type: string
+        required: true
+    responses:
+      "200":
+        description: 성공
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: 이메일
+                nickname:
+                  type: string
+                  description: 닉네임
+                gender:
+                  type: string
+                  description: 성별
+                age:
+                  type: string
+                  description: 나이
+                inroduce:
+                  type: string
+                  description: 자기소개
+                profileImg:
+                  type: string
+                  description: 프로필사진
+                matchCount:
+                  type: number
+                  description: 동행 횟수
+                matchPoint:
+                  type: string
+                  description: 동행 점수
+      "204":
+        description: 데이터가 없음
+/mypage/comments:
+  get:
+    tags:
+      - /mypage
+    summary: 마이페이지 - 댓글 내역
+    consumes:
+      - application/json
+    parameters:
+      - in: header
+        name: x-access-token
+        schema:
+          type: string
+        required: true
+    responses:
+      "200":
+        description: 성공
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  postId:
+                    type: string
+                  title:
+                    type: string
+                  region:
+                    type: string
+                  duration:
+                    type: array
+                    items:
+                      type: string
+                  author:
+                    type: object
+                    properties:
+                      email:
+                        type: string
+                      nickname:
+                        type: string
+                      profileImg:
+                        type: string
+      "204":
+        description: 데이터가 없음
+/mypage/myEnroll:
+  get:
+    tags:
+      - /mypage
+    summary: 마이페이지 - 신청한 내역
+    consumes:
+      - application/json
+    parameters:
+      - in: header
+        name: x-access-token
+        schema:
+          type: string
+        required: true
+    responses:
+      "200":
+        description: 성공
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  matchId:
+                    type: string
+                  postId:
+                    type: string
+                  title:
+                    type: string
+                  matchStatus:
+                    type: string
+                  contact:
+                    type: string
+                  duration:
+                    type: array
+                    items:
+                      type: string
+                  author:
+                    type: object
+                    properties:
+                      email:
+                        type: string
+                      nickname:
+                        type: string
+                      profileImg:
+                        type: string
+      "204":
+        description: 데이터가 없음
+/mypage/receivedEnroll:
+  get:
+    tags:
+      - /mypage
+    summary: 마이페이지 - 신청 받은 내역
+    consumes:
+      - application/json
+    parameters:
+      - in: header
+        name: x-access-token
+        schema:
+          type: string
+        required: true
+    responses:
+      "200":
+        description: 성공
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  matchId:
+                    type: string
+                  postId:
+                    type: string
+                  title:
+                    type: string
+                  matchStatus:
+                    type: string
+                  status:
+                    type: boolean
+                  duration:
+                    type: array
+                    items:
+                      type: string
+                  applicant:
+                    type: object
+                    properties:
+                      email:
+                        type: string
+                      nickname:
+                        type: string
+                      profileImg:
+                        type: string
+      "204":
+        description: 데이터가 없음
+/mypage/posts:
+  get:
+    tags:
+      - /mypage
+    summary: 마이페이지 - 게시글 내역
+    consumes:
+      - application/json
+    parameters:
+      - in: header
+        name: x-access-token
+        schema:
+          type: string
+        required: true
+    responses:
+      "200":
+        description: 성공
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  postId:
+                    type: string
+                  title:
+                    type: string
+                  region:
+                    type: string
+                  status:
+                    type: boolean
+                  duration:
+                    type: array
+                    items:
+                      type: string
+      "204":
+        description: 데이터가 없음

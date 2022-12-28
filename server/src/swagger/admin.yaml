@@ -1,0 +1,186 @@
+/notices/{noticeId}:
+  put:
+    tags:
+      - /admin
+    summary: 공지사항 수정
+    consumes:
+      - application/json
+    parameters:
+      - in: path
+        name: noticeId
+        schema:
+          type: string
+        required: true
+      - in: header
+        name: x-access-token
+        schema:
+          type: string
+        required: true
+    requestBody:
+      x-name: body
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              title:
+                type: string
+              content:
+                type: string
+    responses:
+      "200":
+        description: 성공
+      "403":
+        description: 관리자 아님
+  delete:
+    tags:
+      - /admin
+    summary: 공지사항 삭제
+    consumes:
+      - application/json
+    parameters:
+      - in: path
+        name: noticeId
+        schema:
+          type: string
+        required: true
+      - in: header
+        name: x-access-token
+        schema:
+          type: string
+        required: true
+    responses:
+      "200":
+        description: 성공
+      "403":
+        description: 관리자 아님
+/notices/notice:
+  post:
+    tags:
+      - /admin
+    summary: 공지사항 작성
+    consumes:
+      - application/json
+    parameters:
+      - in: header
+        name: x-access-token
+        schema:
+          type: string
+        required: true
+    requestBody:
+      x-name: body
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              title:
+                type: string
+              content:
+                type: string
+    responses:
+      "201":
+        description: 성공
+      "403":
+        description: 관리자 아님
+/users:
+  get:
+    tags:
+      - /admin
+    summary: 회원 조회
+    consumes:
+      - application/json
+    parameters:
+      - in: header
+        name: x-access-token
+        schema:
+          type: string
+        required: true
+      - in: query
+        name: keyword
+        schema:
+          type: string
+    responses:
+      "200":
+        description: 성공
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  email:
+                    type: string
+                    description: 이메일
+                  nickname:
+                    type: string
+                    description: 닉네임
+                  createdAt:
+                    type: string
+                    description: 가입일
+                  role:
+                    type: string
+                    description: 권한
+      "204":
+        description: 데이터가 없음
+      "403":
+        description: 관리자 아님
+/users/{email}:
+  delete:
+    tags:
+      - /admin
+    summary: 회원 강퇴
+    consumes:
+      - application/json
+    parameters:
+      - in: header
+        name: x-access-token
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: email
+        schema:
+          type: string
+        required: true
+    responses:
+      "200":
+        description: 성공
+      "403":
+        description: 관리자 아님
+  put:
+    tags:
+      - /admin
+    summary: 권한 부여
+    consumes:
+      - application/json
+    parameters:
+      - in: header
+        name: x-access-token
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: email
+        schema:
+          type: string
+        required: true
+    requestBody:
+      x-name: body
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              role:
+                type: string
+                description: admin or user
+    responses:
+      "200":
+        description: 성공
+      "403":
+        description: 관리자 아님

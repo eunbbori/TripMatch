@@ -1,0 +1,67 @@
+/search:
+  get:
+    tags:
+      - /search
+    summary: 게시글 검색
+    consumes:
+      - application/json
+    parameters:
+      - in: query
+        name: keyword
+        schema:
+          type: string
+      - in: query
+        name: email
+        schema:
+          type: string
+    responses:
+      "200":
+        description: 성공
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                communities:
+                  type: array
+                  description: 자유게시글 리스트
+                  items:
+                    type: object
+                    properties:
+                      communityId:
+                        type: string
+                      title:
+                        type: string
+                      region:
+                        type: string
+                      category:
+                        type: string
+                      author:
+                        type: object
+                        properties:
+                          email:
+                            type: string
+                          nickname:
+                            type: string
+                          profileImg:
+                            type: string
+                      createdAt:
+                        type: string
+                      commentCount:
+                        type: number
+                posts:
+                  type: array
+                  description: 동행게시글 리스트
+                  items:
+                    type: object
+                    properties:
+                      postId:
+                        type: string
+                      title:
+                        type: string
+                      region:
+                        type: string
+                      thumbnail:
+                        type: string
+                      like:
+                        type: boolean
