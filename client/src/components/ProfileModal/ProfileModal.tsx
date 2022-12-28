@@ -31,6 +31,7 @@ const ProfileModal: React.FC<TProfileModal> = ({ email }) => {
       try {
         const res = await axios.get(`${baseUrl}/api/main/auth/${email}`);
         if (res.status === 200) {
+          console.log(res);
           setUserData((draft) => {
             draft.email = res.data.email;
             draft.nickname = res.data.nickname;
@@ -41,6 +42,8 @@ const ProfileModal: React.FC<TProfileModal> = ({ email }) => {
             draft.matchCount = res.data.matchCount;
             draft.matchPoint = res.data.matchPoint;
           });
+        } else if (res.status === 204) {
+          alert("이미 탈퇴한 유저입니다");
         } else {
           throw new Error(
             `에러코드 ${res.status}, 유저 프로필 요청에 실패하였습니다`,
@@ -113,11 +116,11 @@ const ProfileModal: React.FC<TProfileModal> = ({ email }) => {
                   </div>
                 </div>
               </div>
-              <textarea className="introTextArea" readOnly>
+              <div className="introTextArea">
                 {userData.introduce === ""
                   ? "도움! 프로필 요청 에러!"
-                  : userData.age}
-              </textarea>
+                  : userData.introduce}
+              </div>
               <img
                 className="close"
                 src="https://res.cloudinary.com/dk9scwone/image/upload/v1671625307/free-icon-cancel-8532370_kuiqk1.png"
