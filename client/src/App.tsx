@@ -21,6 +21,7 @@ import Search from "./pages/Search/Search";
 import UpdateUserInfo from "./pages/MyPage/UpdateUserInfo";
 import WishListPage from "./pages/WishList/WishList";
 import FindPassword from "./pages/FindPassword/FindPassword";
+import NotFound from "./components/NotFound/NotFound";
 
 const App = () => {
   return (
@@ -51,6 +52,7 @@ const App = () => {
             path="tripinfo"
             element={<FestivalList location="tripInfo" />}
           />
+          <Route path="*" element={<NotFound message="잘못된 주소입니다" />} />
         </Route>
       </Routes>
     </BrowserRouter>

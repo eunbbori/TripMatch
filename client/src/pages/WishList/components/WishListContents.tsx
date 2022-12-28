@@ -45,7 +45,7 @@ const WishListContents: React.FC<DatasProp> = ({ data, likes = [] }) => {
             return (
               <div className="item" key={item.postId}>
                 <img src={fullHeart} className="heart" />
-                <Link to="/">
+                <Link to={`/match/${item.postId}`}>
                   <span className="region">{item.region}</span>
                   <img src={item.thumbnail} className="itemImg" />
                   <div className="itemTitle">{item.title}</div>
