@@ -242,3 +242,24 @@
                   description: 갱신된 JWT
       "401":
         description: 다시 로그인 요청
+/auth/password:
+  post:
+    tags:
+      - /auth
+    summary: 비밀번호찾기
+    consumes:
+      - application/json
+    requestBody:
+      x-name: body
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              email:
+                type: string
+    responses:
+      "200":
+        description: 성공
+      "400":
+        description: 가입되지 않은 이메일

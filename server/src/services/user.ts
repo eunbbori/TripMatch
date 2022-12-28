@@ -21,8 +21,8 @@ class UserService {
   async join(body: User) {
     const result = await redis.get(body.email);
     if (result !== "certified") throw new Error("403");
-    const hashedInfo = await hashPassword.hash(body);
-    const user = await this.userModel.create(hashedInfo);
+    body.password = await hashPassword.hash(body.password);
+    const user = await this.userModel.create(body);
     await sendMail(user.email, "Trip Match에 가입되었습니다.");
   }
   async login(email: string, password: string) {
@@ -92,6 +92,8 @@ class UserService {
     await this.userModel.deleteOne(email);
   }
   async update(email: string, body: object) {
+    if ("password" in body)
+      body.password = await hashPassword.hash(body.password as string);
     await this.userModel.updateOne(email, body);
   }
   async refresh(accessToken: string, refresh: string) {
@@ -114,6 +116,17 @@ class UserService {
     const users = await this.userModel.findForAdmin(condition);
     if (users.length === 0) throw new Error("204");
     return users;
+  }
+  async newPassword(email: string) {
+    const user = await this.userModel.findByEmail(email, { _id: 1 });
+    if (!user) throw new Error("400");
+    const password = customAlphabet("0123456789TripMatch", 8)();
+    const hashed = await hashPassword.hash(password);
+    await this.userModel.updateOne(email, { password: hashed });
+    await sendMail(
+      email,
+      `임시 비밀번호입니다. 로그인 후 꼭 비밀번호를 변경해주십시오. >> ${password}`
+    );
   }
 }
 

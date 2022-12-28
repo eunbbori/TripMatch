@@ -76,5 +76,13 @@ authController.put("/update", loginCheck, async (req, res, next) => {
     next(err);
   }
 });
+authController.post("/password", async (req, res, next) => {
+  try {
+    await userService.newPassword(req.body.email);
+    res.status(200).end();
+  } catch (err) {
+    next(err);
+  }
+});
 
 export default authController;

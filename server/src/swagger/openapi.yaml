@@ -25,6 +25,8 @@ paths:
     $ref: "./auth.yaml#/~1auth~1update"
   /main/auth/refresh:
     $ref: "./auth.yaml#/~1auth~1refresh"
+  /main/auth/password:
+    $ref: "./auth.yaml#/~1auth~1password"
   /main/comment:
     $ref: "./comment.yaml#/~1comment"
   /main/comment/{commentId}:
