@@ -243,7 +243,14 @@ const PostDetail: React.FC<PostDetailProps> = ({
         className="toastui-editor-contents"
       ></PostContent>
       {matchPost && (
-        <MatchButton onClick={onClickApply} isApplying={isApplying!}>
+        <MatchButton
+          onClick={onClickApply}
+          isApplying={isApplying!}
+          disabled={
+            sessionStorage.getItem("email") === matchPost.author?.email ||
+            matchPost.status === false
+          }
+        >
           {isApplying ? "동행 신청 중" : "동행 신청하기"}
         </MatchButton>
       )}

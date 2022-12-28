@@ -26,20 +26,23 @@ const Comment: React.FC<CommentProps> = ({ comment, setDeleteCommentId }) => {
   const [isAuthor, setIsAuthor] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
 
-  const [onUpdateComment, { isError, isSuccess }] = useUpdateCommentMutation();
+  const [
+    onUpdateComment,
+    { isError: isErrorUpdateComment, isSuccess: isSuccessUpdateComment },
+  ] = useUpdateCommentMutation();
 
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (isError) {
+    if (isErrorUpdateComment) {
       alert("댓글 수정에 실패했습니다.");
       setIsClickUpdate(false);
     }
-    if (isSuccess) {
+    if (isSuccessUpdateComment) {
       setIsClickUpdate(true);
       window.location.reload();
     }
-  }, [isError, isSuccess]);
+  }, [isErrorUpdateComment, isSuccessUpdateComment]);
 
   useEffect(() => {
     setIsAuthor(sessionStorage.getItem("email") === comment.author.email);

@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import Theme from "../../styles/Theme";
 
 export const PostTitle = styled.h3`
   font-size: ${(props) => props.theme.font.L};
@@ -109,10 +108,14 @@ export const MatchButton = styled.button<{ isApplying: boolean }>`
   border-radius: 5px;
   cursor: pointer;
   background-color: ${(props) =>
-    props.isApplying ? "grey" : props.theme.color.pink};
+    props.isApplying ? props.theme.color.blue : props.theme.color.pink};
   font-size: ${(props) => props.theme.font.M};
   color: #fff;
   font-weight: bold;
   margin-bottom: 20px;
   font-family: "S-CoreDream-3Light";
+
+  &:disabled {
+    background-color: lightgrey;
+  }
 `;

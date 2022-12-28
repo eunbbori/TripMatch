@@ -12,7 +12,7 @@ const refreshAccessToken = async () => {
   // 서버에 새 access token 요청해서 받기
   const response = await axios.get(refreshTokenURl, {
     headers: {
-      ["x-access-token"]: sessionStorage.getItem("x-access-token"),
+      ["x-access-token"]: `Bearer ${sessionStorage.getItem("x-access-token")}`,
       refresh: refreshToken,
     },
   });

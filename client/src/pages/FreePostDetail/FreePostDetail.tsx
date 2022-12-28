@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PostDetail from "../../components/PostDetail/PostDetail";
 import styled from "styled-components";
 import Comment from "../../components/CommentList/CommentList";
@@ -19,8 +19,10 @@ const FreePostDetail = () => {
 
   const postquery = useGetFreePostQuery(id);
   const { data: post, isError } = postquery;
-  const [onDeletePost] = useDeleteFreePostMutation();
-  const [onDeleteComment] = useDeleteCommentMutation();
+  const [onDeletePost, { isError: isErrorDeletePost }] =
+    useDeleteFreePostMutation();
+  const [onDeleteComment, { isError: isErrorDeleteComment }] =
+    useDeleteCommentMutation();
 
   const { show: isShown, modalText } = useAppSelector((state) => state.modal);
 
@@ -28,6 +30,14 @@ const FreePostDetail = () => {
 
   // useGetAllFreePostQuery 예시
   // const { data, isLoading, isError } = useGetAllFreePostQuery({ page: 0, region: "서울" });
+
+  useEffect(() => {
+    if (isErrorDeleteComment) {
+      alert("댓글 삭제에 실패했습니다.");
+    } else if (isErrorDeletePost) {
+      alert("게시글 삭제에 실패했습니다.");
+    }
+  }, [isErrorDeleteComment, isErrorDeletePost]);
 
   const onClickDeletePost = () => {
     console.log("삭제");
