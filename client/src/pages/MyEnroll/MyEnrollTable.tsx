@@ -27,8 +27,23 @@ const MyEnrollTable: React.FC = () => {
   const [data, setData] = useState<Enroll[]>([]);
   const [isCancel, setCancel] = useState(false);
   const [isReview, setReview] = useState(false);
+  const [state, setState] = useState(false);
   const dispatch = useAppDispatch();
   const { show: isShown, modalText } = useAppSelector((state) => state.modal);
+
+  useEffect(() => {
+    const enrollData = async () => {
+      try {
+        const fetchData = await authAxios.get("/api/main/mypage/myEnroll");
+        setData(fetchData.data);
+      } catch (err: unknown) {
+        console.error(err);
+      }
+    };
+    if (state) {
+      enrollData();
+    }
+  }, [state]);
 
   useEffect(() => {
     const enrollData = async () => {
@@ -42,32 +57,6 @@ const MyEnrollTable: React.FC = () => {
     enrollData();
   }, []);
   console.log(data);
-
-  const onCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    setCancel(!isCancel);
-    if (isCancel) {
-      dispatch(
-        showModal({
-          title: "동행 신청 취소",
-          content: "동행 신청을 취소하시겠습니까?",
-          rightButton: "예",
-          leftButton: "아니요",
-        }),
-      );
-    }
-  };
-
-  const handleCancel = () => {
-    if (modalText?.title === "동행 신청 취소") {
-      return onCancel;
-    }
-  };
-
-  const onReview = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    setReview(!isReview);
-  };
 
   return (
     <Content>
@@ -83,7 +72,42 @@ const MyEnrollTable: React.FC = () => {
           </thead>
 
           {data &&
-            data?.map((item) => {
+            data.map((item) => {
+              const onCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
+                e.preventDefault();
+                setCancel(!isCancel);
+                if (isCancel) {
+                  dispatch(
+                    showModal({
+                      title: "동행 신청 취소",
+                      content: "동행 신청을 취소하시겠습니까?",
+                      rightButton: "예",
+                      leftButton: "아니요",
+                    }),
+                  );
+                }
+              };
+
+              const handleCancel = async () => {
+                if (modalText?.title === "동행 신청 취소") {
+                  try {
+                    const a = await authAxios.delete(
+                      `/api/main/matches/${item.matchId}`,
+                    );
+                    if (a.status === 200) {
+                      setState(true);
+                      // console.log("삭제 성공");
+                    }
+                  } catch (err: unknown) {
+                    console.error(err);
+                  }
+                }
+              };
+
+              const onReview = (e: React.MouseEvent<HTMLButtonElement>) => {
+                e.preventDefault();
+                setReview(!isReview);
+              };
               const today = Date.now();
               const tripEnd = item.duration[1];
               const dateTripEnd = new Date(tripEnd);
@@ -121,7 +145,7 @@ const MyEnrollTable: React.FC = () => {
                         </ReviewDiv>
                       ) : elapse < 1 && item.matchStatus === "수락" ? (
                         <span></span>
-                      ) : elapse < 1 && item.matchStatus === "대기중" ? (
+                      ) : item.matchStatus === "대기중" ? (
                         <div>
                           <button id="cancel" onClick={onCancel}>
                             취소

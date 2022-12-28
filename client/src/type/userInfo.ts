@@ -6,5 +6,5 @@ export interface UserInfo {
   gender: string;
   introduce: string;
   matchCount: number;
-  matchScore: number;
+  matchPoint: string;
 }

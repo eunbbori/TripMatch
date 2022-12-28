@@ -25,7 +25,7 @@ const MyPageTop: React.FC = () => {
       <Score>
         <span>나의 점수</span>
         <span>
-          <span id="scoreNum">{data?.matchScore ?? 0}</span>/5
+          <span id="scoreNum">{data?.matchPoint ?? 0}</span>/5
         </span>
       </Score>
     </Top>

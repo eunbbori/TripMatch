@@ -73,6 +73,10 @@ export const Content = styled.div`
       padding-top: 7px;
       margin-left: 15px;
 
+      .disabled {
+        cursor: not-allowed;
+      }
+
       button {
         cursor: pointer;
         width: 80px;

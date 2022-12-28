@@ -18,7 +18,8 @@ const MyCommentTable: React.FC = () => {
       }
     };
     postData();
-  }, [data]);
+  }, []);
+  console.log(data);
 
   return (
     <Content>

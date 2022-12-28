@@ -7,9 +7,9 @@ export interface EnrolledPersonType {
   matchId: string;
   postId: string;
   title: string;
-  status: string;
+  matchStatus: string;
   duration: string[];
-  applicant: Applicant[];
+  applicant: Applicant;
 }
 
 export interface Applicant {
@@ -37,6 +37,7 @@ export interface Applicant {
 
 const ReceivedEnrollTable: React.FC = () => {
   const [data, setData] = useState<EnrolledPersonType[]>([]);
+  const [status, setStatus] = useState<boolean>(false);
 
   useEffect(() => {
     const getData = async () => {
@@ -45,45 +46,29 @@ const ReceivedEnrollTable: React.FC = () => {
           "/api/main/mypage/receivedEnroll",
         );
         setData(fetchData.data);
-        // setData(data11);
+      } catch (err: unknown) {
+        console.error(err);
+      }
+    };
+    if (status) {
+      getData();
+    }
+  }, [status]);
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const fetchData = await authAxios.get(
+          "/api/main/mypage/receivedEnroll",
+        );
+        setData(fetchData.data);
       } catch (err: unknown) {
         console.error(err);
       }
     };
     getData();
   }, []);
-
-  const handleApproval = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    const approvalFn = async () => {
-      try {
-        await authAxios.put(
-          `/api/main/matches/${data[0].matchId}`,
-          { status: "수락" },
-          // { headers: { matchId: data[0].matchId } },
-        );
-      } catch (err: unknown) {
-        console.error(err);
-      }
-    };
-    approvalFn();
-  };
-
-  const handleDenied = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    const deniedFn = async () => {
-      try {
-        await authAxios.put(
-          `/api/main/matches/${data[0].matchId}`,
-          { status: "거절" },
-          // { headers: { matchId: data[0].matchId } },
-        );
-      } catch (err: unknown) {
-        console.error(err);
-      }
-    };
-    deniedFn();
-  };
+  console.log(data);
 
   return (
     <Content>
@@ -100,18 +85,90 @@ const ReceivedEnrollTable: React.FC = () => {
           <tbody>
             {data &&
               data.map((item) => {
+                const handleApproval = (
+                  e: React.MouseEvent<HTMLButtonElement>,
+                ) => {
+                  e.preventDefault();
+
+                  const approvalFn = async () => {
+                    try {
+                      const a = await authAxios.put(
+                        `/api/main/matches/${item.matchId}`,
+                        {
+                          ...data,
+                          matchStatus: "수락",
+                        },
+                      );
+                      if (a.status === 200) {
+                        setStatus(true);
+                      }
+                    } catch (err: unknown) {
+                      console.error(err);
+                    }
+                  };
+                  approvalFn();
+                  // setStatus(true);
+                };
+
+                const handleDenied = (
+                  e: React.MouseEvent<HTMLButtonElement>,
+                ) => {
+                  e.preventDefault();
+
+                  const deniedFn = async () => {
+                    try {
+                      const a = await authAxios.put(
+                        `/api/main/matches/${item.matchId}`,
+                        {
+                          ...data,
+                          matchStatus: "거절",
+                        },
+                      );
+                      if (a.status === 200) {
+                        setStatus(true);
+                      }
+                    } catch (err: unknown) {
+                      console.error(err);
+                    }
+                  };
+                  deniedFn();
+                  // setStatus(true);
+                };
+
                 return (
-                  <tr key={item.postId}>
+                  <tr key={item.matchId}>
                     <td id="title">{item.title}</td>
-                    <td>{item.applicant[0].nickname}</td>
-                    <td id="last">
-                      <button value="수락" onClick={handleApproval}>
-                        수락
-                      </button>
-                      <button value="거절" onClick={handleDenied}>
-                        거절
-                      </button>
-                    </td>
+                    <td>{item.applicant.nickname}</td>
+
+                    {item.matchStatus !== "대기중" ? (
+                      <td id="last">
+                        <button
+                          value="수락"
+                          className="disabled"
+                          disabled
+                          onClick={handleApproval}
+                        >
+                          수락
+                        </button>
+                        <button
+                          value="거절"
+                          className="disabled"
+                          disabled
+                          onClick={handleDenied}
+                        >
+                          거절
+                        </button>
+                      </td>
+                    ) : (
+                      <td id="last">
+                        <button value="수락" onClick={handleApproval}>
+                          수락
+                        </button>
+                        <button value="거절" onClick={handleDenied}>
+                          거절
+                        </button>
+                      </td>
+                    )}
                   </tr>
                 );
               })}

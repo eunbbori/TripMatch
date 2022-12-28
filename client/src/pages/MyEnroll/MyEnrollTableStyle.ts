@@ -43,6 +43,7 @@ export const Content = styled.div`
     }
 
     #first {
+      position: relative;
       border-top-left-radius: 10px;
       border-top-right-radius: 10px;
       background-color: ${(props) => props.theme.color.pink};
