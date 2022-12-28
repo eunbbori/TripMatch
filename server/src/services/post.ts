@@ -60,7 +60,11 @@ class PostService {
     await this.postModel.deleteOne(postId);
   }
   async getAuthor(postId: string) {
-    const author = await this.postModel.findOne(postId, { _id: 0, author: 1 });
+    const author = await this.postModel.findOne(postId, {
+      _id: 0,
+      author: 1,
+      duration: 1,
+    });
     return author;
   }
   async create(body: object, author: object) {
@@ -92,11 +96,10 @@ class PostService {
   }
   async getMyEnroll(matches: []) {
     const posts = [];
-    for (const { matchId, postId, author, matchStatus } of matches) {
+    for (const { matchId, postId, author, matchStatus, endDate } of matches) {
       const post = await this.postModel.findOne(postId, {
         _id: 0,
         title: 1,
-        duration: 1,
         contact: 1,
       });
       posts.push({
@@ -104,8 +107,8 @@ class PostService {
         postId,
         author,
         matchStatus,
+        endDate,
         title: post?.title,
-        duration: post?.duration,
         contact: post?.contact,
       });
     }
@@ -114,11 +117,16 @@ class PostService {
   }
   async getRecvdEnroll(matches: []) {
     const posts = [];
-    for (const { matchId, postId, applicant, matchStatus } of matches) {
+    for (const {
+      matchId,
+      postId,
+      applicant,
+      matchStatus,
+      endDate,
+    } of matches) {
       const post = await this.postModel.findOne(postId, {
         _id: 0,
         title: 1,
-        duration: 1,
         status: 1,
       });
       posts.push({
@@ -126,8 +134,8 @@ class PostService {
         postId,
         applicant,
         matchStatus,
+        endDate,
         title: post?.title,
-        duration: post?.duration,
         status: post?.status,
       });
     }

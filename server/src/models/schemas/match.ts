@@ -31,6 +31,7 @@ const matchSchema = new Schema<Match>(
     },
     scoredByAuthor: { type: Boolean, required: true, default: false },
     scoredByApplicant: { type: Boolean, required: true, default: false },
+    endDate: { type: String, required: true },
   },
   {
     collection: "matches",

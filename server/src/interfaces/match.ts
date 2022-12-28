@@ -6,4 +6,5 @@ export default interface Match {
   matchStatus: string;
   scoredByAuthor: boolean;
   scoredByApplicant: boolean;
+  endDate: string;
 }

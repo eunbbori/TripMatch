@@ -122,10 +122,8 @@
                     type: string
                   contact:
                     type: string
-                  duration:
-                    type: array
-                    items:
-                      type: string
+                  endDate:
+                    type: string
                   author:
                     type: object
                     properties:
@@ -170,10 +168,8 @@
                     type: string
                   status:
                     type: boolean
-                  duration:
-                    type: array
-                    items:
-                      type: string
+                  endDate:
+                    type: string
                   applicant:
                     type: object
                     properties:

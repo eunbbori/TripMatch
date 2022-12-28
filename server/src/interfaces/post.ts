@@ -5,7 +5,7 @@ export default interface Post {
   content: string;
   region: string;
   thumbnail: string;
-  duration: [string];
+  duration: [string, string];
   hopeGender: string;
   hopeAge: [string];
   userCount: number;
