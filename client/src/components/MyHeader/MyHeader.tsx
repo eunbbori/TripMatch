@@ -107,7 +107,7 @@ const MyHeader = () => {
             alt="자유게시판"
           />
         </Link>
-        <Link to={role ? "/wishlist" : "/login"}>
+        <Link to={role ? "/wishlist" : "/auth/login"}>
           <img
             src="https://res.cloudinary.com/dk9scwone/image/upload/v1671184505/free-icon-heart-shape-39559_aatqxl.png"
             alt="위시리스트"
@@ -115,7 +115,11 @@ const MyHeader = () => {
         </Link>
         <Link
           to={
-            role ? (role === "user" ? "/mypage/userInfo" : "/admin") : "/login"
+            role
+              ? role === "user"
+                ? "/mypage/userInfo"
+                : "/admin"
+              : "/auth/login"
           }
         >
           <img
