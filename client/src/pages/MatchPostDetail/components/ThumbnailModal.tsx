@@ -21,7 +21,7 @@ const ThumbnailModal: React.FC<ThumbnailModalProps> = ({
 export default ThumbnailModal;
 
 const Thumbnail = styled.img`
-  max-width: 1000px;
+  max-width: 600px;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);

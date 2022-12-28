@@ -37,6 +37,7 @@ export const Thumbnail = styled.div`
 
 export const ThumbnailImg = styled.img`
   width: 100%;
+  cursor: pointer;
 `;
 
 export const UserContainer = styled.div`
