@@ -8,19 +8,21 @@ type OnHandler = {
 interface PageProps {
   onHandler: OnHandler;
   paging?: number;
+  perPage?: number;
   totalCount?: number;
 }
 
 const Paging: React.FC<PageProps> = ({
   totalCount = 0,
   paging = 1,
+  perPage = 10,
   onHandler,
 }) => {
   return (
     <PaginationStyleContainer>
       <Pagination
         activePage={paging}
-        itemsCountPerPage={10}
+        itemsCountPerPage={perPage}
         totalItemsCount={totalCount}
         pageRangeDisplayed={10}
         prevPageText={"‹"}
