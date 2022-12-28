@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "@toast-ui/editor/dist/toastui-editor-viewer.css";
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   PostTitle,
   UserContainer,
@@ -15,7 +15,6 @@ import type { MatchPostType } from "../../type/matchPost";
 import { useAppDispatch, useAppSelector } from "./../../store/hooks";
 import { showModal } from "../../slice/modal";
 import { dateFormat } from "../../util/dateFormatting";
-import authAxios from "../../axios/authAxios";
 import {
   useDeleteNoticeMutation,
   useGetNoticeQuery,
@@ -32,7 +31,6 @@ interface PostDetailProps {
 }
 
 const NoticeDetail: React.FC<PostDetailProps> = () => {
-  const location = useLocation();
   const navigate = useNavigate();
   const { id } = useParams();
 

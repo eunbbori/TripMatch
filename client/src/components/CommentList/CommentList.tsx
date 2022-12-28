@@ -16,10 +16,8 @@ const CommentList: React.FC<CommentListProps> = ({
 }) => {
   const [commentInput, setCommentInput] = useState("");
 
-  const [
-    onCreateComment,
-    { isError: isErrorCreateComment, isSuccess: isSuccessCreateComment },
-  ] = useCreateCommentMutation();
+  const [onCreateComment, { isError: isErrorCreateComment }] =
+    useCreateCommentMutation();
 
   const location = useLocation();
 
@@ -31,14 +29,7 @@ const CommentList: React.FC<CommentListProps> = ({
     }
   }, [isErrorCreateComment]);
 
-  useEffect(() => {
-    if (isSuccessCreateComment) {
-      window.location.reload();
-    }
-  }, [isSuccessCreateComment]);
-
-  const onSubmitComment = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const onSubmitComment = () => {
     const path = currentPath[0] === "free" ? "communityId" : "postId";
     onCreateComment({
       content: commentInput,
