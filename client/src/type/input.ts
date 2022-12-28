@@ -3,6 +3,7 @@ import { RadioAndCheckBox } from "../components/AppInputRadioCheck/AppInputRadio
 
 export interface AppInputProps {
   defaultValue?: string;
+  required?: boolean;
   defaultValues?: string[];
   label?: string;
   type: string;
@@ -13,4 +14,5 @@ export interface AppInputProps {
   radioAndCheckBoxList?: RadioAndCheckBox[];
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
   refer?: RefObject<HTMLInputElement>;
+  min?: number;
 }

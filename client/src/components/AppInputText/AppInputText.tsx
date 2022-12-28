@@ -12,6 +12,7 @@ const AppInputText: React.FC<AppInputProps> = ({
   placeholder,
   refer,
   onChange,
+  min,
 }) => {
   return (
     <Div>
@@ -25,6 +26,7 @@ const AppInputText: React.FC<AppInputProps> = ({
         className={className}
         onChange={onChange}
         required={required}
+        min={min}
       />
     </Div>
   );

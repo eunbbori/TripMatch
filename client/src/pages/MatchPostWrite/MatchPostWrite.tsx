@@ -137,7 +137,11 @@ const MatchPostWrite = () => {
     const endDate = endDateRef.current!.value;
     const content = contentRef.current?.getInstance().getHTML() || "";
 
-    if (ages.length === 0 || genders.length === 0) {
+    if (
+      ages.length === 0 ||
+      genders.length === 0 ||
+      content === "<p><br></p>"
+    ) {
       alert("입력 값을 확인해주세요.");
       return;
     }
@@ -201,6 +205,7 @@ const MatchPostWrite = () => {
           type={"number"}
           label={"모집 인원"}
           className={"peopleCount"}
+          min={1}
         />
         <DateRange>
           <AppInputText
