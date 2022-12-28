@@ -12,7 +12,7 @@ export interface MatchPostType {
   content: string;
   status?: boolean;
   duration: string[];
-  thumbnail: string;
+  thumbnail?: string;
   contact: string;
   like?: boolean;
   comments?: CommentType[];

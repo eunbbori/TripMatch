@@ -17,6 +17,7 @@ import {
 } from "./FreePostListStyle";
 import { FreePostType } from "../../type/freePost";
 import CommentLogo from "../../images/comment-dots.png";
+import { dateFormat } from "../../util/dateFormatting";
 
 interface FreePostProps {
   region: string;
@@ -42,7 +43,9 @@ const FreePostList: React.FC<FreePostProps> = ({ region, communities }) => {
                   <UserInfo>
                     <Nickname>{data.author?.nickname}</Nickname>
                     <SeparateLine>|</SeparateLine>
-                    <CreatedDate>{data.createdAt}</CreatedDate>
+                    <CreatedDate>
+                      {dateFormat(data.createdAt || "")}
+                    </CreatedDate>
                   </UserInfo>
                 </MainContent>
                 <CommentInfo>

@@ -170,7 +170,7 @@ const MatchPostDetail = () => {
       {openThumbnail && (
         <ThumbnailModal
           onToggleThumbnail={onToggleThumbnail}
-          imgUrl={matchPost!.post.thumbnail}
+          imgUrl={matchPost!.post.thumbnail || "#"}
         />
       )}
     </Container>

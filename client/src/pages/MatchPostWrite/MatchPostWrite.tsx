@@ -127,7 +127,7 @@ const MatchPostWrite = () => {
     }
 
     if (fileUrl === "" && state) {
-      fileUrl = state.thumbnail;
+      fileUrl = state.thumbnail || "";
     }
     const region = regionRef.current!.value;
     const title = titleRef.current!.value;
@@ -153,7 +153,7 @@ const MatchPostWrite = () => {
       duration: [startDate, endDate],
       hopeGender: genders,
       hopeAge: ages,
-      thumbnail: fileUrl,
+      ...(fileUrl !== "" && { thumbnail: fileUrl }),
       contact: contact,
       content: content,
     };

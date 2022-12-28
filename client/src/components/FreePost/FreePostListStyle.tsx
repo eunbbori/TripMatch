@@ -4,7 +4,6 @@ import Theme from "./../../styles/Theme";
 
 export const Container = styled.div`
   .container {
-    width: 1000px;
     height: 50px;
     margin: auto;
     padding: 15px;
