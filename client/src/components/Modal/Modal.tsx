@@ -39,6 +39,7 @@ const ModalCard = styled(ModalStyle)`
   .modalCard {
     width: 400px;
     justify-content: space-between;
+    height: fit-content;
   }
 `;
 

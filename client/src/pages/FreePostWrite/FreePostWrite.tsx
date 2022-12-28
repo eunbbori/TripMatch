@@ -22,6 +22,7 @@ export default FreePostWrite;
 const Container = styled.div`
   width: 1000px;
   margin: auto;
+  padding: 20px 0 15vh;
 `;
 
 const Title = styled.h2`
