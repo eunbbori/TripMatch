@@ -2,7 +2,7 @@ import React from "react";
 import AuthTemplate from "../../components/Auth/AuthTemplate";
 import RegisterForm from "./components/RegisterForm";
 
-const RegisterPage = () => {
+const Register = () => {
   return (
     <AuthTemplate>
       <RegisterForm />
@@ -10,4 +10,4 @@ const RegisterPage = () => {
   );
 };
 
-export default RegisterPage;
+export default Register;

@@ -7,7 +7,7 @@ import authAxios from "../../axios/authAxios";
 
 // const baseUrl = "http://localhost:3003";
 
-const WishListPage = () => {
+const WishList = () => {
   const [dataList, setDataList] = useState();
   const navigate = useNavigate();
 
@@ -24,11 +24,11 @@ const WishListPage = () => {
         }
       } catch (error) {
         console.error(error);
-        // navigate("/login");
+        navigate("/login");
       }
     };
     getLikedDataList();
-  }, []);
+  }, [navigate]);
 
   return (
     <div>
@@ -37,4 +37,4 @@ const WishListPage = () => {
     </div>
   );
 };
-export default WishListPage;
+export default WishList;

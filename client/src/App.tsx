@@ -7,8 +7,8 @@ import FreePostDetail from "./pages/FreePostDetail/FreePostDetail";
 import MatchPostDetail from "./pages/MatchPostDetail/MatchPostDetail";
 import MyPageContents from "./pages/MyPage/MyPageContents";
 import FreePostWrite from "./pages/FreePostWrite/FreePostWrite";
-import LoginPage from "./pages/Login/LoginPage";
-import RegisterPage from "./pages/Register/RegisterPage";
+import Login from "./pages/Login/Login";
+import Register from "./pages/Register/Register";
 import MyComment from "./pages/MyComment/MyComment";
 import FreePostList from "./pages/FreePostList/FreePostList";
 import Admin from "./pages/Admin/Admin";
@@ -19,7 +19,7 @@ import MyEnroll from "./pages/MyEnroll/MyEnroll";
 import FestivalList from "./components/FestivalList/FestivalList";
 import Search from "./pages/Search/Search";
 import UpdateUserInfo from "./pages/MyPage/UpdateUserInfo";
-import WishListPage from "./pages/WishList/WishListPage";
+import WishListPage from "./pages/WishList/WishList";
 import FindPassword from "./pages/FindPassword/FindPassword";
 
 const App = () => {
@@ -41,8 +41,8 @@ const App = () => {
           <Route path="/free/write/:id" element={<FreePostWrite />} />
           <Route path="/match/write" element={<MatchPostWrite />} />
           <Route path="/match/write/:id" element={<MatchPostWrite />} />
-          <Route path="/auth/login" element={<LoginPage />} />
-          <Route path="/auth/register" element={<RegisterPage />} />
+          <Route path="/auth/login" element={<Login />} />
+          <Route path="/auth/register" element={<Register />} />
           <Route path="/auth/findpassword" element={<FindPassword />} />
           <Route path="/wishlist" element={<WishListPage />} />
           <Route path="admin" element={<Admin />} />
