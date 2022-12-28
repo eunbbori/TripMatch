@@ -13,6 +13,15 @@ const TitleStyle = styled.div`
     font-size: ${(props) => props.theme.font.L};
     font-weight: bold;
     cursor: default;
+
+    span {
+      cursor: pointer;
+      margin-right: 10px;
+    }
+
+    span.false {
+      font-weight: normal;
+    }
   }
 
   a {

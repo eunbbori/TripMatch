@@ -48,8 +48,8 @@ const App = () => {
           <Route path="admin" element={<Admin />} />
           <Route path="search/:keyword" element={<Search />} />
           <Route
-            path="festival"
-            element={<FestivalList location="festival" />}
+            path="tripinfo"
+            element={<FestivalList location="tripInfo" />}
           />
         </Route>
       </Routes>

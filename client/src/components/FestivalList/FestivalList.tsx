@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { Container, FestivalInfo, ModalCard } from "./FestivalListStyle";
-import { mockData } from "./mockData";
+import { Link, useNavigate } from "react-router-dom";
+import { Container, ModalCard, TripInfo } from "./FestivalListStyle";
 import axios from "axios";
-import { closeModal, showModal } from "../../slice/modal";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import TitleStyle from "../Title/TitleStyle";
 import Title from "../Title/Title";
 
 interface Item {
@@ -20,29 +18,28 @@ interface LocationProps {
 }
 
 const FestivalList: React.FC<LocationProps> = ({ location }) => {
-  const [festivalInfo, setFestivalInfo] = useState<Item[]>([]);
+  const [InfoList, setInfoList] = useState<Item[]>([]);
   const [itemInfo, setItemInfo] = useState<Item>({});
-  const [festivalModal, setFestivalModal] = useState(false);
-  const date = new Date();
-  const eventStartDate = `${date.getFullYear()}${date.getMonth() + 1}01`;
-  const serviceKey =
-    "7vK0Tt5CPNrirky41NfjhrXhOVngGJ0McJjDrgASEMepGMEtUXEP1%2Fy2wlH6mAUF4U%2FJAUtS0xsaYjtn3NLGgA%3D%3D";
+  const [modalOn, setModalOn] = useState(false);
+  const [toggleOn, setToggleOn] = useState(true);
+  const navigate = useNavigate();
+
+  const getInfo = async (infoType: string, location: string) => {
+    const infoList = await axios
+      .get(`http://34.64.156.80:3003/api/main/infoes/${infoType}`)
+      .then((res) =>
+        res.data.sort((a: Item, b: Item) => {
+          return Number(a.eventstartdate) - Number(b.eventstartdate);
+        }),
+      );
+    location === "/"
+      ? setInfoList(infoList.slice(0, 8))
+      : setInfoList(infoList);
+    return;
+  };
 
   useEffect(() => {
-    // const getData = async () => {
-    //   const response = await axios.get(`http://apis.data.go.kr/B551011/KorService/searchFestival?numOfRows={home ? 8 : 20}&pageNo=1&MobileOS=ETC&MobileApp=AppTest&arrange=C&_type=json&serviceKey=${serviceKey}&eventStartDate=${eventStartDate}`)
-    // }
-    const newData = mockData
-      .sort((a, b) => {
-        return Number(a.eventstartdate) - Number(b.eventstartdate);
-      })
-      .map((item) => {
-        return { ...item, readcount: "0" };
-      });
-
-    location === "/"
-      ? setFestivalInfo(newData.slice(0, 8))
-      : setFestivalInfo(newData); //찐데이터로 받을 때 수정해야할 식
+    getInfo("festival", location);
   }, [location]);
 
   const dateFormat = (date: string) => {
@@ -58,18 +55,31 @@ const FestivalList: React.FC<LocationProps> = ({ location }) => {
             src="https://res.cloudinary.com/dk9scwone/image/upload/v1671625307/free-icon-cancel-8532370_kuiqk1.png"
             onClick={(e) => {
               e.stopPropagation();
-              setFestivalModal(false);
+              setModalOn(false);
             }}
           />
 
-          <img src={item.firstimage} className="festivalImg" />
+          <img
+            src={item.firstimage}
+            className="modalImg"
+            onClick={() => {
+              window.open(item.firstimage, "_blank");
+            }}
+          />
           <div className="info">
-            <div className="festivalTitle">{item.title}</div>
-            <div className="festivalDate">
-              {dateFormat(item.eventstartdate)}~{dateFormat(item.eventenddate)}
-            </div>
+            <div className="modalTitle">{item.title}</div>
+            {item.eventstartdate ? (
+              <div className="festivalDate">
+                {dateFormat(item.eventstartdate)}~
+                {dateFormat(item.eventenddate)}
+              </div>
+            ) : (
+              <div></div>
+            )}
             <div className="address">{item.addr1}</div>
-            <div className="tel">{item.tel}</div>
+            <div className="tel">
+              {item.tel ? item.tel : "연락처가 없습니다."}
+            </div>
           </div>
         </div>
       </ModalCard>
@@ -78,33 +88,65 @@ const FestivalList: React.FC<LocationProps> = ({ location }) => {
 
   return (
     <div>
-      <Title title="축제정보" location={location} />
+      {location === "/" ? (
+        <Title title="여행정보" location="/" />
+      ) : (
+        <TitleStyle>
+          <h3>
+            <span
+              className={`${toggleOn}`}
+              onClick={() => {
+                getInfo("festival", location);
+                setToggleOn(true);
+              }}
+            >
+              축제정보
+            </span>
+            <span
+              className={`${!toggleOn}`}
+              onClick={() => {
+                getInfo("stay", location);
+                setToggleOn(false);
+              }}
+            >
+              숙박정보
+            </span>
+          </h3>
+        </TitleStyle>
+      )}
       <Container>
-        <FestivalInfo>
-          {festivalInfo &&
-            festivalInfo.map((item) => {
+        <TripInfo>
+          {InfoList &&
+            InfoList.map((item) => {
               return (
                 <div
                   className="item"
-                  key={item.contentid}
+                  key={item._id}
                   onClick={(e) => {
                     e.stopPropagation();
                     setItemInfo(item);
-                    setFestivalModal(true);
+                    setModalOn(true);
                   }}
                 >
                   <img src={item.firstimage} />
-                  <div className="itemTitle">{item.title}</div>
-                  <div className="itemDate">
-                    {dateFormat(item.eventstartdate)}~
-                    {dateFormat(item.eventenddate)}
+                  <div className="itemTitle">
+                    {item.title.length > 29
+                      ? item.title.slice(0, 29) + "..."
+                      : item.title}
                   </div>
+                  {location === "/" ||
+                    (item.eventstartdate && (
+                      <div className="itemDate">
+                        {dateFormat(item.eventstartdate)}~
+                        {dateFormat(item.eventenddate)}
+                      </div>
+                    ))}
                 </div>
               );
             })}
-          {festivalModal && <InfoModal item={itemInfo} />}
-        </FestivalInfo>
-        {location === "festival" ? (
+          {modalOn && <InfoModal item={itemInfo} />}
+        </TripInfo>
+        {location !== "/" ? (
           <div className="shortCutBtn">
             <div>혼자 가기 외로울 땐?</div>
             <Link to="/match/write">

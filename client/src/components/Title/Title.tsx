@@ -16,8 +16,8 @@ const Title: React.FC<TitleProps> = ({ title, location }) => {
     case "자유게시판":
       link = "/free";
       break;
-    case "축제정보":
-      link = "festival";
+    case "여행정보":
+      link = "tripinfo";
       break;
     default:
       link = "/";
