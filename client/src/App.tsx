@@ -18,6 +18,9 @@ import MatchPostWrite from "./pages/MatchPostWrite/MatchPostWrite";
 import MyEnroll from "./pages/MyEnroll/MyEnroll";
 import FestivalList from "./components/FestivalList/FestivalList";
 import Search from "./pages/Search/Search";
+import NoticeList from "./pages/NoticeList/NoticeList";
+import NoticeDetail from "./pages/NoticeDetail/NoticeDetail";
+import NoticeWrite from "./pages/NoticeWrite/NoticeWrite";
 import UpdateUserInfo from "./pages/MyPage/UpdateUserInfo";
 import WishListPage from "./pages/WishList/WishList";
 import FindPassword from "./pages/FindPassword/FindPassword";
@@ -52,6 +55,10 @@ const App = () => {
             path="tripinfo"
             element={<FestivalList location="tripInfo" />}
           />
+          <Route path="notice" element={<NoticeList />} />
+          <Route path="notice/:id" element={<NoticeDetail />} />
+          <Route path="notice/write" element={<NoticeWrite />} />
+          <Route path="notice/write/:id" element={<NoticeWrite />} />
           <Route path="*" element={<NotFound message="잘못된 주소입니다" />} />
         </Route>
       </Routes>

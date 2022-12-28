@@ -1,16 +1,16 @@
 import styled from "styled-components";
-import FreePostForm from "./components/FreePostForm";
+import NoticeForm from "./components/NoticeForm";
 
-const FreePostWrite = () => {
+const NoticeWrite = () => {
   return (
     <Container>
       <Title>게시글 쓰기</Title>
-      <FreePostForm />
+      <NoticeForm />
     </Container>
   );
 };
 
-export default FreePostWrite;
+export default NoticeWrite;
 
 const Container = styled.div`
   width: 1000px;
