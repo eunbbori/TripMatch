@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Top = styled.div`
   display: grid;
-  grid-template-columns: 1fr 160px 180px;
+  grid-template-columns: 80px 1fr 160px 180px;
   align-items: center;
   gap: 10px;
   width: 920px;
@@ -12,8 +12,18 @@ export const Top = styled.div`
   border-radius: 10px;
   box-shadow: 1px 1px 6px 1px rgba(0, 0, 0, 0.11);
   font-size: ${(props) => props.theme.font.M};
-  h1 {
+  img {
+    width: 55px;
+    height: 55px;
+    justify-content: center;
+    align-items: center;
     margin-left: 30px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 30px;
+  }
+
+  h1 {
+    margin-left: 10px;
     font-size: ${(props) => props.theme.font.XL};
     font-weight: 600;
   }

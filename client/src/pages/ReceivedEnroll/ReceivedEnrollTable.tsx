@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Content, Layer } from "./ReceivedEnrollTableStyle";
 import axios from "axios";
 import authAxios from "../../axios/authAxios";
+import { Link } from "react-router-dom";
 
 export interface EnrolledPersonType {
   matchId: string;
@@ -137,7 +138,9 @@ const ReceivedEnrollTable: React.FC = () => {
 
                 return (
                   <tr key={item.matchId}>
-                    <td id="title">{item.title}</td>
+                    <td id="title">
+                      <Link to={`/match/${item.postId}`}>{item.title}</Link>
+                    </td>
                     <td>{item.applicant.nickname}</td>
 
                     {item.matchStatus !== "대기중" ? (

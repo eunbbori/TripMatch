@@ -17,6 +17,7 @@ const MyPageTop: React.FC = () => {
 
   return (
     <Top key={data?.email}>
+      <img src={data?.profileImg} />
       <h1>{data?.nickname}님, 안녕하세요 !</h1>
       <TripCount>
         <span>동행 횟수</span>

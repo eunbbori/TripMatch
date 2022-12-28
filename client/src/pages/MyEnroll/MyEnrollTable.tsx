@@ -6,6 +6,7 @@ import axios from "axios";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import ReviewModal from "../Home/reviewModal";
 import authAxios from "../../axios/authAxios";
+import { Link } from "react-router-dom";
 
 export interface Enroll {
   matchId: string;
@@ -123,7 +124,9 @@ const MyEnrollTable: React.FC = () => {
               return (
                 <tbody key={item.postId}>
                   <tr>
-                    <td id="title">{item.title}</td>
+                    <td id="title">
+                      <Link to={`/match/${item.postId}`}>{item.title}</Link>
+                    </td>
                     <td>{item.author.nickname}</td>
                     <td>{item.matchStatus}</td>
                     <td id="last">

@@ -118,9 +118,7 @@ const MyPageTable: React.FC = () => {
                   return (
                     <tr key={item.postId}>
                       <td id="title">
-                        <Link to={`/mypage/mycontents/${item.postId}`}>
-                          {item.title}
-                        </Link>
+                        <Link to={`/match/${item.postId}`}>{item.title}</Link>
                       </td>
                       <td>{item.region}</td>
                       <td>

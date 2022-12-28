@@ -14,7 +14,8 @@ export const Container = styled.div`
   justify-content: start;
   width: 1000px;
   height: 700px;
-  margin: 30px auto;
+  margin: 0 auto;
+  padding-top: 30px;
   background-color: ${(props) => props.theme.color.lightpink};
 `;
 
