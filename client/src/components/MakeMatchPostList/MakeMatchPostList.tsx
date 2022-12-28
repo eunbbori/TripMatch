@@ -80,7 +80,7 @@ const MakeMatchPostList: React.FC<DataProps> = ({ data }) => {
       {isShown && (
         <Modal
           callBackFn={() => {
-            navigate("/login");
+            navigate("/auth/login");
           }}
         />
       )}

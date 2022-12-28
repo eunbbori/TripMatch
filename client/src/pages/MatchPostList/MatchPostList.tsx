@@ -1,7 +1,10 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import AppButton from "../../components/AppButton/AppButton";
 import AppTabContent from "../../components/AppTabContent/AppTabContent";
 import MatchPostPanel from "../../components/AppTapPanel/MatchPostPanel";
+import Modal from "../../components/Modal/Modal";
+import { showModal } from "../../slice/modal";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { Container, ButtonContainer } from "./MatchPostListStyle";
 
 const MatchPostList = () => {
@@ -17,19 +20,45 @@ const MatchPostList = () => {
     { tab: "기타", content: <MatchPostPanel region="기타" /> },
   ];
 
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const { show: isShown, modalText } = useAppSelector((state) => state.modal);
+  const postLinkHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+
+    if (sessionStorage.getItem("email")) {
+      navigate("/match/write");
+    } else {
+      dispatch(
+        showModal({
+          title: "로그인",
+          content: "로그인 하시겠습니까?",
+          rightButton: "예",
+          leftButton: "아니요",
+        }),
+      );
+    }
+  };
   return (
     <Container>
       <AppTabContent tabContents={regions} />
       <ButtonContainer>
-        <Link to="/match/write">
-          <AppButton
-            width={"120px"}
-            className={"postBtn"}
-            text={"글쓰기"}
-            type={"button"}
-          />
-        </Link>
+        <AppButton
+          onClick={postLinkHandler}
+          width={"120px"}
+          className={"postBtn"}
+          text={"글쓰기"}
+          type={"button"}
+        />
       </ButtonContainer>
+      {isShown && (
+        <Modal
+          callBackFn={() => {
+            navigate("/auth/login");
+          }}
+        />
+      )}
     </Container>
   );
 };
