@@ -29,7 +29,8 @@ const MatchPostDetail = () => {
   const postquery = useGetMatchPostQuery(id);
   const { data: matchPost, isError } = postquery;
   const [onDeletePost] = useDeleteMatchPostMutation();
-  const [onDeleteComment] = useDeleteCommentMutation();
+  const [onDeleteComment, { isSuccess: isSuccessDeleteComment }] =
+    useDeleteCommentMutation();
 
   const [onApplyMatch, { isSuccess: isSuccessApplyMatch }] =
     useApplyMatchMutation();
@@ -76,6 +77,12 @@ const MatchPostDetail = () => {
     isSuccessApplyMatch && getMatchPost();
   }, [id, isSuccessApplyMatch]);
 
+  useEffect(() => {
+    if (isSuccessDeleteComment) {
+      window.location.reload();
+    }
+  }, [isSuccessDeleteComment]);
+
   const onClickApplyMatch = () => {
     onApplyMatch(id!);
     setIsApplying(!isApplying);
@@ -93,7 +100,6 @@ const MatchPostDetail = () => {
 
   const onClickDeleteComment = () => {
     onDeleteComment(deleteCommentId);
-    window.location.reload();
   };
 
   const getModalCallback = () => {

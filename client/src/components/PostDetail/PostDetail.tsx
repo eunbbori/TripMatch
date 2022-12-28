@@ -79,7 +79,7 @@ const PostDetail: React.FC<PostDetailProps> = ({
 
       if (result.data) {
         const currentLike = result.data.find(
-          (post: { postId: string }) => post.postId === id,
+          (post: { postId: string }) => post?.postId === id,
         );
 
         currentLike && setIsLikePost(true);
