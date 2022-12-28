@@ -15,7 +15,7 @@ export const freePostApi = createApi({
     // 예시 : useGetAllFreePostQuery({page: 0, region: "서울"})
     // get 요청 이외에는 토큰이 필요해서 인터셉터를 먼저 구현해봐야 테스트할 수 있습니다!
     getAllFreePost: builder.query<
-      { totalPage: number; communities: FreePostType[] },
+      { totalCount: number; communities: FreePostType[] },
       { page: number; region?: string }
     >({
       query: ({ page, region }) => {

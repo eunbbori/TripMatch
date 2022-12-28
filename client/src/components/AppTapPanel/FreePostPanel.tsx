@@ -24,8 +24,9 @@ const FreePostPanel: React.FC<FreePostPanelProps> = ({ region }) => {
       <FreePostList region={region} communities={data?.communities || []} />
       <Paging
         paging={page}
+        perPage={10}
         onHandler={handlePageChange}
-        totalCount={data?.communities.length}
+        totalCount={data?.totalCount}
       />
     </>
   );

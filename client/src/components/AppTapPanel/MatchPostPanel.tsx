@@ -39,9 +39,10 @@ const MatchPostPanel: React.FC<MatchPostPanelProps> = ({ region }) => {
         <MakeMatchPostList data={data?.posts || []} />
       </Container>
       <Paging
+        perPage={8}
         paging={page}
         onHandler={handlePageChange}
-        totalCount={data?.posts.length}
+        totalCount={data?.totalCount}
       />
     </>
   );
