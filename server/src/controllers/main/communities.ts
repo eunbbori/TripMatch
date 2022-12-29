@@ -5,19 +5,20 @@ import { loginCheck } from "../../middlewares";
 const communitiesController = Router();
 
 communitiesController.get("/", async (req, res, next) => {
-  const { page, region, keyword, perPage } = req.query;
+  const { page, region, keyword } = req.query;
   try {
-    const totalCount = await communityService.getTotalCount(
-      region as string,
-      keyword as string
-    );
-    const communities = await communityService.getTenCommus(
-      Number(page) || 1,
-      Number(perPage) || 10,
-      region as string,
-      keyword as string
-    );
-    res.status(200).json({ totalCount, communities });
+    const totalCount = keyword
+      ? 0
+      : await communityService.getTotalCount(region as string);
+    const communities = keyword
+      ? await communityService.search(keyword as string)
+      : await communityService.getTenCommus(
+          Number(page) || 1,
+          region as string
+        );
+    res
+      .status(200)
+      .json(keyword ? { communities } : { totalCount, communities });
   } catch (err) {
     next(err);
   }

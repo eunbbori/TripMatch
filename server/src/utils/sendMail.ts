@@ -9,11 +9,15 @@ const transport = nodemailer.createTransport({
   },
 });
 
-export default async function sendMail(email: string, text: string) {
+export default async function sendMail(
+  email: string,
+  image: string,
+  text: string
+) {
   await transport.sendMail({
     from: "TripMatch <tripmatch@elice.io>",
     to: email,
     subject: "Welcome to TripMatch",
-    text,
+    html: `<img src="${image}" width="100%"/><h1 style="text-align:center">${text}</h1>`,
   });
 }

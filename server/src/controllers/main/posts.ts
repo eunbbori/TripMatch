@@ -10,27 +10,31 @@ import { loginCheck } from "../../middlewares";
 const postsController = Router();
 
 postsController.get("/", async (req, res, next) => {
-  const { page, perPage, region, status, email, keyword } = req.query;
+  const { page, region, status, email, keyword } = req.query;
   try {
-    const totalCount = await postService.getTotalCount(
-      region as string,
-      status as string,
-      keyword as string
-    );
-    const posts = await postService.getEightPosts(
-      Number(page) || 1,
-      Number(perPage) || 8,
-      region as string,
-      status as string,
-      keyword as string
-    );
+    const totalCount = keyword
+      ? 0
+      : await postService.getTotalCount(region as string, status as string);
+    const posts = keyword
+      ? await postService.search(keyword as string)
+      : await postService.getEightPosts(
+          Number(page) || 1,
+          region as string,
+          status as string
+        );
     if (email) {
       const postsWithLike = await likeService.isLiked(
         posts as [],
         email as string
       );
-      res.status(200).json({ totalCount, posts: postsWithLike });
-    } else res.status(200).json({ totalCount, posts });
+      res
+        .status(200)
+        .json(
+          keyword
+            ? { posts: postsWithLike }
+            : { totalCount, posts: postsWithLike }
+        );
+    } else res.status(200).json(keyword ? { posts } : { totalCount, posts });
   } catch (err) {
     next(err);
   }

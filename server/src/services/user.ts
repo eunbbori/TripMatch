@@ -11,7 +11,11 @@ class UserService {
     if (user) throw new Error("409");
     const authNumber = customAlphabet("0123456789TripMatch", 6)();
     await redis.set(email, authNumber);
-    await sendMail(email, `다음 인증번호를 입력해주십시오. >> ${authNumber}`);
+    await sendMail(
+      email,
+      "https://res.cloudinary.com/dnow6qfd8/image/upload/v1672316793/002_h5mfnj.png",
+      `다음 인증번호를 입력해주십시오. >> ${authNumber}`
+    );
   }
   async checkNumber(email: string, authNumber: string) {
     const correct = await redis.get(email);
@@ -23,7 +27,11 @@ class UserService {
     if (result !== "certified") throw new Error("403");
     body.password = await hashPassword.hash(body.password);
     const user = await this.userModel.create(body);
-    await sendMail(user.email, "Trip Match에 가입되었습니다.");
+    await sendMail(
+      user.email,
+      "https://res.cloudinary.com/dnow6qfd8/image/upload/v1672316793/001_e3imfo.png",
+      "Trip Match에 가입되었습니다."
+    );
   }
   async login(email: string, password: string) {
     const user = await this.userModel.findByEmail(email, {
@@ -125,6 +133,7 @@ class UserService {
     await this.userModel.updateOne(email, { password: hashed });
     await sendMail(
       email,
+      "https://res.cloudinary.com/dnow6qfd8/image/upload/v1672316792/003_lytao5.png",
       `임시 비밀번호입니다. 로그인 후 꼭 비밀번호를 변경해주십시오. >> ${password}`
     );
   }

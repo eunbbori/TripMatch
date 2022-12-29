@@ -8,7 +8,7 @@ class CommunityModel {
     const total = await this.communityDB.countDocuments(condition);
     return total;
   }
-  async findTen(page: number, perPage: number, condition: object) {
+  async findTen(page: number, condition: object) {
     const communities = await this.communityDB
       .find(condition, {
         _id: 0,
@@ -21,8 +21,8 @@ class CommunityModel {
         commentCount: 1,
       })
       .sort({ createdAt: -1 })
-      .skip(perPage * (page - 1))
-      .limit(perPage);
+      .skip(10 * (page - 1))
+      .limit(10);
     return communities;
   }
   async findOne(communityId: string) {

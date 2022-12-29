@@ -11,10 +11,6 @@
         schema:
           type: integer
       - in: query
-        name: perPage
-        schema:
-          type: integer
-      - in: query
         name: region
         schema:
           type: string
@@ -40,7 +36,7 @@
               properties:
                 totalCount:
                   type: number
-                  description: 총 게시글 수
+                  description: 총 게시글 수. *keyword 요청시 없음*
                 posts:
                   type: array
                   description: 동행게시글 리스트
