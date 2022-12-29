@@ -33,15 +33,12 @@ const LoginForm = () => {
   // jwt 토큰 이용 로직 구현 예정
   const onSubmitLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("버튼은 눌려졌을걸?");
     try {
       const res = await axios.post(`${baseUrl}/api/main/auth/login`, {
         email: userState.email,
         password: userState.password,
       });
-      console.log("axios 전송은 됐을걸");
       if (res.status === 201) {
-        console.log("요청은 성공했을걸?");
         const {
           refresh,
           ["x-access-token"]: accessToken,

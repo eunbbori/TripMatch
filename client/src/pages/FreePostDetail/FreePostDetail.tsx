@@ -40,7 +40,6 @@ const FreePostDetail = () => {
   }, [isErrorDeleteComment, isErrorDeletePost]);
 
   const onClickDeletePost = () => {
-    console.log("삭제");
     onDeletePost(id);
     navigate("/free");
   };

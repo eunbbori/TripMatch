@@ -104,7 +104,6 @@ const MyEnrollTable: React.FC = () => {
                     );
                     if (a.status === 200) {
                       setState(true);
-                      // console.log("삭제 성공");
                     }
                   } catch (err: unknown) {
                     console.error(err);

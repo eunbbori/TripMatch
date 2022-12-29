@@ -31,7 +31,6 @@ const WishListContents: React.FC<DatasProp> = ({ data, likes = [] }) => {
     };
     likeDatas();
   }, []);
-  console.log(data);
 
   return (
     <Container>

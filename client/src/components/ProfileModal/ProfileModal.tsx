@@ -31,7 +31,6 @@ const ProfileModal: React.FC<TProfileModal> = ({ email }) => {
       try {
         const res = await axios.get(`${baseUrl}/api/main/auth/${email}`);
         if (res.status === 200) {
-          console.log(res);
           setUserData((draft) => {
             draft.email = res.data.email;
             draft.nickname = res.data.nickname;

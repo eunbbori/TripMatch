@@ -55,7 +55,6 @@ const ReceivedEnrollTable: React.FC = () => {
     };
     getData();
   }, []);
-  console.log(data);
 
   return (
     <Content>

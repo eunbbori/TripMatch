@@ -57,8 +57,6 @@ const Admin = () => {
       newRole = "admin";
     }
 
-    console.log("새 역할은?", newRole);
-
     await authAxios
       .put(`/api/admin/users/${email}`, { role: newRole })
       .then()
@@ -118,7 +116,6 @@ const Admin = () => {
                     className="role"
                     defaultValue={member.role === "user" ? "회원" : "관리자"}
                     onChange={(e) => {
-                      console.log("클릭", e.currentTarget.value);
                       roleChange(member.email, e.currentTarget.value);
                     }}
                   />

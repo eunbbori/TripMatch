@@ -24,7 +24,6 @@ const FindPasswordForm = () => {
 
   const onSubmitEmail = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("버튼은 눌려졌을걸?");
 
     const checkEmail = (email: string) => {
       const RegExp =
@@ -43,11 +42,8 @@ const FindPasswordForm = () => {
     setValidText(checkResult);
     try {
       const sendOj = { email: email };
-      console.log(sendOj);
       const res = await axios.post(`${baseUrl}/api/main/auth/password`, sendOj);
-      console.log("axios 전송은 됐을걸");
       if (res.status === 200) {
-        console.log("요청은 성공했을걸?");
         alert(
           "입력하신 이메일로 비밀번호가 전송되었습니다. 이메일을 확인해주세요",
         );

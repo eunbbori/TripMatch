@@ -335,7 +335,6 @@ const UpdateUserInfoFrom = () => {
         const sendOj = {
           [activeData.current]: userState[activeData.current],
         };
-        console.log("수정 요청 api 실행됨!", sendOj);
         // api 완성 시, 주석 해제
         try {
           const res = await authAxios.put(`/api/main/auth/update`, sendOj);
@@ -530,7 +529,6 @@ const UpdateUserInfoFrom = () => {
             imgData.append("file", imagefile); //객체에 파일값 넣음
             imgData.append("upload_preset", "tripMatch"); //클라우디너리 설정값이므로 반드시 넣어주세요.
             imgData.append("cloud_name", "dk9scwone");
-            console.log("폼데이터 : ", imagefile);
             if (imagefile) {
               uploadimg(imgData);
             } else {

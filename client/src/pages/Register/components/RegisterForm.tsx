@@ -105,7 +105,6 @@ const RegisterForm = () => {
         const res = await axios.post(`${baseUrl}/api/main/auth/email`, {
           email: userState.email,
         });
-        console.log("axios 성공", res);
         if (res.status === 201) {
           setUserState((draft) => {
             draft.reqAuthNumberAxios = true;
@@ -175,7 +174,6 @@ const RegisterForm = () => {
           email: userState.email,
           authNumber: userState.authNumber,
         });
-        console.log("인증번호 res: ", res);
         if (res.status === 200) {
           setUserState((draft) => {
             draft.certified = true;
@@ -304,7 +302,6 @@ const RegisterForm = () => {
     if (userState.certified === true) {
       const res = await axios.post(`${baseUrl}/api/main/auth/join`, userData);
       if (res.status === 201) {
-        console.log("회원가입이 완료되었습니다!");
         navigate("/auth/login");
       } else if (res.status === 403) {
         alert("이메일 인증 후에 회원가입 해주세요");
