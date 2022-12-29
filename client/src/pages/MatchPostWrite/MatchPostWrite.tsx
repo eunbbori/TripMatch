@@ -270,6 +270,7 @@ const MatchPostWrite = () => {
           refer={fileRef}
           defaultValue={state && state.thumbnail}
           type={"file"}
+          accept="image/*"
           label={"사진 첨부"}
           className={"file"}
         />

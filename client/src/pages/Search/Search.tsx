@@ -17,7 +17,6 @@ const Search = () => {
     isError: matchError,
     isLoading: matchLoading,
   } = useGetAllMatchPostQuery({
-    perPage: 100,
     ...(email && { email }),
     keyword: `${keyword}`,
   });
@@ -27,7 +26,6 @@ const Search = () => {
     isError: freeError,
     isLoading: freeLoading,
   } = useGetAllFreePostQuery({
-    perPage: 100,
     ...(email && { email }),
     keyword: `${keyword}`,
   });
@@ -38,7 +36,11 @@ const Search = () => {
       <Title title="동행게시판" location="/search" />
       <Content>
         {matchData ? (
-          <MakeMatchPostList data={matchData.posts} />
+          matchData.posts.length !== 0 ? (
+            <MakeMatchPostList data={matchData.posts} />
+          ) : (
+            <NotFound message="검색 결과가 없습니다." />
+          )
         ) : (
           <NotFound message="검색 결과가 없습니다." />
         )}
@@ -46,10 +48,14 @@ const Search = () => {
       <Title title="자유게시판" location="/search" />
       <Content>
         {freeData ? (
-          <FreePostPreview
-            freePostList={freeData.communities}
-            location="/search"
-          />
+          freeData.communities.length !== 0 ? (
+            <FreePostPreview
+              freePostList={freeData.communities}
+              location="/search"
+            />
+          ) : (
+            <NotFound message="검색 결과가 없습니다." />
+          )
         ) : (
           <NotFound message="검색 결과가 없습니다." />
         )}
