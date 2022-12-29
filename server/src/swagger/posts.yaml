@@ -11,6 +11,10 @@
         schema:
           type: integer
       - in: query
+        name: perPage
+        schema:
+          type: integer
+      - in: query
         name: region
         schema:
           type: string
@@ -20,6 +24,10 @@
           type: string
       - in: query
         name: email
+        schema:
+          type: string
+      - in: query
+        name: keyword
         schema:
           type: string
     responses:
