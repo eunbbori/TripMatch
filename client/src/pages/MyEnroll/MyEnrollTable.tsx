@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Content, Layer, ReviewDiv } from "./MyEnrollTableStyle";
+import { Content, Layer, StyledLink, ReviewDiv } from "./MyEnrollTableStyle";
 import Modal from "../../components/Modal/Modal";
 import { showModal } from "../../slice/modal";
 import axios from "axios";
@@ -12,7 +12,7 @@ export interface Enroll {
   matchId: string;
   postId: string;
   title: string;
-  duration: string[];
+  endDate: string;
   matchStatus: string;
   contact: string;
   author: Author;
@@ -36,7 +36,9 @@ const MyEnrollTable: React.FC = () => {
     const enrollData = async () => {
       try {
         const fetchData = await authAxios.get("/api/main/mypage/myEnroll");
-        setData(fetchData.data);
+        if (fetchData.status === 200) {
+          setData(fetchData.data);
+        }
       } catch (err: unknown) {
         console.error(err);
       }
@@ -50,7 +52,9 @@ const MyEnrollTable: React.FC = () => {
     const enrollData = async () => {
       try {
         const fetchData = await authAxios.get("/api/main/mypage/myEnroll");
-        setData(fetchData.data);
+        if (fetchData.status === 200) {
+          setData(fetchData.data);
+        }
       } catch (err: unknown) {
         console.error(err);
       }
@@ -58,6 +62,19 @@ const MyEnrollTable: React.FC = () => {
     enrollData();
   }, []);
   console.log(data);
+
+  useEffect(() => {
+    if (isCancel) {
+      dispatch(
+        showModal({
+          title: "동행 신청 취소",
+          content: "동행 신청을 취소하시겠습니까?",
+          rightButton: "예",
+          leftButton: "아니요",
+        }),
+      );
+    }
+  }, [dispatch, isCancel]);
 
   return (
     <Content>
@@ -72,21 +89,12 @@ const MyEnrollTable: React.FC = () => {
             </tr>
           </thead>
 
-          {data &&
+          {/* endDate 속성명 변경 */}
+
+          {data ? (
             data.map((item) => {
-              const onCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
-                e.preventDefault();
+              const onCancel = () => {
                 setCancel(!isCancel);
-                if (isCancel) {
-                  dispatch(
-                    showModal({
-                      title: "동행 신청 취소",
-                      content: "동행 신청을 취소하시겠습니까?",
-                      rightButton: "예",
-                      leftButton: "아니요",
-                    }),
-                  );
-                }
               };
 
               const handleCancel = async () => {
@@ -109,8 +117,9 @@ const MyEnrollTable: React.FC = () => {
                 e.preventDefault();
                 setReview(!isReview);
               };
+
               const today = Date.now();
-              const tripEnd = item.duration[1];
+              const tripEnd = item.endDate;
               const dateTripEnd = new Date(tripEnd);
               const tripEndTime = dateTripEnd.getTime();
               const elapse = Number(
@@ -124,9 +133,16 @@ const MyEnrollTable: React.FC = () => {
               return (
                 <tbody key={item.postId}>
                   <tr>
-                    <td id="title">
-                      <Link to={`/match/${item.postId}`}>{item.title}</Link>
-                    </td>
+                    {!item.title ? (
+                      <td id="title">삭제된 게시물 입니다.</td>
+                    ) : (
+                      <td id="title">
+                        <StyledLink to={`/match/${item.postId}`}>
+                          {item.title}
+                        </StyledLink>
+                      </td>
+                    )}
+
                     <td>{item.author.nickname}</td>
                     <td>{item.matchStatus}</td>
                     <td id="last">
@@ -155,7 +171,11 @@ const MyEnrollTable: React.FC = () => {
                           </button>
                           {isShown && <Modal callBackFn={handleCancel} />}
                         </div>
+                      ) : !item.title && item.matchStatus === "대기중" ? (
+                        // 여행 시작 안했고 대기중일 때
+                        <span></span>
                       ) : (
+                        // 여행 끝난지 한참됨
                         // 여행 시작 안했고 대기중일 때
                         <span></span>
                         // 여행 끝난지 한참됨
@@ -177,7 +197,12 @@ const MyEnrollTable: React.FC = () => {
                   )}
                 </tbody>
               );
-            })}
+            })
+          ) : (
+            <tr>
+              <td></td>
+            </tr>
+          )}
         </table>
       </Layer>
     </Content>

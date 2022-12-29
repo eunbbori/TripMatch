@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
+// import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import ModalCard from "./reviewModalStyle";
 import axios from "axios";
 import authAxios from "../../axios/authAxios";
@@ -94,6 +94,7 @@ const ReviewModal: React.FC<ReviewProps> = ({
       },
     );
     setReview(false);
+    window.location.reload();
   };
 
   return (

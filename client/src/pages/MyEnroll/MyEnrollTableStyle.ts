@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const Content = styled.div`
@@ -143,6 +144,20 @@ export const Content = styled.div`
         }
       }
     }
+  }
+`;
+
+export const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: #1c5570;
+
+  &:visited {
+    text-decoration: none;
+    color: #1c5570;
+  }
+
+  &:hover {
+    text-decoration: underline;
   }
 `;
 

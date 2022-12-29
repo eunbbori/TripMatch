@@ -18,7 +18,7 @@ export const Top = styled.div`
     justify-content: center;
     align-items: center;
     margin-left: 30px;
-    border: 1px solid rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.2);
     border-radius: 30px;
   }
 

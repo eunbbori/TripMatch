@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Content, Layer } from "./TableContentStyle";
+import { Content, StyledLink, Layer } from "./TableContentStyle";
 import { PostType } from "../../../type/userPost";
 import authAxios from "../../../axios/authAxios";
 import axios from "axios";
@@ -118,7 +118,9 @@ const MyPageTable: React.FC = () => {
                   return (
                     <tr key={item.postId}>
                       <td id="title">
-                        <Link to={`/match/${item.postId}`}>{item.title}</Link>
+                        <StyledLink to={`/match/${item.postId}`}>
+                          {item.title}
+                        </StyledLink>
                       </td>
                       <td>{item.region}</td>
                       <td>
