@@ -20,6 +20,7 @@ import {
 } from "../../slice/noticeApi";
 import Modal from "../../components/Modal/Modal";
 import MarkdownView from "../../components/MarkdownView/MarkdownView";
+import NotFound from "../../components/NotFound/NotFound";
 
 interface PostDetailProps {
   matchPost?: MatchPostType;
@@ -34,7 +35,7 @@ const NoticeDetail: React.FC<PostDetailProps> = () => {
   const navigate = useNavigate();
   const { id } = useParams();
 
-  const { data: notice } = useGetNoticeQuery(id);
+  const { data: notice, isError: isErrorGetNotice } = useGetNoticeQuery(id);
   const [onDeleteNotice, { isSuccess: isSuccessDeleteNotice }] =
     useDeleteNoticeMutation();
 
@@ -67,6 +68,10 @@ const NoticeDetail: React.FC<PostDetailProps> = () => {
   const onClickModalDelete = () => {
     onDeleteNotice(id);
   };
+
+  if (isErrorGetNotice) {
+    return <NotFound />;
+  }
 
   return (
     <Container>
