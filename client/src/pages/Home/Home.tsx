@@ -3,8 +3,8 @@ import FestivalList from "../../components/FestivalList/FestivalList";
 import FreePostPreview from "../../components/FreePostPreview/FreePostPreview";
 import MakeMatchPostList from "../../components/MakeMatchPostList/MakeMatchPostList";
 import Title from "../../components/Title/Title";
-import { useGetAllMatchPostQuery } from "../../slice/matchPostApi";
 import NotFound from "../../components/NotFound/NotFound";
+import { useGetAllMatchPostQuery } from "../../slice/matchPostApi";
 import { useGetAllFreePostQuery } from "../../slice/freePostApi";
 
 const Home = () => {

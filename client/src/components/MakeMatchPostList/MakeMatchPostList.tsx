@@ -6,16 +6,20 @@ import { useAppSelector, useAppDispatch } from "../../store/hooks";
 import { showModal } from "../../slice/modal";
 import Modal from "../Modal/Modal";
 import {
+  useAddLikeSearchMutation,
+  useDeleteLikeSearchMutation,
+} from "../../slice/searchApi";
+import {
   useAddLikeMutation,
   useDeleteLikeMutation,
 } from "../../slice/matchPostApi";
 
 interface DataProps {
   data: MatchPostType[];
-  likes?: MatchPostType[];
+  location?: string;
 }
 
-const MakeMatchPostList: React.FC<DataProps> = ({ data }) => {
+const MakeMatchPostList: React.FC<DataProps> = ({ data, location }) => {
   //비회원의 경우 좋아요 없으므로 빈 배열을 디폴트로 설정
   const [matchPosts, setMatchPosts] = useState<MatchPostType[]>([]);
   const fullHeart =
@@ -33,6 +37,8 @@ const MakeMatchPostList: React.FC<DataProps> = ({ data }) => {
   const { show: isShown, modalText } = useAppSelector((state) => state.modal);
   const [onDeleteLike] = useDeleteLikeMutation();
   const [onAddLike] = useAddLikeMutation();
+  const [onDeleteLikeSearch] = useDeleteLikeSearchMutation();
+  const [onAddLikeSearch] = useAddLikeSearchMutation();
 
   const toggleLikes = async (item: MatchPostType) => {
     if (!sessionStorage.getItem("email")) {
@@ -47,9 +53,17 @@ const MakeMatchPostList: React.FC<DataProps> = ({ data }) => {
       return;
     } else {
       if (item.like) {
-        onDeleteLike(item.postId || "");
+        if (location === "search") {
+          onDeleteLikeSearch(item.postId || "");
+        } else {
+          onDeleteLike(item.postId || "");
+        }
       } else {
-        onAddLike(item.postId || "");
+        if (location === "search") {
+          onAddLikeSearch(item.postId || "");
+        } else {
+          onAddLike(item.postId || "");
+        }
       }
     }
   };

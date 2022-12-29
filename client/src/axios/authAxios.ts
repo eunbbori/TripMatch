@@ -41,7 +41,6 @@ authAxios.interceptors.request.use(
     //   await refreshAccessToken();
     // }
     // 요청 객체 헤더에 Authorizaion 은 null 이 아니므로 non-null 연산자 (!.) 를 사용하여 lint 에러를 해결하고 bearer 로 세션에서 가져온 엑세스 토큰을 넣어주자
-    console.log("header 가 없나?");
     config.headers!["x-access-token"] = `Bearer ${sessionStorage.getItem(
       "x-access-token",
     )}`;

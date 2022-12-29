@@ -31,4 +31,8 @@ const TitleStyle = styled.div`
   }
 `;
 
+export const NoticeStyle = styled(TitleStyle)`
+  width: 1000px;
+`;
+
 export default TitleStyle;

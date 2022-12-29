@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import TitleStyle from "./TitleStyle";
+import TitleStyle, { NoticeStyle } from "./TitleStyle";
 
 interface TitleProps {
   title: string;
@@ -23,11 +23,16 @@ const Title: React.FC<TitleProps> = ({ title, location }) => {
       link = "/";
   }
 
-  return (
+  return location !== "/notice" ? (
     <TitleStyle>
       <h3>{title}</h3>
       {location === "/" && <Link to={link}>더보기 &gt;</Link>}
     </TitleStyle>
+  ) : (
+    <NoticeStyle>
+      <h3>{title}</h3>
+      <div></div>
+    </NoticeStyle>
   );
 };
 

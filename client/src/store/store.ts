@@ -5,6 +5,7 @@ import { commentApi } from "../slice/commentApi";
 import { matchPostApi } from "./../slice/matchPostApi";
 import { updateImgApi } from "./../slice/uploadImgApi";
 import { noticeApi } from "../slice/noticeApi";
+import { searchPostApi } from "../slice/searchApi";
 
 // ...
 
@@ -16,6 +17,7 @@ export const store = configureStore({
     [matchPostApi.reducerPath]: matchPostApi.reducer,
     [updateImgApi.reducerPath]: updateImgApi.reducer,
     [noticeApi.reducerPath]: noticeApi.reducer,
+    [searchPostApi.reducerPath]: searchPostApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
@@ -24,6 +26,7 @@ export const store = configureStore({
       matchPostApi.middleware,
       updateImgApi.middleware,
       noticeApi.middleware,
+      searchPostApi.middleware,
     ),
 });
 
