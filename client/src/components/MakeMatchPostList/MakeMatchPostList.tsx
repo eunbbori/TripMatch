@@ -71,7 +71,11 @@ const MakeMatchPostList: React.FC<DataProps> = ({ data, location }) => {
               <Link to={url}>
                 <span className="region">{item.region}</span>
                 <img src={item.thumbnail} className="itemImg" />
-                <div className="itemTitle">{item.title}</div>
+                <div className="itemTitle">
+                  {item.title.length > 35
+                    ? item.title.slice(0, 35) + "..."
+                    : item.title}
+                </div>
               </Link>
             </div>
           );
