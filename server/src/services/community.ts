@@ -5,9 +5,11 @@ class CommunityService {
 
   async getTotalCount(region: string, keyword: string) {
     const condition: { region?: string; $or?: any; } = {};
-    const regex = new RegExp(`(${[...keyword].join(".*")})`);
 
-    if (keyword) condition.$or = [{ title: regex }, { content: regex }, { category: regex }, { region: regex }];
+    if (keyword) {
+      const regex = new RegExp(`(${[...keyword].join(".*")})`);
+      condition.$or = [{ title: regex }, { content: regex }, { category: regex }, { region: regex }];
+    }
     if (region) condition.region = region;
 
     const totalCount = await this.communityModel.countPosts(condition);
@@ -15,9 +17,11 @@ class CommunityService {
   }
   async getTenCommus(page: number, perPage: number, region: string, keyword: string) {
     const condition: { region?: string; $or?: any; } = {};
-    const regex = new RegExp(`(${[...keyword].join(".*")})`);
 
-    if (keyword) condition.$or = [{ title: regex }, { content: regex }, { category: regex }, { region: regex }];
+    if (keyword) {
+      const regex = new RegExp(`(${[...keyword].join(".*")})`);
+      condition.$or = [{ title: regex }, { content: regex }, { category: regex }, { region: regex }];
+    }
     if (region) condition.region = region;
 
     const communities = await this.communityModel.findTen(page, perPage, condition);
