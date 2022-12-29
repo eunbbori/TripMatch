@@ -8,18 +8,18 @@ class PostModel {
     const total = await this.postDB.countDocuments(condition);
     return total;
   }
-  async findEight(page: number, condition: object) {
+  async findEight(page: number, perPage: number, condition: object) {
     const communities = await this.postDB
       .find(condition, {
         _id: 0,
         postId: 1,
         title: 1,
         region: 1,
-        thumbnail: 1,
+        thumbnail: 1
       })
       .sort({ createdAt: -1 })
-      .skip(8 * (page - 1))
-      .limit(8);
+      .skip(perPage * (page - 1))
+      .limit(perPage);
     return communities;
   }
   async findOne(postId: string, projection: object) {

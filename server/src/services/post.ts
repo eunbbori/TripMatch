@@ -3,18 +3,22 @@ import { PostModel } from "../models";
 class PostService {
   private postModel = new PostModel();
 
-  async getTotalCount(region: string, status: string) {
-    const condition: { region?: string; status?: boolean } = {};
+  async getTotalCount(region: string, status: string, keyword: string) {
+    const condition: { region?: string; status?: boolean; $or?: any; } = {};
+    const regex = new RegExp(`(${[...keyword].join(".*")})`);
     if (region) condition.region = region;
     if (status) condition.status = true;
+    if (keyword) condition.$or = [{ title: regex }, { content: regex }, { region: regex }];
     const totalCount = await this.postModel.countPosts(condition);
     return totalCount;
   }
-  async getEightPosts(page: number, region: string, status: string) {
-    const condition: { region?: string; status?: boolean } = {};
+  async getEightPosts(page: number, perPage: number, region: string, status: string, keyword: string) {
+    const condition: { region?: string; status?: boolean; $or?: any; } = {};
+    const regex = new RegExp(`(${[...keyword].join(".*")})`);
     if (region) condition.region = region;
     if (status) condition.status = true;
-    const posts = await this.postModel.findEight(page, condition);
+    if (keyword) condition.$or = [{ title: regex }, { content: regex }, { region: regex }];
+    const posts = await this.postModel.findEight(page, perPage, condition);
     return posts;
   }
   async getWishlist(postIds: []) {
