@@ -40,16 +40,13 @@ const ProfileModal: React.FC<TProfileModal> = ({ email }) => {
             draft.matchCount = res.data.matchCount;
             draft.matchPoint = res.data.matchPoint;
           });
-        } else if (res.status === 204) {
-          alert("이미 탈퇴한 유저입니다");
         } else {
-          throw new Error(
-            `에러코드 ${res.status}, 유저 프로필 요청에 실패하였습니다`,
-          );
+          // throw new Error(
+          //   `에러코드 ${res.status}, 유저 프로필 요청에 실패하였습니다(204면 탈퇴한 유저)`,
+          // );
         }
       } catch (error) {
-        console.error(error);
-        alert("유저 프로필 요청에 실패하였습니다");
+        // console.error(error);
       }
     };
     callProfile();
@@ -85,20 +82,18 @@ const ProfileModal: React.FC<TProfileModal> = ({ email }) => {
                 <div className="infoContainer">
                   <div className="nicknameEmailWrapper">
                     <span className="nickname">
-                      {userData.nickname === ""
-                        ? "로딩실패"
-                        : userData.nickname}
+                      {userData.nickname === "" ? "-" : userData.nickname}
                     </span>
                     <span className="email">
-                      {userData.email === "" ? "error@err.com" : userData.email}
+                      {userData.email === "" ? "-" : userData.email}
                     </span>
                   </div>
                   <div className="genderAge">
                     <span className="etc">
-                      {userData.gender === "" ? "중성" : userData.gender}
+                      {userData.gender === "" ? "-" : userData.gender}
                     </span>
                     <span className="etc">
-                      {userData.age === "" ? "애매한나이" : userData.age}
+                      {userData.age === "" ? "-" : userData.age}
                     </span>
                   </div>
                   <div className="matches">
@@ -107,8 +102,8 @@ const ProfileModal: React.FC<TProfileModal> = ({ email }) => {
                     </span>
                     <span className="etc">
                       동행점수&#x2001;{" "}
-                      {userData.matchPoint === "" ? "-10" : userData.matchPoint}{" "}
-                      / 5
+                      {userData.matchPoint === "" ? "-" : userData.matchPoint} /
+                      5
                     </span>
                     <div className="etcWrapper"></div>
                   </div>
@@ -116,7 +111,7 @@ const ProfileModal: React.FC<TProfileModal> = ({ email }) => {
               </div>
               <div className="introTextArea">
                 {userData.introduce === ""
-                  ? "도움! 프로필 요청 에러!"
+                  ? "이미 탈퇴한 유저입니다."
                   : userData.introduce}
               </div>
               <img

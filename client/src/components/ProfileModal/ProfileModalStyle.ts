@@ -24,7 +24,7 @@ export const Modal = styled.div`
     background: white;
     padding: 1.5rem 1.5rem;
     border-radius: 1rem;
-    width: 25rem;
+    width: 30rem;
   }
 
   .close {
@@ -62,12 +62,14 @@ export const Modal = styled.div`
     margin-bottom: 1rem;
 
     .nickname {
-      font-size: ${Theme.font.L};
+      /* font-size: ${Theme.font.L}; */
+      font-size: 1rem;
       font-weight: 600;
       margin-right: 1.5rem;
     }
     .email {
-      font-size: ${Theme.font.M};
+      /* font-size: ${Theme.font.M}; */
+      font-size: 0.8rem;
       font-weight: 600;
     }
   }
@@ -102,7 +104,7 @@ export const Modal = styled.div`
     background-color: #cfcfcf;
     border-radius: 0.5rem;
     resize: none;
-    height: 10rem;
+    height: 15rem;
 
     &:focus {
       outline: none;
