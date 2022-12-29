@@ -3,16 +3,24 @@ import { CommunityModel } from "../models";
 class CommunityService {
   private communityModel = new CommunityModel();
 
-  async getTotalCount(region: string) {
-    const condition: { region?: string } = {};
+  async getTotalCount(region: string, keyword: string) {
+    const condition: { region?: string; $or?: any; } = {};
+    const regex = new RegExp(`(${[...keyword].join(".*")})`);
+
+    if (keyword) condition.$or = [{ title: regex }, { content: regex }, { category: regex }, { region: regex }];
     if (region) condition.region = region;
+
     const totalCount = await this.communityModel.countPosts(condition);
     return totalCount;
   }
-  async getTenCommus(page: number, region: string) {
-    const condition: { region?: string } = {};
+  async getTenCommus(page: number, perPage: number, region: string, keyword: string) {
+    const condition: { region?: string; $or?: any; } = {};
+    const regex = new RegExp(`(${[...keyword].join(".*")})`);
+
+    if (keyword) condition.$or = [{ title: regex }, { content: regex }, { category: regex }, { region: regex }];
     if (region) condition.region = region;
-    const communities = await this.communityModel.findTen(page, condition);
+
+    const communities = await this.communityModel.findTen(page, perPage, condition);
     return communities;
   }
   async getCommunity(communityId: string) {
