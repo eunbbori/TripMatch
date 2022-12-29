@@ -5,7 +5,7 @@ import { CommentType } from "./../type/comment";
 
 export const freePostApi = createApi({
   reducerPath: "freePostApi",
-  tagTypes: ["FreePost", "SearchPost", "MatchPost"],
+  tagTypes: ["FreePost", "MatchPost", "SearchPost"],
   baseQuery: authAxiosBaseQuery({
     baseUrl: "http://34.64.156.80:3003/api/",
   }),
@@ -16,13 +16,13 @@ export const freePostApi = createApi({
     // get 요청 이외에는 토큰이 필요해서 인터셉터를 먼저 구현해봐야 테스트할 수 있습니다!
     getAllFreePost: builder.query<
       { totalCount: number; communities: FreePostType[] },
-      { page: number; region?: string }
+      { page?: number; region?: string; perPage?: number; keyword?: string }
     >({
-      query: ({ page, region }) => {
+      query: ({ page, region, perPage, keyword }) => {
         return {
           url: "main/communities",
           method: "get",
-          params: { page, region },
+          params: { page, region, perPage, keyword },
         };
       },
       providesTags: (result, error, arg) =>
@@ -65,7 +65,7 @@ export const freePostApi = createApi({
         method: "post",
         data: newPost,
       }),
-      invalidatesTags: ["FreePost"],
+      invalidatesTags: ["FreePost", "SearchPost"],
     }),
     // id에 해당하는 게시글 삭제 useDeleteFreePost(id)
     deleteFreePost: builder.mutation<null, string | undefined>({
@@ -73,7 +73,7 @@ export const freePostApi = createApi({
         url: `main/communities/${communityId}`,
         method: "delete",
       }),
-      invalidatesTags: ["FreePost"],
+      invalidatesTags: ["FreePost", "SearchPost"],
     }),
   }),
 });

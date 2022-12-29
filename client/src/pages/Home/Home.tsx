@@ -29,7 +29,7 @@ const Home = () => {
       {matchData ? <MakeMatchPostList data={matchData.posts} /> : <NotFound />}
       <Title title="자유게시판" location="/" />
       {freeData ? (
-        <FreePostPreview freePostList={freeData?.communities} location="/" />
+        <FreePostPreview freePostList={freeData.communities} location="/" />
       ) : (
         <NotFound />
       )}

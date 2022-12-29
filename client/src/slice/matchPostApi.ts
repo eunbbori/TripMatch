@@ -6,7 +6,7 @@ import { FreePostType } from "../type/freePost";
 
 export const matchPostApi = createApi({
   reducerPath: "matchPostApi",
-  tagTypes: ["MatchPost", "SearchPost"],
+  tagTypes: ["FreePost", "MatchPost", "SearchPost"],
   baseQuery: authAxiosBaseQuery({
     baseUrl: "http://34.64.156.80:3003/api/",
   }),
@@ -17,13 +17,20 @@ export const matchPostApi = createApi({
     // get 요청 이외에는 토큰이 필요해서 인터셉터를 먼저 구현해봐야 테스트할 수 있습니다!
     getAllMatchPost: builder.query<
       { totalCount: number; posts: MatchPostType[] },
-      { page: number; region?: string; status?: boolean; email?: string }
+      {
+        page?: number;
+        perPage?: number;
+        region?: string;
+        status?: boolean;
+        email?: string;
+        keyword?: string;
+      }
     >({
-      query: ({ page, region, status, email }) => {
+      query: ({ page, region, status, email, keyword, perPage }) => {
         return {
           url: "main/posts",
           method: "get",
-          params: { page, region, status, email },
+          params: { page, region, status, email, keyword, perPage },
         };
       },
       providesTags: (result, error, arg) =>
@@ -36,25 +43,6 @@ export const matchPostApi = createApi({
               })),
             ]
           : ["MatchPost"],
-    }),
-    getSearchPost: builder.query<
-      { posts: MatchPostType[]; communities: FreePostType[] },
-      { keyword: string; email?: string }
-    >({
-      query: ({ keyword, email }) => ({
-        url: `/main/search?keyword=${keyword}${email ? `&email=${email}` : ""}`,
-        method: "get",
-      }),
-      providesTags: (result, error, arg) =>
-        result
-          ? [
-              "SearchPost",
-              ...result.posts.map((post) => ({
-                type: "SearchPost" as const,
-                id: post.postId,
-              })),
-            ]
-          : ["SearchPost"],
     }),
     // id에 해당하는 게시글을 불러옴
     getMatchPost: builder.query<
@@ -85,7 +73,7 @@ export const matchPostApi = createApi({
         method: "post",
         data: newPost,
       }),
-      invalidatesTags: ["MatchPost"],
+      invalidatesTags: ["SearchPost", "MatchPost"],
     }),
     // id에 해당하는 게시글 삭제
     deleteMatchPost: builder.mutation<MatchPostType, string | undefined>({
@@ -93,7 +81,7 @@ export const matchPostApi = createApi({
         url: `main/posts/${postId}`,
         method: "delete",
       }),
-      invalidatesTags: ["MatchPost"],
+      invalidatesTags: ["SearchPost", "MatchPost"],
     }),
     applyMatch: builder.mutation<null, string>({
       query: (postId) => ({
@@ -131,7 +119,6 @@ export const matchPostApi = createApi({
 export const {
   useGetAllMatchPostQuery,
   useGetMatchPostQuery,
-  useGetSearchPostQuery,
   useCreateMatchPostMutation,
   useUpdateMatchPostMutation,
   useDeleteMatchPostMutation,
