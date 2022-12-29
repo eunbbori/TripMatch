@@ -86,7 +86,6 @@ const NoticeDetail: React.FC<PostDetailProps> = () => {
         <Link to="/notice">
           <Button>목록</Button>
         </Link>
-
         {isAdmin && (
           <>
             <Link to={`/notice/write/${id}`} state={notice}>

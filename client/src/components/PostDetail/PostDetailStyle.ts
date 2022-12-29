@@ -16,6 +16,11 @@ export const PostTitle = styled.h3`
     width: 25px;
     cursor: pointer;
   }
+  div {
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 `;
 
 export const MatchStatus = styled.span<{ status: boolean }>`

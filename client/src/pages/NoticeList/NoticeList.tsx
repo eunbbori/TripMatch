@@ -7,10 +7,10 @@ import {
   TitleStyle,
   UserInfo,
   CreatedDate,
-  FreePostLink,
   ListContainer,
-  ListTitle,
   Index,
+  NoticeLink,
+  New,
 } from "./NoticeListStyle";
 import { useGetAllNoticeQuery } from "../../slice/noticeApi";
 import { dateFormat } from "../../util/dateFormatting";
@@ -25,20 +25,28 @@ const NoticeList = () => {
       <Title title="공지사항" location="/notice" />
       <ListContainer>
         {notices &&
-          notices.map((data, i) => {
-            const url = `/notice/${data.noticeId}`;
-            return (
-              <FreePostLink key={i} to={url}>
-                <PostInfo>
-                  <Index>{i + 1}</Index>
-                  <TitleStyle>{data.title}</TitleStyle>
-                </PostInfo>
-                <UserInfo>
-                  <CreatedDate>{dateFormat(data.createdAt)}</CreatedDate>
-                </UserInfo>
-              </FreePostLink>
-            );
-          })}
+          [...notices]
+            .map((data, i) => {
+              const url = `/notice/${data.noticeId}`;
+              const date = new Date(data.createdAt).toLocaleDateString();
+              const now = new Date(Date.now()).toLocaleDateString();
+
+              return (
+                <NoticeLink key={i} to={url}>
+                  <PostInfo>
+                    <Index>{i + 1}</Index>
+                    <TitleStyle>
+                      <h4>{data.title}</h4>
+                      {date === now && <New>new</New>}
+                    </TitleStyle>
+                  </PostInfo>
+                  <UserInfo>
+                    <CreatedDate>{dateFormat(data.createdAt)}</CreatedDate>
+                  </UserInfo>
+                </NoticeLink>
+              );
+            })
+            .reverse()}
       </ListContainer>
       <ButtonContainer>
         {role === "admin" && (

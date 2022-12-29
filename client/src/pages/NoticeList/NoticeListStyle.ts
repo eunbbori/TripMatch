@@ -5,6 +5,7 @@ export const Container = styled.div`
   padding: 20px 0 15vh;
   width: 1000px;
   margin: auto;
+  overflow: hidden;
 `;
 
 export const ListTitle = styled.h2`
@@ -27,6 +28,7 @@ export const ButtonContainer = styled.div`
 export const PostInfo = styled.div`
   display: flex;
   font-size: 1rem;
+  align-items: center;
 `;
 
 export const Index = styled.span`
@@ -36,6 +38,22 @@ export const Index = styled.span`
 
 export const TitleStyle = styled.div`
   font-weight: bold;
+  display: flex;
+  align-items: center;
+
+  h4 {
+    width: 750px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+  }
+`;
+
+export const New = styled.span`
+  font-size: ${(props) => props.theme.font.S};
+  color: red;
+  display: inline-block;
+  margin-left: 5px;
 `;
 
 export const UserInfo = styled.div`
@@ -47,21 +65,21 @@ export const CreatedDate = styled.div`
   font-weight: bold;
 `;
 
-export const FreePostLink = styled(Link)`
-  width: 1000px;
-  height: 50px;
+export const NoticeLink = styled(Link)`
+  width: 100%;
+  height: 60px;
+  box-sizing: border-box;
   margin: auto;
   padding: 15px;
   font-weight: bold;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border: 1px solid ${(props) => props.theme.color.lightblue};
-  background: linear-gradient(
-    100deg,
-    ${(props) => props.theme.color.lightpink},
-    ${(props) => props.theme.color.lightblue}
-  );
+  border-bottom: 1px solid ${(props) => props.theme.color.lightblue};
   text-decoration: none;
   color: #000;
+
+  &:hover {
+    background-color: ${(props) => props.theme.color.lightblue};
+  }
 `;
