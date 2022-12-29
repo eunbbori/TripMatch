@@ -73,7 +73,7 @@ class PostService {
   async search(keyword: string) {
     const regex = new RegExp(`(${[...keyword].join(".*")})`);
     const posts = await this.postModel.findByKeyword({
-      $or: [{ title: regex }, { content: regex }],
+      $or: [{ title: regex }, { content: regex }, { region: regex }],
     });
     return posts;
   }

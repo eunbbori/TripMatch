@@ -32,7 +32,12 @@ class CommunityService {
   async search(keyword: string) {
     const regex = new RegExp(`(${[...keyword].join(".*")})`);
     const communities = await this.communityModel.findByKeyword({
-      $or: [{ title: regex }, { content: regex }],
+      $or: [
+        { title: regex },
+        { content: regex },
+        { region: regex },
+        { category: regex },
+      ],
     });
     return communities;
   }
