@@ -1,0 +1,223 @@
+/communities:
+  get:
+    tags:
+      - /communities
+    summary: 자유게시판 리스트
+    consumes:
+      - application/json
+    parameters:
+      - in: query
+        name: page
+        schema:
+          type: integer
+      - in: query
+        name: perPage
+        schema:
+          type: integer
+      - in: query
+        name: region
+        schema:
+          type: string
+      - in: query
+        name: keyword
+        schema:
+          type: string
+    responses:
+      "200":
+        description: 성공
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                totalCount:
+                  type: number
+                  description: 총 게시글 수
+                communities:
+                  type: array
+                  description: 자유게시글 리스트
+                  items:
+                    type: object
+                    properties:
+                      communityId:
+                        type: string
+                      title:
+                        type: string
+                      region:
+                        type: string
+                      category:
+                        type: string
+                      author:
+                        type: object
+                        properties:
+                          email:
+                            type: string
+                          nickname:
+                            type: string
+                          profileImg:
+                            type: string
+                      createdAt:
+                        type: string
+                      commentCount:
+                        type: number
+/communities/{communityId}:
+  get:
+    tags:
+      - /communities
+    summary: 자유게시글 조회
+    consumes:
+      - application/json
+    parameters:
+      - in: path
+        name: communityId
+        schema:
+          type: string
+        required: true
+    responses:
+      "200":
+        description: 성공
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                community:
+                  type: object
+                  description: 자유게시글
+                  properties:
+                    communityId:
+                      type: string
+                    title:
+                      type: string
+                    content:
+                      type: string
+                    region:
+                      type: string
+                    category:
+                      type: string
+                    author:
+                      type: object
+                      properties:
+                        email:
+                          type: string
+                        nickname:
+                          type: string
+                        profileImg:
+                          type: string
+                    createdAt:
+                      type: string
+                comments:
+                  type: array
+                  description: 댓글 리스트
+                  items:
+                    type: object
+                    properties:
+                      commentId:
+                        type: string
+                      author:
+                        type: object
+                        properties:
+                          email:
+                            type: string
+                          nickname:
+                            type: string
+                          profileImg:
+                            type: string
+                      createdAt:
+                        type: string
+                      content:
+                        type: string
+      "204":
+        description: 데이터 없음
+  put:
+    tags:
+      - /communities
+    summary: 자유게시글 수정
+    consumes:
+      - application/json
+    parameters:
+      - in: path
+        name: communityId
+        schema:
+          type: string
+        required: true
+      - in: header
+        name: x-access-token
+        schema:
+          type: string
+        required: true
+    requestBody:
+      x-name: body
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              title:
+                type: string
+              content:
+                type: string
+              region:
+                type: string
+              category:
+                type: string
+    responses:
+      "200":
+        description: 성공
+      "403":
+        description: 작성자 아님
+  delete:
+    tags:
+      - /communities
+    summary: 자유게시글 삭제
+    consumes:
+      - application/json
+    parameters:
+      - in: path
+        name: communityId
+        schema:
+          type: string
+        required: true
+      - in: header
+        name: x-access-token
+        schema:
+          type: string
+        required: true
+    responses:
+      "200":
+        description: 성공
+      "403":
+        description: 작성자 아님
+/communities/community:
+  post:
+    tags:
+      - /communities
+    summary: 자유게시글 작성
+    consumes:
+      - application/json
+    parameters:
+      - in: header
+        name: x-access-token
+        schema:
+          type: string
+        required: true
+    requestBody:
+      x-name: body
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              title:
+                type: string
+              content:
+                type: string
+              region:
+                type: string
+              category:
+                type: string
+    responses:
+      "201":
+        description: 성공

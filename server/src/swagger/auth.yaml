@@ -1,0 +1,265 @@
+/auth/email:
+  post:
+    tags:
+      - /auth
+    summary: 이메일 중복검사 및 인증 번호 발급
+    consumes:
+      - application/json
+    requestBody:
+      x-name: body
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              email:
+                type: string
+    responses:
+      "201":
+        description: 성공
+      "409":
+        description: 이메일 중복
+/auth/certify:
+  post:
+    tags:
+      - /auth
+    summary: 이메일 인증
+    consumes:
+      - application/json
+    requestBody:
+      x-name: body
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              email:
+                type: string
+              authNumber:
+                type: string
+    responses:
+      "200":
+        description: 성공
+      "400":
+        description: 인증 번호 오류
+/auth/join:
+  post:
+    tags:
+      - /auth
+    summary: 회원가입
+    consumes:
+      - application/json
+    requestBody:
+      x-name: body
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              email:
+                type: string
+              nickname:
+                type: string
+              password:
+                type: string
+              gender:
+                type: string
+              age:
+                type: string
+              introduce:
+                type: string
+    responses:
+      "201":
+        description: 성공
+      "403":
+        description: 인증 안 된 이메일
+/auth/login:
+  post:
+    tags:
+      - /auth
+    summary: 로그인
+    consumes:
+      - application/json
+    requestBody:
+      x-name: body
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              email:
+                type: string
+              password:
+                type: string
+    responses:
+      "201":
+        description: 성공
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                x-access-token:
+                  type: string
+                  description: 로그인 인증할 JWT
+                refresh:
+                  type: string
+                  description: x-access-token 갱신할 JWT
+                email:
+                  type: string
+                  description: 로그인한 클라의 이메일
+                role:
+                  type: string
+                  description: 로그인한 클라의 권한
+      "400":
+        description: email 또는 password 틀림
+/auth/{email}:
+  get:
+    tags:
+      - /auth
+    summary: 회원정보 조회
+    consumes:
+      - application/json
+    parameters:
+      - in: path
+        name: email
+        schema:
+          type: string
+        required: true
+    responses:
+      "200":
+        description: 성공
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: 이메일
+                nickname:
+                  type: string
+                  description: 닉네임
+                gender:
+                  type: string
+                  description: 성별
+                age:
+                  type: string
+                  description: 나이
+                introduce:
+                  type: string
+                  description: 자기소개
+                profileImg:
+                  type: string
+                  description: 프로필사진
+                matchCount:
+                  type: number
+                  description: 동행 횟수
+                matchPoint:
+                  type: string
+                  description: 동행 점수
+      "204":
+        description: 데이터가 없음. 탈퇴 유저?
+/auth/delete:
+  delete:
+    tags:
+      - /auth
+    summary: 회원 탈퇴
+    consumes:
+      - application/json
+    parameters:
+      - in: header
+        name: x-access-token
+        schema:
+          type: string
+        required: true
+    responses:
+      "200":
+        description: 성공
+/auth/update:
+  put:
+    tags:
+      - /auth
+    summary: 회원정보 수정
+    consumes:
+      - application/json
+    parameters:
+      - in: header
+        name: x-access-token
+        schema:
+          type: string
+        required: true
+    requestBody:
+      x-name: body
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              nickname:
+                type: string
+              password:
+                type: string
+              age:
+                type: string
+              introduce:
+                type: string
+    responses:
+      "200":
+        description: 성공
+/auth/refresh:
+  get:
+    tags:
+      - /auth
+    summary: 토큰 갱신
+    consumes:
+      - application/json
+    parameters:
+      - in: header
+        name: x-access-token
+        schema:
+          type: string
+        required: true
+      - in: header
+        name: refresh
+        schema:
+          type: string
+        required: true
+    responses:
+      "200":
+        description: 성공
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                x-access-token:
+                  type: string
+                  description: 갱신된 JWT
+      "401":
+        description: 다시 로그인 요청
+/auth/password:
+  post:
+    tags:
+      - /auth
+    summary: 비밀번호찾기
+    consumes:
+      - application/json
+    requestBody:
+      x-name: body
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              email:
+                type: string
+    responses:
+      "200":
+        description: 성공
+      "400":
+        description: 가입되지 않은 이메일

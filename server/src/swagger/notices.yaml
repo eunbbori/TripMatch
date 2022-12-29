@@ -1,0 +1,56 @@
+/notices:
+  get:
+    tags:
+      - /notices
+    summary: 공지사항 리스트
+    consumes:
+      - application/json
+    responses:
+      "200":
+        description: 성공
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  noticeId:
+                    type: string
+                  title:
+                    type: string
+                  createdAt:
+                    type: string
+      "204":
+        description: 데이터가 없음
+/notices/{noticeId}:
+  get:
+    tags:
+      - /notices
+    summary: 공지사항 조회
+    consumes:
+      - application/json
+    parameters:
+      - in: path
+        name: noticeId
+        schema:
+          type: string
+        required: true
+    responses:
+      "200":
+        description: 성공
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                noticeId:
+                  type: string
+                title:
+                  type: string
+                content:
+                  type: string
+                createdAt:
+                  type: string
+      "204":
+        description: 데이터가 없음

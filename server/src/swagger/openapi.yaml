@@ -1,0 +1,346 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: "8282 API docs"
+  description: "Elice SW3 Team 8282 API 문서"
+  license:
+    name: KJ
+servers:
+  - url: http://localhost:3003/api
+  - url: http://34.64.156.80:3003/api
+paths:
+  /main/auth/email:
+    $ref: "./auth.yaml#/~1auth~1email"
+  /main/auth/certify:
+    $ref: "./auth.yaml#/~1auth~1certify"
+  /main/auth/join:
+    $ref: "./auth.yaml#/~1auth~1join"
+  /main/auth/login:
+    $ref: "./auth.yaml#/~1auth~1login"
+  /main/auth/{email}:
+    $ref: "./auth.yaml#/~1auth~1{email}"
+  /main/auth/delete:
+    $ref: "./auth.yaml#/~1auth~1delete"
+  /main/auth/update:
+    $ref: "./auth.yaml#/~1auth~1update"
+  /main/auth/refresh:
+    $ref: "./auth.yaml#/~1auth~1refresh"
+  /main/auth/password:
+    $ref: "./auth.yaml#/~1auth~1password"
+  /main/comment:
+    $ref: "./comment.yaml#/~1comment"
+  /main/comment/{commentId}:
+    $ref: "./comment.yaml#/~1comment~1{commentId}"
+  /main/communities:
+    $ref: "./communities.yaml#/~1communities"
+  /main/communities/{communityId}:
+    $ref: "./communities.yaml#/~1communities~1{communityId}"
+  /main/communities/community:
+    $ref: "./communities.yaml#/~1communities~1community"
+  /main/likes:
+    $ref: "./likes.yaml#/~1likes"
+  /main/likes/like:
+    $ref: "./likes.yaml#/~1likes~1like"
+  /main/matches/match:
+    $ref: "./matches.yaml#/~1matches~1match"
+  /main/matches/{matchId}:
+    $ref: "./matches.yaml#/~1matches~1{matchId}"
+  /main/matches/{matchId}/score:
+    $ref: "./matches.yaml#/~1matches~1{matchId}~1score"
+  /main/mypage:
+    $ref: "./mypage.yaml#/~1mypage"
+  /main/mypage/comments:
+    $ref: "./mypage.yaml#/~1mypage~1comments"
+  /main/mypage/myEnroll:
+    $ref: "./mypage.yaml#/~1mypage~1myEnroll"
+  /main/mypage/receivedEnroll:
+    $ref: "./mypage.yaml#/~1mypage~1receivedEnroll"
+  /main/mypage/posts:
+    $ref: "./mypage.yaml#/~1mypage~1posts"
+  /main/notices:
+    $ref: "./notices.yaml#/~1notices"
+  /main/notices/{noticeId}:
+    $ref: "./notices.yaml#/~1notices~1{noticeId}"
+  /main/posts:
+    $ref: "./posts.yaml#/~1posts"
+  /main/posts/{postId}:
+    $ref: "./posts.yaml#/~1posts~1{postId}"
+  /main/posts/post:
+    $ref: "./posts.yaml#/~1posts~1post"
+  /main/search:
+    $ref: "./search.yaml#/~1search"
+  /main/infoes/festival:
+    $ref: "./infoes.yaml#/~1infoes~1festival"
+  /main/infoes/stay:
+    $ref: "./infoes.yaml#/~1infoes~1stay"
+  /admin/notices/{noticeId}:
+    $ref: "./admin.yaml#/~1notices~1{noticeId}"
+  /admin/notices/notice:
+    $ref: "./admin.yaml#/~1notices~1notice"
+  /admin/users:
+    $ref: "./admin.yaml#/~1users"
+  /admin/users/{email}:
+    $ref: "./admin.yaml#/~1users~1{email}"
+components:
+  schemas:
+    status:
+      type: object
+      properties:
+        200번대:
+          type: object
+          description: 성공 응답
+          properties:
+            200:
+              description: "요청 성공<br>클라의 요청을 무사히 처리했을 때 발생<br>데이터가 추가되지 않는 POST를 포함한 대부분의 method에서 뜸"
+            201:
+              description: "데이터 생성 완료<br>클라의 요청을 무사히 처리했을 때 발생<br>POST 요청시 뜰 수 있음"
+            204:
+              description: "요청은 처리됐으나 내용이 없음<br>DB에 등록된 데이터가 없을 때 발생<br>보통 GET 요청시 뜰 수 있음"
+        400번대:
+          type: object
+          description: 클라 에러 응답
+          properties:
+            400:
+              description: "잘못된 요청<br>요청과 함께 넘어온 정보가 옳지 않을 때 발생<br>이메일 인증 번호가 틀렸거나, 로그인시 이메일이나 비밀번호가 틀리면 뜸"
+            401:
+              description: "인증되지 않음<br>인증된 토큰이 아닐 때 발생<br>acess가 없거나 만료됐거나 훼손됐거나, refresh가 만료됐거나 값이 다르면 뜸"
+            403:
+              description: "권한이 없음<br>클라가 허용되지 않은 api를 요청할 때 발생<br>인증되지 않은 이메일이 회원가입을 요청하면 뜸"
+            404:
+              description: "정보 없음<br>없는 api를 요청할 때 발생<br>사용되지 않는 uri로 접근하면 뜸"
+            409:
+              description: "충돌 <br> 이미 가입된 이메일로 회원가입을 시도하면 뜸"
+        500번대:
+          type: object
+          description: 서버 에러 응답
+          properties:
+            500:
+              description: 기타 에러
+    comment:
+      properties:
+        commentId:
+          type: string
+          description: 댓글 id
+        author:
+          type: object
+          description: 댓글 작성자
+          properties:
+            email:
+              type: string
+            nickname:
+              type: string
+            profileImg:
+              type: String
+        content:
+          type: string
+          description: 댓글 내용
+        communityId:
+          type: string
+          description: 자유게시글 id
+        postId:
+          type: string
+          description: 동행게시글 id
+    community:
+      properties:
+        communityId:
+          type: string
+          description: 자유게시글 id
+        author:
+          type: object
+          description: 자유게시글 작성자
+          properties:
+            email:
+              type: string
+            nickname:
+              type: string
+            profileImg:
+              type: String
+        title:
+          type: string
+          description: 자유게시글 제목
+        content:
+          type: string
+          description: 자유게시글 내용
+        region:
+          type: string
+          description: 지역
+        category:
+          type: string
+          description: 카테고리
+        commentCount:
+          type: string
+          description: 댓글 수
+    festival:
+      properties:
+        addr1:
+          type: string;
+          description: 주소
+        eventstartdate:
+          type: string;
+          description: 시작일
+        eventenddate:
+          type: string;
+          description: 종료일
+        firstimage:
+          type: string;
+          description: 대표 이미지
+        tel:
+          type: string;
+          description: 연락처
+        title:
+          type: string;
+          description: 축제명
+    like:
+      properties:
+        email:
+          type: string
+          description: 좋아요 표시한 유저 이메일
+        postId:
+          type: string
+          description: 좋아요 표시된 동행게시글 id
+    match:
+      properties:
+        matchId:
+          type: string
+          description: 동행 신청 id
+        postId:
+          type: string
+          description: 신청한 동행게시글 id
+        author:
+          type: object
+          description: 동행게시글 작성자, 신청받은 유저
+          properties:
+            email:
+              type: string
+            nickname:
+              type: string
+            profileImg:
+              type: String
+        applicant:
+          type: object
+          description: 동행 신청한 유저
+          properties:
+            email:
+              type: string
+            nickname:
+              type: string
+            profileImg:
+              type: String
+        matchStatus:
+          type: string
+          description: 대기중/수락/거절
+        scoredByAuthor:
+          type: boolean
+          description: 신청 받은 유저의 동행 점수 평가 여부
+        scoredByApplicant:
+          type: boolean
+          description: 신청한 유저의 동행 점수 평가 여부
+        endDate:
+          type: string
+          description: 동행 종료일
+    notice:
+      properties:
+        noticeId:
+          type: string
+          description: 공지사항 id
+        title:
+          type: string
+          description: 공지사항 제목
+        content:
+          type: string
+          description: 공지사항 내용
+    post:
+      properties:
+        postId:
+          type: string
+          description: 동행게시글 id
+        author:
+          type: object
+          description: 동행게시글 작성자
+          properties:
+            email:
+              type: string
+            nickname:
+              type: string
+            profileImg:
+              type: String
+        title:
+          type: string
+          description: 동행게시글 제목
+        content:
+          type: string
+          description: 동행게시글 내용
+        region:
+          type: string
+          description: 지역
+        thumbnail:
+          type: string
+          description: 동행게시글 썸네일
+        duration:
+          type: array
+          items:
+            type: string
+          description: 여행기간
+        hopeGender:
+          type: string
+          description: 희망 성별
+        hopeAge:
+          type: array
+          items:
+            type: string
+          description: 희망 나이
+        userCount:
+          type: number
+          description: 최대 인원
+        contact:
+          type: string
+          description: 작성자 연락처
+        status:
+          type: boolean
+          description: 모집상태
+    stay:
+      properties:
+        addr1:
+          type: string;
+          description: 주소
+        firstimage:
+          type: string;
+          description: 대표 이미지
+        goodstay:
+          type: string;
+          description: 굿스테이 여부
+        tel:
+          type: string;
+          description: 연락처
+        title:
+          type: string;
+          description: 축제명
+    user:
+      properties:
+        email:
+          type: string
+          description: 이메일
+        nickname:
+          type: string
+          description: 닉네임
+        password:
+          type: string
+          description: 비밀번호
+        gender:
+          type: string
+          description: 성별
+        age:
+          type: string
+          description: 나이대
+        introduce:
+          type: string
+          description: 자기소개
+        profileImg:
+          type: string
+          description: 프로필 사진
+        matchPoints:
+          type: [number]
+          description: 평가받은 동행 점수들
+        role:
+          type: string
+          description: 권한(user 또는 admin)
