@@ -21,6 +21,10 @@ import { showModal } from "../../slice/modal";
 import { dateFormat } from "../../util/dateFormatting";
 import authAxios from "../../axios/authAxios";
 import MarkdownView from "../MarkdownView/MarkdownView";
+import {
+  useAddLikeMutation,
+  useDeleteLikeMutation,
+} from "../../slice/matchPostApi";
 
 interface PostDetailProps {
   matchPost?: MatchPostType;
@@ -49,6 +53,9 @@ const PostDetail: React.FC<PostDetailProps> = ({
   const [isAuthor, setIsAuthor] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
 
+  const [addLikePost] = useAddLikeMutation();
+  const [deleteLikePost] = useDeleteLikeMutation();
+
   const fullHeart =
     "https://res.cloudinary.com/dk9scwone/image/upload/v1671341657/fullheart_adk06q.png";
   const emptyHeart =
@@ -57,18 +64,21 @@ const PostDetail: React.FC<PostDetailProps> = ({
   // 하트를 클릭하면 좋아요 post/delete 요청을 보냄
   useEffect(() => {
     const fetchLikePost = async () => {
-      if (isLikePost && clickLikePost) {
-        await authAxios.post("http://34.64.156.80:3003/api/main/likes/like", {
-          postId: id,
-        });
-      } else if (!isLikePost && clickLikePost) {
-        await authAxios.delete("http://34.64.156.80:3003/api/main/likes/like", {
-          params: { postId: id },
-        });
+      if (isLikePost && clickLikePost && id) {
+        addLikePost(id);
+      } else if (!isLikePost && clickLikePost && id) {
+        deleteLikePost(id);
       }
     };
     location.pathname.includes("match") && fetchLikePost();
-  }, [clickLikePost, id, isLikePost, location.pathname]);
+  }, [
+    addLikePost,
+    clickLikePost,
+    deleteLikePost,
+    id,
+    isLikePost,
+    location.pathname,
+  ]);
 
   // 이미 좋아요를 누른 게시글이면 setIsLikePost(true)
   useEffect(() => {
