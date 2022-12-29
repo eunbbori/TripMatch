@@ -6,10 +6,6 @@ import { useAppSelector, useAppDispatch } from "../../store/hooks";
 import { showModal } from "../../slice/modal";
 import Modal from "../Modal/Modal";
 import {
-  useAddLikeSearchMutation,
-  useDeleteLikeSearchMutation,
-} from "../../slice/searchApi";
-import {
   useAddLikeMutation,
   useDeleteLikeMutation,
 } from "../../slice/matchPostApi";
@@ -37,8 +33,6 @@ const MakeMatchPostList: React.FC<DataProps> = ({ data, location }) => {
   const { show: isShown, modalText } = useAppSelector((state) => state.modal);
   const [onDeleteLike] = useDeleteLikeMutation();
   const [onAddLike] = useAddLikeMutation();
-  const [onDeleteLikeSearch] = useDeleteLikeSearchMutation();
-  const [onAddLikeSearch] = useAddLikeSearchMutation();
 
   const toggleLikes = async (item: MatchPostType) => {
     if (!sessionStorage.getItem("email")) {
@@ -53,17 +47,9 @@ const MakeMatchPostList: React.FC<DataProps> = ({ data, location }) => {
       return;
     } else {
       if (item.like) {
-        if (location === "search") {
-          onDeleteLikeSearch(item.postId || "");
-        } else {
-          onDeleteLike(item.postId || "");
-        }
+        onDeleteLike(item.postId || "");
       } else {
-        if (location === "search") {
-          onAddLikeSearch(item.postId || "");
-        } else {
-          onAddLike(item.postId || "");
-        }
+        onAddLike(item.postId || "");
       }
     }
   };

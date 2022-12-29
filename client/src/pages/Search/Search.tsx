@@ -1,10 +1,10 @@
+import { useLocation } from "react-router-dom";
 import MakeMatchPostList from "../../components/MakeMatchPostList/MakeMatchPostList";
 import Title from "../../components/Title/Title";
 import FreePostPreview from "../../components/FreePostPreview/FreePostPreview";
-import { Content, Keyword, SearchStyle } from "./SearchStyle";
-import { useLocation } from "react-router-dom";
 import NotFound from "../../components/NotFound/NotFound";
-import { useGetSearchPostQuery } from "../../slice/searchApi";
+import { Content, Keyword, SearchStyle } from "./SearchStyle";
+import { useGetSearchPostQuery } from "../../slice/matchPostApi";
 
 const Search = () => {
   const location = decodeURIComponent(useLocation().pathname);
