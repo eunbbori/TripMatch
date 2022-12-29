@@ -14,13 +14,13 @@ const Home = () => {
     data: matchData,
     isError: matchError,
     isLoading: matchLoading,
-  } = useGetAllMatchPostQuery({ page: 1, ...(email && { email }) });
+  } = useGetAllMatchPostQuery({ page: 1, ...(email && { email }), perPage: 8 });
 
   const {
     data: freeData,
     isError: freeError,
     isLoading: freeLoading,
-  } = useGetAllFreePostQuery({ page: 1 });
+  } = useGetAllFreePostQuery({ page: 1, perPage: 6 });
 
   return (
     <>

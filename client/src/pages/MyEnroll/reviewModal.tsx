@@ -62,7 +62,7 @@ const ReviewModal: React.FC<ReviewProps> = ({
     const getAuthorInfo = async () => {
       try {
         const fetchData = await axios.get(
-          `http://34.64.156.80:3003/api/main/auth/${authorEmail}`,
+          `http://kdt-sw3-team08.elicecoding.com:3003/api/main/auth/${authorEmail}`,
         );
 
         if (fetchData.status === 200) {

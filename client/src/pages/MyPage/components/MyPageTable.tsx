@@ -31,7 +31,7 @@ const MyPageTable: React.FC = () => {
   // const [status, setStatus] = useState(true);
   // const selectRef = useRef<HTMLSelectElement>(null);
 
-  //const baseUrl = "http://34.64.156.80:3003";
+  //const baseUrl = "http://kdt-sw3-team08.elicecoding.com:3003";
 
   useEffect(() => {
     const getData = async () => {
@@ -84,7 +84,7 @@ const MyPageTable: React.FC = () => {
 
                     try {
                       const postData = await axios.get(
-                        `http://34.64.156.80:3003/api/main/posts/${item.postId}`,
+                        `http://kdt-sw3-team08.elicecoding.com:3003/api/main/posts/${item.postId}`,
                       );
 
                       if (postData.status === 200) {

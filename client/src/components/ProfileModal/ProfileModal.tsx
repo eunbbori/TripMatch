@@ -8,7 +8,7 @@ type TProfileModal = {
   email: string;
 };
 
-const baseUrl = "http://34.64.156.80:3003";
+const baseUrl = "http://kdt-sw3-team08.elicecoding.com:3003";
 // 요청 실패시 보일 기본 이미지
 const defaultImgUrl =
   "https://pixabay.com/get/gb92bd7c402e3b65ab306467a4f369192e56028d5e62f6f08b06abc90c642aab1e9ee36af2fe2cbe78378a1d67166427d6d39b5d375c50251c9cf5925d0b38cab932a796618d1ab445142c281136a748d_640.png";

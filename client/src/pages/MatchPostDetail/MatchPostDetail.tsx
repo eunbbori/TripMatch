@@ -46,9 +46,7 @@ const MatchPostDetail = () => {
   // 페이지 첫 렌더링시 동행 신청중인 글인지 확인함
   useEffect(() => {
     const getMatchPost = async () => {
-      const result = await authAxios.get(
-        "http://34.64.156.80:3003/api/main/mypage/myEnroll",
-      );
+      const result = await authAxios.get("/api/main/mypage/myEnroll");
 
       if (result.data) {
         const currentMatch = result.data.find(
@@ -65,9 +63,7 @@ const MatchPostDetail = () => {
 
   useEffect(() => {
     const getMatchPost = async () => {
-      const result = await authAxios.get(
-        "http://34.64.156.80:3003/api/main/mypage/myEnroll",
-      );
+      const result = await authAxios.get("/api/main/mypage/myEnroll");
 
       if (result.data) {
         const currentMatch = result.data.find(

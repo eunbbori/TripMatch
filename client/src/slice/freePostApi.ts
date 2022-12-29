@@ -1,13 +1,13 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import type { FreePostType } from "../type/freePost";
-import { authAxiosBaseQuery, axiosBaseQuery } from "./axiosBaseQuery";
+import { authAxiosBaseQuery } from "./axiosBaseQuery";
 import { CommentType } from "./../type/comment";
 
 export const freePostApi = createApi({
   reducerPath: "freePostApi",
   tagTypes: ["FreePost", "MatchPost", "SearchPost"],
   baseQuery: authAxiosBaseQuery({
-    baseUrl: "http://34.64.156.80:3003/api/",
+    baseUrl: "http://kdt-sw3-team08.elicecoding.com:3003/api/",
   }),
   endpoints: (builder) => ({
     // 전체 자유게시글을 불러옴

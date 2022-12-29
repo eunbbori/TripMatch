@@ -19,10 +19,6 @@ interface DatasProp {
   likes?: string[]; //로그인 유저의 좋아요 누른 게시글의 포스트 id가 배열로 온다고 가정하고 작성함
 }
 
-interface LikePostType {
-  [key: string]: boolean; //postID에 대해 true, false로 좋아요 글 구분
-}
-
 const WishListContents: React.FC<DatasProp> = ({ data, likes = [] }) => {
   //비회원의 경우 좋아요 없으므로 빈 배열을 디폴트로 설정
   const fullHeart =

@@ -10,7 +10,7 @@ import {
 import axios from "axios";
 
 const FindPasswordForm = () => {
-  const baseUrl = "http://34.64.156.80:3003";
+  const baseUrl = "http://kdt-sw3-team08.elicecoding.com:3003";
   // const loginUrl = `${baseUrl}/main/auth/login`;
   const [email, setEmail] = useState("");
   const [validText, setValidText] = useState(

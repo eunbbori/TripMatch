@@ -10,7 +10,7 @@ import { useImmer } from "use-immer";
 import axios from "axios";
 
 const LoginForm = () => {
-  const baseUrl = "http://34.64.156.80:3003";
+  const baseUrl = "http://kdt-sw3-team08.elicecoding.com:3003";
   // const loginUrl = `${baseUrl}/main/auth/login`;
   const navigate = useNavigate();
 

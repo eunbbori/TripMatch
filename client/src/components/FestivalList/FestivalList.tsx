@@ -27,7 +27,9 @@ const FestivalList: React.FC<LocationProps> = ({ location }) => {
 
   const getInfo = async (infoType: string, location: string) => {
     const infoList = await axios
-      .get(`http://34.64.156.80:3003/api/main/infoes/${infoType}`)
+      .get(
+        `http://kdt-sw3-team08.elicecoding.com:3003/api/main/infoes/${infoType}`,
+      )
       .then((res) =>
         res.data.sort((a: Item, b: Item) => {
           return Number(a.eventstartdate) - Number(b.eventstartdate);

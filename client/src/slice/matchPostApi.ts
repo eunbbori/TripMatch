@@ -2,13 +2,12 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 import type { MatchPostType } from "./../type/matchPost";
 import { authAxiosBaseQuery, axiosBaseQuery } from "./axiosBaseQuery";
 import { CommentType } from "./../type/comment";
-import { FreePostType } from "../type/freePost";
 
 export const matchPostApi = createApi({
   reducerPath: "matchPostApi",
   tagTypes: ["FreePost", "MatchPost", "SearchPost"],
   baseQuery: authAxiosBaseQuery({
-    baseUrl: "http://34.64.156.80:3003/api/",
+    baseUrl: "http://kdt-sw3-team08.elicecoding.com:3003/api/",
   }),
   endpoints: (builder) => ({
     // 전체 동행게시글을 불러옴
