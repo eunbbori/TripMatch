@@ -5,7 +5,7 @@ import type { FreePostType } from "../type/freePost";
 
 export const searchPostApi = createApi({
   reducerPath: "searchPostApi",
-  tagTypes: ["SearchPost"],
+  tagTypes: ["SearchPost", "MatchPost", "FreePost"],
   baseQuery: authAxiosBaseQuery({
     baseUrl: "http://34.64.156.80:3003/api/",
   }),

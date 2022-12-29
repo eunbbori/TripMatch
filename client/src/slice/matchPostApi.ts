@@ -5,7 +5,7 @@ import { CommentType } from "./../type/comment";
 
 export const matchPostApi = createApi({
   reducerPath: "matchPostApi",
-  tagTypes: ["MatchPost"],
+  tagTypes: ["MatchPost", "SearchPost", "FreePost"],
   baseQuery: authAxiosBaseQuery({
     baseUrl: "http://34.64.156.80:3003/api/",
   }),
