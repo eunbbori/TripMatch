@@ -69,16 +69,19 @@ const MatchPostWrite = () => {
     state ? state.duration[0] : today,
   );
   const [endDate, setEndDate] = useState<string>(
-    state ? state.duration[1] : today,
+    state ? state.duration[1] : "",
   );
   const [updateImg] = useUpdateImgMutation();
 
   const handleStartDate = (event: ChangeEvent<HTMLInputElement>) => {
-    if (event.target.value > endDate) {
+    if (event.target.value > endDate && endDate !== "") {
       alert("종료 날짜보다 작게 설정 바랍니다.");
       setStartDate(endDate);
       event.target.value = endDate;
       return;
+    }
+    if (endDate === "") {
+      setStartDate(startDate);
     }
     setStartDate(event.target.value);
   };
