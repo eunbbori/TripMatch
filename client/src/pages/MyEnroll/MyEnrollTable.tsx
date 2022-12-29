@@ -4,7 +4,7 @@ import Modal from "../../components/Modal/Modal";
 import { showModal } from "../../slice/modal";
 import axios from "axios";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import ReviewModal from "../Home/reviewModal";
+import ReviewModal from "./reviewModal";
 import authAxios from "../../axios/authAxios";
 import { Link } from "react-router-dom";
 
@@ -61,7 +61,6 @@ const MyEnrollTable: React.FC = () => {
     };
     enrollData();
   }, []);
-  console.log(data);
 
   useEffect(() => {
     if (isCancel) {

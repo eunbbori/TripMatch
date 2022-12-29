@@ -13,7 +13,6 @@ const MyPageTop: React.FC = () => {
     };
     postData();
   }, []);
-  console.log(data);
 
   return (
     <Top key={data?.email}>
