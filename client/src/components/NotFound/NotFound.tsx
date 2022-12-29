@@ -43,6 +43,7 @@ const Button = styled.button`
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  font-family: "S-CoreDream-3Light";
   font-size: ${(props) => props.theme.font.M};
   background-color: ${(props) => props.theme.color.lightblue};
   color: #333;

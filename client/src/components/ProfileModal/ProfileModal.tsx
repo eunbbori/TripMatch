@@ -65,7 +65,7 @@ const ProfileModal: React.FC<TProfileModal> = ({ email }) => {
   return (
     <>
       {modal && (
-        <Modal>
+        <Modal onClick={toggleModal}>
           <div className="overlay">
             <div className="content">
               <div className="contentWrapper">

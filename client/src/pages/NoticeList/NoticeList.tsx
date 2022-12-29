@@ -4,7 +4,7 @@ import {
   Container,
   ButtonContainer,
   PostInfo,
-  Title,
+  TitleStyle,
   UserInfo,
   CreatedDate,
   FreePostLink,
@@ -14,6 +14,7 @@ import {
 } from "./NoticeListStyle";
 import { useGetAllNoticeQuery } from "../../slice/noticeApi";
 import { dateFormat } from "../../util/dateFormatting";
+import Title from "../../components/Title/Title";
 
 const NoticeList = () => {
   const { data: notices } = useGetAllNoticeQuery("");
@@ -21,7 +22,7 @@ const NoticeList = () => {
 
   return (
     <Container>
-      <ListTitle>공지사항</ListTitle>
+      <Title title="공지사항" location="/notice" />
       <ListContainer>
         {notices &&
           notices.map((data, i) => {
@@ -30,7 +31,7 @@ const NoticeList = () => {
               <FreePostLink key={i} to={url}>
                 <PostInfo>
                   <Index>{i + 1}</Index>
-                  <Title>{data.title}</Title>
+                  <TitleStyle>{data.title}</TitleStyle>
                 </PostInfo>
                 <UserInfo>
                   <CreatedDate>{dateFormat(data.createdAt)}</CreatedDate>

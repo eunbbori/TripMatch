@@ -34,18 +34,27 @@ const MyFooter = () => {
             <img
               src="https://res.cloudinary.com/dk9scwone/image/upload/v1671095094/freeIconInstagram_uviyex.png"
               alt="인스타그램"
+              onClick={() => {
+                window.open("https://www.instagram.com/", "_blank");
+              }}
             />
           </Link>
           <Link to="/">
             <img
               src="https://res.cloudinary.com/dk9scwone/image/upload/v1671095094/freeIconTwitter_djkce8.png"
               alt="트위터"
+              onClick={() => {
+                window.open("https://twitter.com/", "_blank");
+              }}
             />
           </Link>
           <Link to="/">
             <img
               src="https://res.cloudinary.com/dk9scwone/image/upload/v1671095094/freeIconFacebook_oegnua.png"
               alt="페이스북"
+              onClick={() => {
+                window.open("https://www.facebook.com/", "_blank");
+              }}
             />
           </Link>
         </div>

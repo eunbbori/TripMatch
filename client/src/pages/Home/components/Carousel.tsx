@@ -27,7 +27,7 @@ const Carousel = () => {
         {slide.map((item, idx) => {
           return (
             <div key={idx}>
-              <Link to={idx === 0 ? "/match" : idx === 1 ? "/" : "/free"}>
+              <Link to={idx === 0 ? "/match" : idx === 1 ? "/notice" : "/free"}>
                 <img src={item} />
               </Link>
             </div>

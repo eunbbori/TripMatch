@@ -187,9 +187,9 @@ const Footer = styled.span`
   color: gray;
   margin-bottom: 2rem;
 
-  a:visited {
-    font-size: 5rem;
+  a {
     color: gray;
+    text-decoration: none;
   }
 
   a:hover {

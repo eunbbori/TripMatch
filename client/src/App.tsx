@@ -36,19 +36,19 @@ const App = () => {
           <Route path="match" element={<MatchPostList />} />
           <Route path="free/:id" element={<FreePostDetail />} />
           <Route path="match/:id" element={<MatchPostDetail />} />
-          <Route path="/mypage/mycontents" element={<MyPageContents />} />
-          <Route path="/mypage/userinfo" element={<UpdateUserInfo />} />
-          <Route path="/mypage/mycomment" element={<MyComment />} />
-          <Route path="/mypage/receivedenroll" element={<ReceivedEnroll />} />
-          <Route path="/mypage/myenroll" element={<MyEnroll />} />
-          <Route path="/free/write" element={<FreePostWrite />} />
-          <Route path="/free/write/:id" element={<FreePostWrite />} />
-          <Route path="/match/write" element={<MatchPostWrite />} />
-          <Route path="/match/write/:id" element={<MatchPostWrite />} />
-          <Route path="/auth/login" element={<Login />} />
-          <Route path="/auth/register" element={<Register />} />
-          <Route path="/auth/findpassword" element={<FindPassword />} />
-          <Route path="/wishlist" element={<WishListPage />} />
+          <Route path="mypage/mycontents" element={<MyPageContents />} />
+          <Route path="mypage/userinfo" element={<UpdateUserInfo />} />
+          <Route path="mypage/mycomment" element={<MyComment />} />
+          <Route path="mypage/receivedenroll" element={<ReceivedEnroll />} />
+          <Route path="mypage/myenroll" element={<MyEnroll />} />
+          <Route path="free/write" element={<FreePostWrite />} />
+          <Route path="free/write/:id" element={<FreePostWrite />} />
+          <Route path="match/write" element={<MatchPostWrite />} />
+          <Route path="match/write/:id" element={<MatchPostWrite />} />
+          <Route path="auth/login" element={<Login />} />
+          <Route path="auth/register" element={<Register />} />
+          <Route path="auth/findpassword" element={<FindPassword />} />
+          <Route path="wishlist" element={<WishListPage />} />
           <Route path="admin" element={<Admin />} />
           <Route path="search/:keyword" element={<Search />} />
           <Route

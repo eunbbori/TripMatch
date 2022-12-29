@@ -13,6 +13,7 @@ export const ListTitle = styled.h2`
 `;
 
 export const ListContainer = styled.div`
+  margin-top: 15px;
   min-height: 500px;
 `;
 
@@ -33,7 +34,7 @@ export const Index = styled.span`
   margin: 0 15px;
 `;
 
-export const Title = styled.div`
+export const TitleStyle = styled.div`
   font-weight: bold;
 `;
 

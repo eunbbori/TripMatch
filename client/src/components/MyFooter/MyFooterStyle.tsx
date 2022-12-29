@@ -19,6 +19,7 @@ const Footer = styled.footer`
       "comInfo comInfo"
       "legalInfo snsLogo"
       "copyright snsLogo";
+    cursor: default;
 
     > div {
       margin-top: 10px;
