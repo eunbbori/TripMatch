@@ -136,7 +136,7 @@ const MatchPostDetail = () => {
         case "댓글 삭제":
           return onClickDeleteComment;
         case "로그인":
-          return () => navigate("/login");
+          return () => navigate("/auth/login");
       }
     }
   };

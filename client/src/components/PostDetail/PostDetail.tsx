@@ -103,6 +103,17 @@ const PostDetail: React.FC<PostDetailProps> = ({
   }, [freePost, matchPost]);
 
   const onToggleLikes = () => {
+    if (!sessionStorage.getItem("x-access-token")) {
+      dispatch(
+        showModal({
+          title: "로그인",
+          content: "로그인 하시겠습니까?",
+          rightButton: "예",
+          leftButton: "아니요",
+        }),
+      );
+      return;
+    }
     setIsLikePost(!isLikePost);
     setClickLikePost(true);
   };
@@ -112,7 +123,7 @@ const PostDetail: React.FC<PostDetailProps> = ({
       dispatch(
         showModal({
           title: "로그인",
-          content: "로그인 후 사용 가능한 기능입니다. 로그인 하시겠습니까?",
+          content: "로그인 하시겠습니까?",
           rightButton: "예",
           leftButton: "아니요",
         }),
@@ -196,11 +207,7 @@ const PostDetail: React.FC<PostDetailProps> = ({
           {freePost?.title || matchPost?.title}
         </div>
         {matchPost && (
-          <button
-            className="heart"
-            onClick={onToggleLikes}
-            disabled={!sessionStorage.getItem("x-access-token")}
-          >
+          <button className="heart" onClick={onToggleLikes}>
             <img src={isLikePost ? fullHeart : emptyHeart} />
           </button>
         )}
@@ -235,13 +242,6 @@ const PostDetail: React.FC<PostDetailProps> = ({
           </p>
         </MatchContainer>
       )}
-      {/* <PostContent
-        dangerouslySetInnerHTML={
-          (freePost && { __html: freePost.content }) ||
-          (matchPost && { __html: matchPost.content })
-        }
-        className="toastui-editor-contents"
-      ></PostContent> */}
       <MarkdownView content={freePost?.content || matchPost?.content} />
       {matchPost && (
         <MatchButton
