@@ -373,6 +373,7 @@ const UpdateUserInfoFrom = () => {
     try {
       const res = await authAxios.delete(`/api/main/auth/delete`);
       if (res.status === 200) {
+        sessionStorage.clear();
         alert("회원탈퇴가 완료되었습니다");
         navigate("/");
       } else {
