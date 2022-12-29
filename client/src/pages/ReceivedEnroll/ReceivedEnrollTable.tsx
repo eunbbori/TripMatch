@@ -9,6 +9,7 @@ export interface EnrolledPersonType {
   postId: string;
   title: string;
   matchStatus: string;
+  status: boolean;
   duration: string[];
   applicant: Applicant;
 }
@@ -134,7 +135,7 @@ const ReceivedEnrollTable: React.FC = () => {
                     )}
 
                     <td>{item.applicant.nickname}</td>
-                    <td>{item.matchStatus}</td>
+                    <td>{item.status ? "모집중" : "모집마감"}</td>
 
                     {item.matchStatus !== "대기중" ? (
                       <td id="last">
