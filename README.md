@@ -8,7 +8,7 @@
 
 ## 1. 서비스 소개
 
-![시연영상](/uploads/475c0b595de403309aea5abf6d0de1ef/8팀_8282__1_.mov)
+https://user-images.githubusercontent.com/102281327/210049115-1b05a2d7-9bfa-48df-a48e-c03cd09b461b.mov
 
 - 기술 스택
   ![img](https://res.cloudinary.com/dnow6qfd8/image/upload/v1672301273/2022-12-29_17_03_48_eadleu.png)
@@ -49,6 +49,7 @@
   - 자유게시판 (자유로운 질문 및 후기 게시판)
     - 지역별 자유게시판 게시글 조회
       - 전체, 지역별 조회
+      ![자유게시판조회](https://user-images.githubusercontent.com/112812483/210074396-dab438bb-814f-4b80-a7b2-6bb7c3049373.gif)
     - 게시글 작성
       - 지역 및 카테고리 설정 
       - 게시글 제목 및 내용 작성
@@ -61,8 +62,10 @@
     - 지역별 게시글 전체 조회
       - 지역별, 모집 상태별 조회
       - 희망(위시 리스트) 모집글 표시
+      ![동행게시판조회](https://user-images.githubusercontent.com/112812483/210074027-5af7b514-2fb0-49a8-be29-11eb5e092d07.gif)
     - 게시글 작성
       - 지역, 모집 인원, 여행 기간, 희망 성별 및 나이대, 관련 사진 입력 가능
+      ![동행게시판글쓰기](https://user-images.githubusercontent.com/112812483/210074458-d71b0ba1-5cd0-464d-a644-71329c81b0c7.gif)
     - 게시글 상세 조회
       - 모달을 통해 작성자 상세 정보 조회
       - 동행 신청
