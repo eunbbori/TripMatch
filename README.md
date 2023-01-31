@@ -2,7 +2,7 @@
 
 -  여행 'Trip'과 짝을 맞추다 'Match'의 합성어로 국내 여행 동행자를 매칭하고 여행 정보를 나눌 수 있는 커뮤니티 서비스
 
-## 프로젝트 회고 
+## ✅프로젝트 회고 
  [개발자의 매력을 알게 해준 좋은 팀원들과의 TripMatch 프로젝트 회고](https://velog.io/@eunsilk/%EA%B0%9C%EB%B0%9C%EC%9E%90%EC%9D%98-%EB%A7%A4%EB%A0%A5%EC%9D%84-%EC%95%8C%EA%B2%8C-%ED%95%B4%EC%A4%80-%EC%A2%8B%EC%9D%80-%ED%8C%80%EC%9B%90%EB%93%A4%EA%B3%BC%EC%9D%98-TripMatch-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%ED%9A%8C%EA%B3%A0) 
 
 <!--  [링크](http://kdt-sw3-team08.elicecoding.com/) <br>
